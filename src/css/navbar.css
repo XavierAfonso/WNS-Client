@@ -1,0 +1,27 @@
+.navbar-custom {
+    background-color: #e44d3a !important;
+    color: white;
+}
+
+.navbar-toggle {
+    background-color: green !important;
+    color: white;
+}
+
+.test{
+    background-color: orange !important;
+    color: white;
+    border-color:white;
+}
+
+.nav.navbar-nav li a {
+    color: white;
+}
+
+body{
+    background-color:#ecf0f1;
+}
+
+.navbar-custom .navbar-toggle .icon-bar {
+    background-color: black;
+}
