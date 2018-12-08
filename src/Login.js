@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { AuthContext } from './AuthProvider';
+import {Switch, Route, Redirect} from 'react-router-dom'
+
+import './css/login.css';
 
 class Login extends Component {
 
@@ -22,23 +25,30 @@ class Login extends Component {
     return (
       <AuthContext>
 
-        {(authContext) => {
+        {( {error,user, signIn}) => { // authContext
 
-          console.log(authContext);
+          if(user){
 
+            return <Redirect to="/" />
+          }
 
           const onSubmit = (event) => {
             event.preventDefault();
-            console.log(this.state.username);
-            console.log(this.state.password);
+
+            let username = this.state.username;
+            let password = this.state.password;
+            console.log(username);
+            console.log(password);
         
-            if (this.state.username !== "" && this.state.password !== "") {
+            if (username !== "" && password !== "") {
+                signIn({username,password});
+
             }
 
           }
 
           return (
-            <div className="container">
+            <div className=" mainPanel container">
               <form onSubmit={onSubmit}>
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
@@ -49,10 +59,11 @@ class Login extends Component {
                   <input type="password" className="form-control" id='password' name='password' placeholder="Password" onChange={this.handleInputChange} />
                 </div>
                 <div className="form-check">
-                  <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                  <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                  {/*<input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                  <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>*/}
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Login</button>
+                <p style={{color:'red'}}>{error}</p>
               </form>
             </div>
           )
