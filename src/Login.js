@@ -62,7 +62,7 @@ class Login extends Component {
                   {/*<input type="checkbox" className="form-check-input" id="exampleCheck1" />
                   <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>*/}
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button style={{width:'100%', background:'#e44d3a',border:'#e44d3a'}} type="submit" className="btn btn-primary">Login</button>
                 <p style={{color:'red'}}>{error}</p>
               </form>
             </div>
