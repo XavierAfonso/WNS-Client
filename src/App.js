@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import HomePage from './Home';
 import LoginPage from './Login';
+import RegisterPage from './Register';
 import { AuthContext } from './AuthProvider';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
@@ -39,6 +40,7 @@ class App extends Component {
         {/*<ProtectedRoute path="/" exact component={HomePage} />*/}
         <Route path="/" exact component={HomePage} />
         <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
       </Switch>
     );
   }

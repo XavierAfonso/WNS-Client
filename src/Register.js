@@ -4,7 +4,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 
 import './css/login.css';
 
-class Login extends Component {
+class Register extends Component {
 
   constructor(props) {
     super(props)
@@ -58,13 +58,17 @@ class Login extends Component {
                   <label htmlFor="password">Password</label>
                   <input type="password" className="form-control" id='password' name='password' placeholder="Password" onChange={this.handleInputChange} />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <input type="password" className="form-control" id='confirmPassword' name='confirmPassword' placeholder="Confirm Password" onChange={this.handleInputChange} />
+                </div>
                 <div className="form-check">
                   {/*<input type="checkbox" className="form-check-input" id="exampleCheck1" />
                   <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>*/}
                 </div>
-                <button style={{width:'100%', background:'#e44d3a',border:'#e44d3a'}} type="submit" className="btn btn-primary">Login</button>
+                <button style={{width:'100%', background:'#e44d3a',border:'#e44d3a'}} type="submit" className="btn btn-primary">Register</button>
                 <p style={{color:'red'}}>{error}</p>
-                <a href="/register">Not register yet ?</a>
+                <a href="/login">You already have an account ?</a>
               </form>
             </div>
           )
@@ -75,4 +79,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;
