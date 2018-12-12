@@ -27,8 +27,9 @@ class Login extends Component {
 
         {( {error,user, signIn}) => { // authContext
 
-          if(user){
+          console.log(user);
 
+          if(user){
             return <Redirect to="/" />
           }
 
@@ -42,17 +43,15 @@ class Login extends Component {
         
             if (username !== "" && password !== "") {
                 signIn({username,password});
-
             }
-
           }
 
           return (
             <div className=" mainPanel container">
               <form onSubmit={onSubmit}>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <input type="input" className="form-control" id='username' name='username' placeholder="Enter Username" onChange={this.handleInputChange} />
+                  <label htmlFor="username">Email</label>
+                  <input type="email" className="form-control" id='username' name='username' placeholder="Enter Username" onChange={this.handleInputChange} />
                 </div>
                 <div className="form-group">
                   <label htmlFor="password">Password</label>

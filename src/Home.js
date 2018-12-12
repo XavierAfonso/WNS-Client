@@ -14,19 +14,19 @@ class Home extends Component {
       <>
       <NabBar />
       <div className="myContainer">
-      <div class="row test">
-        <div class="col1 col-lg-3">
+      <div className="row test">
+        <div className="col1 col-lg-3">
         {/*Profil-->*/ }
-        <div class="row">
-          <div class="post1">
+        <div className="row">
+          <div className="post1">
           </div>
         </div>
 
         </div>
-        <div class="col2 col-lg-6">
+        <div className="col2 col-lg-6">
          {/*Wall-->*/ }
-        <div class="row">
-          <div class="post2">
+        <div className="row">
+          <div className="post2">
             <AddNewPost/>
             
 
@@ -36,10 +36,10 @@ class Home extends Component {
         </div>
         
         </div>
-        <div class="col3 col-lg-3">
+        <div className="col3 col-lg-3">
         {/*Informations-->*/ }
-        <div class="row">
-          <div class="post3">
+        <div className="row">
+          <div className="post3">
           </div>
         </div>
         </div>

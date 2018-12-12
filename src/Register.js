@@ -9,8 +9,12 @@ class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
+
       username: "",
-      password: ""
+      password: "",
+
+      statusRegister: null,
+
     }
   }
 
@@ -25,15 +29,18 @@ class Register extends Component {
     return (
       <AuthContext>
 
-        {( {error,user, signIn}) => { // authContext
+        {( {error,user, signUp}) => { // authContext
 
           if(user){
 
             return <Redirect to="/" />
+            
           }
 
           const onSubmit = (event) => {
+
             event.preventDefault();
+            console.log("LOG 1");
 
             let username = this.state.username;
             let password = this.state.password;
@@ -41,18 +48,19 @@ class Register extends Component {
             console.log(password);
         
             if (username !== "" && password !== "") {
-                signIn({username,password});
 
+                 return signUp({username,password}).then(() => {
+                  this.setState({statusRegister:"Account has been successfully registered"})
+                });
             }
-
           }
 
           return (
             <div className=" mainPanel container">
               <form onSubmit={onSubmit}>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <input type="input" className="form-control" id='username' name='username' placeholder="Enter Username" onChange={this.handleInputChange} />
+                  <label htmlFor="username">Email</label>
+                  <input type="email" className="form-control" id='username' name='username' placeholder="Enter Username" onChange={this.handleInputChange} />
                 </div>
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
@@ -68,6 +76,7 @@ class Register extends Component {
                 </div>
                 <button style={{width:'100%', background:'#e44d3a',border:'#e44d3a'}} type="submit" className="btn btn-primary">Register</button>
                 <p style={{color:'red'}}>{error}</p>
+                <p style={{color:'green'}}>{this.state.statusRegister}</p>
                 <a href="/login">You already have an account ?</a>
               </form>
             </div>

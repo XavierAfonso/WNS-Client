@@ -37,10 +37,11 @@ class App extends Component {
 
     return (
       <Switch>
-        {/*<ProtectedRoute path="/" exact component={HomePage} />*/}
-        <Route path="/" exact component={HomePage} />
+        <ProtectedRoute path="/" exact component={HomePage} />
+        {/*<Route path="/" exact component={HomePage} />*/}
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/*" component={LoginPage} />
       </Switch>
     );
   }
