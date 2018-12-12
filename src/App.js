@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import HomePage from './Home';
-import LoginPage from './Login';
-import RegisterPage from './Register';
-import { AuthContext } from './AuthProvider';
+import HomePage from './Pages/Home';
+import LoginPage from './Pages/Login';
+import RegisterPage from './Pages/Register';
+import { AuthContext } from './Utils/AuthProvider';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 

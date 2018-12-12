@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { AuthContext } from './AuthProvider';
+import { AuthContext } from '../Utils/AuthProvider';
 import {Switch, Route, Redirect} from 'react-router-dom'
 
-import './css/login.css';
+import '../css/login.css';
 
 class Login extends Component {
 

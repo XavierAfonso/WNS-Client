@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import NabBar from './Navbar';
 
-import AddNewPost from './AddNewPost';
-import Wall from './Wall';
+import AddNewPost from '../Components/AddNewPost';
+import Wall from '../Components/Wall';
 import Footer from './Footer';
 
-import './css/home.css';
+import '../css/home.css';
 
 class Home extends Component {
   render() {

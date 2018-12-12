@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import './css/wall.css';
+import '../css/wall.css';
 
-class Wall extends Component {
+class AddNewPost extends Component {
 
   constructor(props) {
     super(props)
@@ -13,9 +13,9 @@ class Wall extends Component {
   render() {
     return (
      <>
-     <div className="wall">
+     <div className="newPost">
 
-        Wall
+        Add new Post
 
      </div>
      </>
@@ -23,4 +23,4 @@ class Wall extends Component {
   }
 }
 
-export default Wall;
+export default AddNewPost;

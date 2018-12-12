@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './css/navbar.css';
-import { AuthContext } from './AuthProvider';
+import '../css/navbar.css';
+import { AuthContext } from '../Utils/AuthProvider';
 
 class Navbar extends Component {
 
@@ -49,6 +49,8 @@ class Navbar extends Component {
                                                 </ul>
                                             </li>
                                         </ul>
+
+                                        
                                         <form className="searchBar navbar-form navbar-left">
                                             <div className="form-group">
                                                 <input type="text" className="form-control" placeholder="Search" />
