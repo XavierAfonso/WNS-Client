@@ -146,6 +146,7 @@ const styles = () => ({
     padding: '48px 36px 0',
     background: '#eaeff1',
   },
+  
 });
 
 class Paperbase extends React.Component {
@@ -167,7 +168,6 @@ class Paperbase extends React.Component {
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">
 
-            
               <Navigator
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"

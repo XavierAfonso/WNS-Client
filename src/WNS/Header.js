@@ -86,6 +86,10 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  appBar: {
+    // Make the app bar z-index always one more than the drawer z-index
+    zIndex: theme.zIndex.drawer + 1,
+  },
 });
 
 class Header extends React.Component {
@@ -167,7 +171,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="absolute" className={classes.appBar}>
           <Toolbar>
                        
           <Hidden smUp>

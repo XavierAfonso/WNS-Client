@@ -88,13 +88,25 @@ const styles = theme => ({
   divider: {
     marginTop: theme.spacing.unit * 2,
   },
+
+  toolbar: theme.mixins.toolbar,
+
+  customZIndex : {
+    zIndex: 1100-1,
+  }
+
 });
 
 function Navigator(props) {
   const { classes, ...other } = props;
 
   return (
-    <Drawer variant="permanent" {...other}>
+
+
+    <Drawer className={classes.customZIndex} variant="permanent" {...other}>
+
+      <div className={classes.toolbar} />
+     
 
       <div style={{padding:'30px'}}>
       <FormControl margin="normal" required fullWidth>
@@ -159,6 +171,7 @@ function Navigator(props) {
 
                 */}
     </Drawer>
+  
   );
 }
 
