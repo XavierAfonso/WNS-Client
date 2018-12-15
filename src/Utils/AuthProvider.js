@@ -68,16 +68,24 @@ class AuthProvider extends Component {
 
     signUp = ({username,password}) =>{
 
-        console.log("SIGN UP");
-
+    
        return axios.post('/users/signup',{username,password}).then(response => {
             
-            //console.log("RESPONSE");
-            console.log(response);
+         //   console.log("RESPONSE");
+           // console.log(response);
 
-        }).catch(error => {
-            console.error(error);
-            this.setState({error: 'Invalid username or password'});
+        }).catch((error) => {
+            
+            console.log(error.response.status);
+
+            if(error.response.status===400){
+                console.log("VALA");
+                this.setState({error: 'The email already exist'});
+              }
+            
+            //this.setState({error: 'Invalid username or password'});
+            throw error;
+           
         });
     }
 

@@ -40,18 +40,26 @@ class Register extends Component {
           const onSubmit = (event) => {
 
             event.preventDefault();
-            console.log("LOG 1");
+            //console.log("LOG 1");
 
             let username = this.state.username;
             let password = this.state.password;
-            console.log(username);
-            console.log(password);
+            //console.log(username);
+           //console.log(password);
         
             if (username !== "" && password !== "") {
 
-                 return signUp({username,password}).then(() => {
+                 return signUp({username,password}).then((element) => {
+                   //console.log(element);
+
                   this.setState({statusRegister:"Account has been successfully registered"})
-                });
+                }).catch(err => {
+                  
+                    console.log(err.response.status);
+    
+                  //Promise.reject("raison");
+                }
+              );
             }
           }
 
