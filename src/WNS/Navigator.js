@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
@@ -21,6 +14,39 @@ import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+import TagFacesIcon from '@material-ui/icons/TagFaces';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+
+import Button from '@material-ui/core/Button';
+import Search from '@material-ui/icons/Search';
+
+const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+    'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+
 
 const categories = [
   {
@@ -91,31 +117,205 @@ const styles = theme => ({
 
   toolbar: theme.mixins.toolbar,
 
-  customZIndex : {
-    zIndex: 1100-1,
-  }
+  customZIndex: {
+    zIndex: 1100 - 1,
+  },
+
+  genres:{
+    marginTop: '10px',
+  },
+
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
 
 });
 
-function Navigator(props) {
-  const { classes, ...other } = props;
+class Navigator extends React.Component {
 
-  return (
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: "",
+      author: "",
+      tags : "",
+      idChip : 0,
+      chipData: [
+        /*{ key: 0, label: 'Angular' },
+        { key: 1, label: 'jQuery' },
+        { key: 2, label: 'Polymer' },
+        { key: 3, label: 'React' },
+        { key: 4, label: 'Vue.js' },*/
+      ],
+      name: [],
+      multiline: '',
+    }
+  }
 
 
-    <Drawer className={classes.customZIndex} variant="permanent" {...other}>
+  handleDelete = data => () => {
 
-      <div className={classes.toolbar} />
-     
+    if (data.label === 'React') {
+      alert('Why would you want to delete React?! :)'); // eslint-disable-line no-alert
+      return;
+    }
 
-      <div style={{padding:'30px'}}>
-      <FormControl margin="normal" required fullWidth>
-        <InputLabel htmlFor="username">Email Address</InputLabel>
-        <Input id="username" name="username" autoComplete="email" autoFocus  />
+    this.setState(state => {
+      const chipData = [...state.chipData];
+      const chipToDelete = chipData.indexOf(data);
+      chipData.splice(chipToDelete, 1);
+      return { chipData };
+    });
+
+  };
+
+  handleInputChange = (event) => {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  handleChangeAuthors = event => {
+    this.setState({ name: event.target.value });
+  };
+
+  handleChangeMultiple = event => {
+    const { options } = event.target;
+    const value = [];
+    for (let i = 0, l = options.length; i < l; i += 1) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    this.setState({
+      name: value,
+    });
+  };
+
+  coucou(){
+    console.log(this.state.tags);
+    this.setState({ chipData:  this.state.idChip + 1});
+    this.setState({ chipData: [...this.state.chipData, { key: this.state.idChip, label: "#" + this.state.tags }] });
+  }
+
+
+  render() {
+
+    const { classes, ...other } = this.props;
+    return (
+
+      <Drawer className={classes.customZIndex} variant="permanent" {...other}>
+
+        <div className={classes.toolbar} />
+
+
+        <div style={{ padding: '30px' }}>
+       
+
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="title">Title</InputLabel>
+            <Input id="title" name="title" autoComplete="title"  onChange={this.handleInputChange}/>
+          </FormControl>
+
+          <FormControl margin="normal" fullWidth>
+          <InputLabel htmlFor="select-multiple">Authors</InputLabel>
+          <Select
+            multiple
+            value={this.state.name}
+            onChange={this.handleChangeAuthors}
+            input={<Input id="select-multiple" />}
+            //MenuProps={MenuProps}
+          >
+            {names.map(name => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl margin="normal" fullWidth>
+        <TextField
+          id="standard-multiline-flexible"
+          label="Description"
+          multiline
+          rowsMax="4"
+          value={this.state.multiline}
+          onChange={this.handleChange('multiline')}
+          className={classes.textField}
+          margin="normal"
+        />
+        </FormControl>
+
+
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="tags">Tags</InputLabel>
+            <Input id="tags" name="tags" autoComplete="tags" onChange={this.handleInputChange}
+            onKeyPress={(ev) => {
+              console.log(`Pressed keyCode ${ev.key}`);
+              if (ev.key === 'Enter') {
+                // Do code here
+                ev.preventDefault();
+                this.coucou();
+              }
+            }}
+            
+            />
+          </FormControl>
+
+      
+       
+
+        <Paper className={classes.genres}>
+          
+        {this.state.chipData.map(data => {
+          let icon = null;
+
+          if (data.label === 'React') {
+            icon = <TagFacesIcon />;
+          }
+
+          return (
+            <Chip
+              key={data.key}
+              icon={icon}
+              label={data.label}
+              onDelete={this.handleDelete(data)}
+              className={classes.chip}
+            />
+          );
+        })}
+      </Paper>
+
+      <FormControl margin="normal" fullWidth>
+      <Button variant="contained" color="primary" className={classes.button}>
+        Search
+        <Search className={classes.rightIcon} />
+      </Button>
       </FormControl>
-      </div>
 
-      {/*<List disablePadding>
+
+
+
+        </div>
+
+        {/*<List disablePadding>
         <ListItem className={classNames(classes.firebase, classes.item, classes.itemCategory)}>
           Paperbase
         </ListItem>
@@ -170,9 +370,10 @@ function Navigator(props) {
       </List>
 
                 */}
-    </Drawer>
-  
-  );
+      </Drawer>
+
+    );
+  }
 }
 
 Navigator.propTypes = {

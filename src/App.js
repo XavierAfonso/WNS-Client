@@ -5,6 +5,8 @@ import LoginPage from './Pages/Login';
 import RegisterPage from './Pages/Register';
 import { AuthContext } from './Utils/AuthProvider';
 import HomePage from './WNS/Home';
+import ProfilPage from './WNS/Profil';
+import './css/general.css';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 
@@ -39,6 +41,7 @@ class App extends Component {
       <Switch>
         {/*<ProtectedRoute path="/" exact component={HomePage} />*/}
         <Route path="/" exact component={HomePage} />
+        <Route path="/profil" component={ProfilPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/*" component={LoginPage} />

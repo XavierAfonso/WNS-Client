@@ -1,82 +1,92 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import Avatar from '@material-ui/core/Avatar';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import Post from '../Components/Post';
+
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    paddingTop: '20px',
+  },
   paper: {
-    maxWidth: 936,
-    margin: 'auto',
-    overflow: 'hidden',
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginTop: '10px',
+    height: '200px',
   },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+  avatar: {
+    margin: 10,
   },
-  searchInput: {
-    fontSize: theme.typography.fontSize,
+  orangeAvatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: deepOrange[500],
   },
-  block: {
-    display: 'block',
-  },
-  addUser: {
-    marginRight: theme.spacing.unit,
-  },
-  contentWrapper: {
-    margin: '40px 16px',
+  purpleAvatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: deepPurple[500],
   },
 });
 
-function Content(props) {
-  const { classes } = props;
 
-  return (
-    <Paper className={classes.paper}>
-      <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-        <Toolbar>
-          <Grid container spacing={16} alignItems="center">
-            <Grid item>
-              <SearchIcon className={classes.block} color="inherit" />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Search by email address, phone number, or user UID"
-                InputProps={{
-                  disableUnderline: true,
-                  className: classes.searchInput,
-                }}
-              />
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary" className={classes.addUser}>
-                Add user
-              </Button>
-              <Tooltip title="Reload">
-                <IconButton>
-                  <RefreshIcon className={classes.block} color="inherit" />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+class Content extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12} lg={8}>
+
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+
           </Grid>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.contentWrapper}>
-        <Typography color="textSecondary" align="center">
-          No users for this project yet
-        </Typography>
+          <Grid item xs={12} lg={4}>
+
+            <Paper className={classes.paper}>
+              Following
+              <Grid container justify="center" alignItems="center">
+                <Avatar className={classes.avatar}>H</Avatar>
+                <Avatar className={classes.orangeAvatar}>N</Avatar>
+                <Avatar className={classes.purpleAvatar}>OP</Avatar>
+              </Grid>
+            </Paper>
+
+            <Paper className={classes.paper}>
+              Followers
+              <Grid container justify="center" alignItems="center">
+                <Avatar className={classes.avatar}>P</Avatar>
+                <Avatar className={classes.orangeAvatar}>W</Avatar>
+                <Avatar className={classes.purpleAvatar}>IL</Avatar>
+                <Avatar className={classes.avatar}>H</Avatar>
+                <Avatar className={classes.orangeAvatar}>M</Avatar>
+              </Grid>
+            </Paper>
+
+          </Grid>
+        </Grid>
       </div>
-    </Paper>
-  );
+    );
+  }
 }
 
 Content.propTypes = {

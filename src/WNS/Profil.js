@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Hidden from '@material-ui/core/Hidden';
-import Navigator from './Navigator';
-import Content from './Content';
+import ContentProfil from './ContentProfil';
 import Header from './Header';
 
 let theme = createMuiTheme({
@@ -149,7 +147,7 @@ const styles = () => ({
   
 });
 
-class Home extends React.Component {
+class Profil extends React.Component {
   state = {
     mobileOpen: false,
   };
@@ -165,27 +163,14 @@ class Home extends React.Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <CssBaseline />
-          <nav className={classes.drawer}>
-            <Hidden smUp implementation="js">
 
-              <Navigator
-                PaperProps={{ style: { width: drawerWidth } }}
-                variant="temporary"
-                open={this.state.mobileOpen}
-                onClose={this.handleDrawerToggle}
-              />
-            </Hidden>
-            <Hidden xsDown implementation="css">
-              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-            </Hidden>
-          </nav>
           <div className={classes.appContent}>
             <Header onDrawerToggle={this.handleDrawerToggle} />
             
             <main className={classes.mainContent}>
 
               
-              <Content />
+            <ContentProfil />
            
            
             </main>
@@ -196,8 +181,8 @@ class Home extends React.Component {
   }
 }
 
-Home.propTypes = {
+Profil.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(Profil);
