@@ -19,7 +19,7 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginTop: '10px',
-    height: '200px',
+    height: 'auto',
   },
   avatar: {
     margin: 10,

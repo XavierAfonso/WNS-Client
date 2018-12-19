@@ -24,6 +24,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
 
+import ChipInput from 'material-ui-chip-input';
+
 const names = [
   'Oliver Hansen',
   'Van Henry',
@@ -35,7 +37,7 @@ const names = [
   'Bradley Wilkerson',
   'Virginia Andrews',
   'Kelly Snyder',
-    'Oliver Hansen',
+  'Oliver Hansen',
   'Van Henry',
   'April Tucker',
   'Ralph Hubbard',
@@ -121,7 +123,7 @@ const styles = theme => ({
     zIndex: 1100 - 1,
   },
 
-  genres:{
+  genres: {
     marginTop: '10px',
   },
 
@@ -147,8 +149,8 @@ class Navigator extends React.Component {
     this.state = {
       title: "",
       author: "",
-      tags : "",
-      idChip : 0,
+      tags: "",
+      idChip: 0,
       chipData: [
         /*{ key: 0, label: 'Angular' },
         { key: 1, label: 'jQuery' },
@@ -208,14 +210,21 @@ class Navigator extends React.Component {
     });
   };
 
-  coucou(){
+  coucou() {
     console.log(this.state.tags);
-    this.setState({ chipData:  this.state.idChip + 1});
+    this.setState({ chipData: this.state.idChip + 1 });
     this.setState({ chipData: [...this.state.chipData, { key: this.state.idChip, label: "#" + this.state.tags }] });
   }
 
 
+  handleChange() {
+
+  }
+
   render() {
+
+
+
 
     const { classes, ...other } = this.props;
     return (
@@ -226,89 +235,98 @@ class Navigator extends React.Component {
 
 
         <div style={{ padding: '30px' }}>
-       
+
 
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="title">Title</InputLabel>
-            <Input id="title" name="title" autoComplete="title"  onChange={this.handleInputChange}/>
+            <Input id="title" name="title" autoComplete="title" onChange={this.handleInputChange} />
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
-          <InputLabel htmlFor="select-multiple">Authors</InputLabel>
-          <Select
-            multiple
-            value={this.state.name}
-            onChange={this.handleChangeAuthors}
-            input={<Input id="select-multiple" />}
+            <InputLabel htmlFor="select-multiple">Authors</InputLabel>
+            <Select
+              multiple
+              value={this.state.name}
+              onChange={this.handleChangeAuthors}
+              input={<Input id="select-multiple" />}
             //MenuProps={MenuProps}
-          >
-            {names.map(name => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            >
+              {names.map(name => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        <FormControl margin="normal" fullWidth>
-        <TextField
-          id="standard-multiline-flexible"
-          label="Description"
-          multiline
-          rowsMax="4"
-          value={this.state.multiline}
-          onChange={this.handleChange('multiline')}
-          className={classes.textField}
-          margin="normal"
-        />
-        </FormControl>
+          <FormControl margin="normal" fullWidth>
+            <TextField
+              id="standard-multiline-flexible"
+              label="Description"
+              multiline
+              rowsMax="4"
+              value={this.state.multiline}
+              onChange={this.handleChange('multiline')}
+              className={classes.textField}
+              margin="normal"
+            />
+          </FormControl>
 
 
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="tags">Tags</InputLabel>
             <Input id="tags" name="tags" autoComplete="tags" onChange={this.handleInputChange}
-            onKeyPress={(ev) => {
-              console.log(`Pressed keyCode ${ev.key}`);
-              if (ev.key === 'Enter') {
-                // Do code here
-                ev.preventDefault();
-                this.coucou();
-              }
-            }}
-            
+              onKeyPress={(ev) => {
+                console.log(`Pressed keyCode ${ev.key}`);
+                if (ev.key === 'Enter') {
+                  // Do code here
+                  ev.preventDefault();
+                  this.coucou();
+                }
+              }}
+
             />
           </FormControl>
 
-      
-       
+          <Paper className={classes.genres}>
 
-        <Paper className={classes.genres}>
+            {this.state.chipData.map(data => {
+              let icon = null;
+
+              if (data.label === 'React') {
+                icon = <TagFacesIcon />;
+              }
+
+              return (
+                <Chip
+                  key={data.key}
+                  icon={icon}
+                  label={data.label}
+                  onDelete={this.handleDelete(data)}
+                  className={classes.chip}
+                />
+              );
+            })}
+          </Paper>
+
+
+          <FormControl margin="normal" fullWidth>
+
           
-        {this.state.chipData.map(data => {
-          let icon = null;
-
-          if (data.label === 'React') {
-            icon = <TagFacesIcon />;
-          }
-
-          return (
-            <Chip
-              key={data.key}
-              icon={icon}
-              label={data.label}
-              onDelete={this.handleDelete(data)}
-              className={classes.chip}
+            <ChipInput
+              label="Tags2"
+              onChange={(chips) => this.handleChange(chips)}
             />
-          );
-        })}
-      </Paper>
 
-      <FormControl margin="normal" fullWidth>
-      <Button variant="contained" color="primary" className={classes.button}>
-        Search
+          </FormControl>
+
+
+          <FormControl margin="normal" fullWidth>
+            <Button variant="contained" color="primary" className={classes.button}>
+              Search
         <Search className={classes.rightIcon} />
-      </Button>
-      </FormControl>
+            </Button>
+          </FormControl>
 
 
 

@@ -15,6 +15,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import PDFObject from '../pdfobject';
+
+import PDFViewer from '../Components/PdfViewer'; 
 
 const styles = theme => ({
   card: {
@@ -48,6 +51,12 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
+
+  componentDidMount() {
+    PDFObject.embed("../pdf/main.pdf", "#example1");
+  }
+
+
   state = { expanded: false };
 
   handleExpandClick = () => {
@@ -100,8 +109,23 @@ class RecipeReviewCard extends React.Component {
           </IconButton>
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+          
           <CardContent>
-            <Typography paragraph>Method:</Typography>
+
+            {/*<div id="example1" style={{backgroundColor:'red',height:'900px'}}>
+            
+           
+
+          </div>*/}
+
+
+          <PDFViewer 
+
+
+            
+            
+            
+            {/*<Typography paragraph>Method:</Typography>
             <Typography paragraph>
               Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
               minutes.
@@ -124,7 +148,15 @@ class RecipeReviewCard extends React.Component {
             <Typography>
               Set aside off of the heat to let rest for 10 minutes, and then serve.
             </Typography>
+
+            */}
+
+
           </CardContent>
+
+
+
+
         </Collapse>
       </Card>
     );

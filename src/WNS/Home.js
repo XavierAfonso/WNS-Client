@@ -123,7 +123,8 @@ theme = {
   },
 };
 
-const drawerWidth = 256;
+const drawerWidthFull = 400;
+const drawerWidthMobile = 200;
 
 const styles = () => ({
   root: {
@@ -132,7 +133,7 @@ const styles = () => ({
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
+      width: drawerWidthFull,
       flexShrink: 0,
     },
   },
@@ -169,14 +170,14 @@ class Home extends React.Component {
             <Hidden smUp implementation="js">
 
               <Navigator
-                PaperProps={{ style: { width: drawerWidth } }}
+                PaperProps={{ style: { width: drawerWidthMobile } }}
                 variant="temporary"
                 open={this.state.mobileOpen}
                 onClose={this.handleDrawerToggle}
               />
             </Hidden>
             <Hidden xsDown implementation="css">
-              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+              <Navigator PaperProps={{ style: { width: drawerWidthFull } }} />
             </Hidden>
           </nav>
           <div className={classes.appContent}>
