@@ -119,12 +119,14 @@ class RecipeReviewCard extends React.Component {
           </div>*/}
 
 
-          <PDFViewer 
+          <PDFViewer
 
+            pdfBlob="http://www.orimi.com/pdf-test.pdf"
+            width="100%"
+            height="500px"
+            containerId = 'testpdf'
+          />
 
-            
-            
-            
             {/*<Typography paragraph>Method:</Typography>
             <Typography paragraph>
               Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10

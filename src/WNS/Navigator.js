@@ -222,10 +222,6 @@ class Navigator extends React.Component {
   }
 
   render() {
-
-
-
-
     const { classes, ...other } = this.props;
     return (
 

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import PDFObject from 'pdfobject';
+import PDFObject from '../pdfobject';
 
 class PdfViewer extends Component {
   componentDidMount() {
@@ -11,16 +11,19 @@ class PdfViewer extends Component {
   render() {
     const { width, height, containerId } = this.props;
 
+    console.log(containerId);
+
     return <div style={{ width, height }} id={containerId} />;
   }
 }
 
-PdfViewer.propTypes = {
+
+/*PdfViewer.propTypes = {
   pdfBlob: PropTypes.string.isRequired,
   width: PropTypes.string,
   height: PropTypes.string,
   containerId: PropTypes.string,
-};
+};*/
 
 PdfViewer.defaultProps = {
   width: '100%',

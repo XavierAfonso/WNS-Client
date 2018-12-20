@@ -54,10 +54,12 @@ class Content extends React.Component {
           <Grid item xs={12} lg={8}>
 
             <Post />
+           
+           {/* <Post /> 
             <Post />
             <Post />
             <Post />
-            <Post />
+            */}
 
           </Grid>
           <Grid item xs={12} lg={4}>
