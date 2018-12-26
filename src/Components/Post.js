@@ -19,6 +19,10 @@ import PDFObject from '../pdfobject';
 
 import PDFViewer from '../Components/PdfViewer'; 
 
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 const styles = theme => ({
   card: {
     //maxWidth: 700,
@@ -52,12 +56,24 @@ const styles = theme => ({
 
 class RecipeReviewCard extends React.Component {
 
+
+  state = {
+    anchorEl: null,
+    expanded: false
+  };
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+    console.log("OK");
+  };
+
   componentDidMount() {
     PDFObject.embed("../pdf/main.pdf", "#example1");
   }
-
-
-  state = { expanded: false };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -65,9 +81,15 @@ class RecipeReviewCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
     return (
+      
+      
+      
       <Card className={classes.card} >
+
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -75,13 +97,30 @@ class RecipeReviewCard extends React.Component {
             </Avatar>
           }
           action={
-            <IconButton>
+            <IconButton
+            aria-label="More"
+            aria-owns={open ? 'long-menu' : undefined}
+            aria-haspopup="true"
+            onClick={this.handleClick}
+          >
               <MoreVertIcon />
             </IconButton>
+            
           }
           title="Shrimp and Chorizo Paella"
           subheader="September 14, 2016"
         />
+
+          <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+        >
+        
+          <MenuItem onClick={this.handleClose}>Edit</MenuItem>
+          <MenuItem onClick={this.handleClose}>Delete</MenuItem>
+        </Menu>
         
 
         <CardContent>
