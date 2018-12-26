@@ -56,24 +56,6 @@ renderSuggestion.propTypes = {
   suggestion: PropTypes.shape({ label: PropTypes.string }).isRequired,
 };
 
-function getSuggestions(value) {
-  const inputValue = deburr(value.trim()).toLowerCase();
-  const inputLength = inputValue.length;
-  let count = 0;
-
-  return inputLength === 0
-    ? []
-    : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-
-        if (keep) {
-          count += 1;
-        }
-
-        return keep;
-      });
-}
 
 class DownshiftMultiple extends React.Component {
 
@@ -94,6 +76,24 @@ class DownshiftMultiple extends React.Component {
     console.log(this.props.data);
   }
 
+    getSuggestions(value) {
+    const inputValue = deburr(value.trim()).toLowerCase();
+    const inputLength = inputValue.length;
+    let count = 0;
+  
+    return inputLength === 0
+      ? []
+      : this.props.data.filter(suggestion => {
+          const keep =
+            count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+  
+          if (keep) {
+            count += 1;
+          }
+  
+          return keep;
+        });
+  }
 
   handleKeyDown = event => {
     const { inputValue, selectedItem } = this.state;
@@ -172,7 +172,7 @@ class DownshiftMultiple extends React.Component {
             })}
             {isOpen ? (
               <Paper className={classes.paper} square>
-                {getSuggestions(inputValue2).map((suggestion, index) =>
+                {this.getSuggestions(inputValue2).map((suggestion, index) =>
                   renderSuggestion({
                     suggestion,
                     index,
