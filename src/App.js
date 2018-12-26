@@ -8,6 +8,8 @@ import HomePage from './WNS/Home';
 import ProfilPage from './WNS/Profil';
 import './css/general.css';
 
+import AutoComplete from './Pages/AutoComplete';
+
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 
   return <Route {...rest} render={(params) => {
@@ -44,6 +46,7 @@ class App extends Component {
         <Route path="/profil" component={ProfilPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/tmp" component={AutoComplete} />
         <Route path="/*" component={LoginPage} />
       </Switch>
     );

@@ -26,50 +26,30 @@ import Search from '@material-ui/icons/Search';
 
 import ChipInput from 'material-ui-chip-input';
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+
+import AutoComplete from '../Pages/AutoComplete';
+
+const authors = [
+  { label: 'Oliver Hansen' },
+  { label: 'Van Henry' },
+  { label: 'April Tucker' },
+  { label: 'Ralph Hubbard' },
+  { label: 'Omar Alexander' },
+  { label: 'Carlos Abbott' },
 ];
 
+const languages = [
+  { label: 'French' },
+  { label: 'English' },
+  { label: 'German' },
+  { label: 'Italian' },
+];
 
-const categories = [
-  {
-    id: 'Develop',
-    children: [
-      { id: 'Authentication', icon: <PeopleIcon />, active: true },
-      { id: 'Database', icon: <DnsRoundedIcon /> },
-      { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Hosting', icon: <PublicIcon /> },
-      { id: 'Functions', icon: <SettingsEthernetIcon /> },
-      { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
-    ],
-  },
-  {
-    id: 'Quality',
-    children: [
-      { id: 'Analytics', icon: <SettingsIcon /> },
-      { id: 'Performance', icon: <TimerIcon /> },
-      { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
-    ],
-  },
+const names = [
+  "Oliver Hansen",
+  "Van Henry",
+  "April Tucker",
+  "Ralph Hubbard",
 ];
 
 const styles = theme => ({
@@ -238,7 +218,8 @@ class Navigator extends React.Component {
             <Input id="title" name="title" autoComplete="title" onChange={this.handleInputChange} />
           </FormControl>
 
-          <FormControl margin="normal" fullWidth>
+          
+          {/*<FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="select-multiple">Authors</InputLabel>
             <Select
               multiple
@@ -253,7 +234,7 @@ class Navigator extends React.Component {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+              </FormControl>*/}
 
           <FormControl margin="normal" fullWidth>
             <TextField
@@ -270,6 +251,14 @@ class Navigator extends React.Component {
 
 
           <FormControl margin="normal" fullWidth>
+          <AutoComplete label = "Authors" data = {authors} />
+          </FormControl>
+
+          <FormControl margin="normal" fullWidth>
+          <AutoComplete label = "Languages" data = {languages} />
+          </FormControl>
+
+          {/*<FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="tags">Tags</InputLabel>
             <Input id="tags" name="tags" autoComplete="tags" onChange={this.handleInputChange}
               onKeyPress={(ev) => {
@@ -282,7 +271,7 @@ class Navigator extends React.Component {
               }}
 
             />
-          </FormControl>
+            </FormControl>
 
           <Paper className={classes.genres}>
 
@@ -303,17 +292,18 @@ class Navigator extends React.Component {
                 />
               );
             })}
-          </Paper>
+          </Paper>*/}
 
 
           <FormControl margin="normal" fullWidth>
 
           
             <ChipInput
-              label="Tags2"
+              label="Tags"
+              variant='standard'
               onChange={(chips) => this.handleChange(chips)}
             />
-
+            
           </FormControl>
 
 
@@ -325,6 +315,10 @@ class Navigator extends React.Component {
           </FormControl>
 
 
+          
+        
+ 
+       
 
 
         </div>
