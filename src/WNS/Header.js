@@ -294,14 +294,11 @@ class Header extends React.Component {
                   </div>
 
 
-
                   <div className={classes.sectionMobile}>
                     <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
                       <MoreIcon />
                     </IconButton>
                   </div>
-
-
 
                 </Toolbar>
               </AppBar>

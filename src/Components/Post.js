@@ -11,17 +11,24 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
+
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChromeReaderMode from '@material-ui/icons/ChromeReaderMode';
+
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import PDFObject from '../pdfobject';
-
 import PDFViewer from '../Components/PdfViewer'; 
-
-
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+
+import Chip from '@material-ui/core/Chip';
+
 
 const styles = theme => ({
   card: {
@@ -43,7 +50,7 @@ const styles = theme => ({
     }),
     marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
+      //marginRight: -8,
     },
   },
   expandOpen: {
@@ -52,63 +59,183 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+
+  chip: {
+    margin: theme.spacing.unit,
+  },
+
 });
 
 class RecipeReviewCard extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      anchorEl: null,
+      expanded: false,
 
-  state = {
-    anchorEl: null,
-    expanded: false
-  };
+      id: '',
+      author: '',
+      title:'',
+      description : '',
+      date : '',
+      linkPdf : '',
+      like : false,
+      initial : '',
+      me : false,
+      tags : [],
+      language : '',
 
+    };
+
+    this.state.id = this.props.data.id;
+    this.state.author = this.props.data.author;
+    this.state.title = this.props.data.title;
+    this.state.description = this.props.data.description;
+    this.state.date = this.props.data.date;
+    this.state.linkPdf = this.props.data.linkPdf;
+    this.state.like = this.props.data.like;
+    this.state.initial = this.props.data.initial;
+    this.state.tags = this.props.data.tags;
+    this.state.language = this.props.data.language;
+    this.state.me = this.props.data.me;
+
+    console.log(this.props.data);
+
+  }
+
+  // MoreVertIcon Click (Find the Position, I think) 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  // Close MoreVertIcon
   handleClose = () => {
     this.setState({ anchorEl: null });
-    console.log("OK");
   };
 
-  componentDidMount() {
+  /*componentDidMount() {
     PDFObject.embed("../pdf/main.pdf", "#example1");
-  }
+  }*/
 
+  // Expand the pdf part
   handleExpandClick = () => {
+    console.log("EXPAND");
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  // More Info
+  moreInfo = () => {
+    console.log("More Info");
+    this.handleClose();
+  }
+
+   // Comments
+   showComments = () => {
+    console.log("Comments");
+    this.handleClose();
+  }
+
+  // Delete
+  deletePost = () => {
+    console.log("Delete ID : " + this.state.id);
+    this.props.delete(this.state.id);
+  }
+
+  // Delete
+  editPost = () => {
+    console.log("Edit ID : " + this.state.id);
+  }
+
+  // Favorite
+  clickFavorite = () => {
+    console.log("Favorite");
+    this.setState({like: !this.state.like});
+  }
+
+  // Share
+  clickShare = () => {
+    console.log("Share");
+  }
+
+  // OpenPDF
+  openPDF = () => {
+    console.log("OPEN PDF");
+    const url = this.state.linkPdf;
+    window.open(url, '_blank');
+  }
+
   render() {
+
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
+
+    const renderTags = this.state.tags.map((tag) => {
+      return (<Chip key={tag} label={tag} className={classes.chip} />)
+     });
+
+    //Check privileges
+    const checkRole = () => {
+
+      if(this.state.me){
+        return(
+        <>
+        <IconButton
+          aria-label="More"
+          aria-owns={open ? 'long-menu' : undefined}
+          aria-haspopup="true"
+          onClick={this.handleClick}
+        >
+        <MoreVertIcon />
+        </IconButton>
+
+          <IconButton
+          onClick={this.editPost}
+          >  
+            <EditIcon/>
+          </IconButton>
+  
+          <IconButton
+          onClick={this.deletePost}
+          >  
+            <DeleteIcon/>
+          </IconButton>
+        </>
+      )
+    }
+    else{
+      return(
+      <>
+        <IconButton
+          aria-label="More"
+          aria-owns={open ? 'long-menu' : undefined}
+          aria-haspopup="true"
+          onClick={this.handleClick}
+        >
+        <MoreVertIcon />
+        </IconButton>
+      </>
+      )
+    }
+  }
+
     return (
-      
-      
       
       <Card className={classes.card} >
 
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
+              {this.state.initial}
             </Avatar>
           }
-          action={
-            <IconButton
-            aria-label="More"
-            aria-owns={open ? 'long-menu' : undefined}
-            aria-haspopup="true"
-            onClick={this.handleClick}
-          >
-              <MoreVertIcon />
-            </IconButton>
-            
-          }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+
+          action={checkRole()}
+          
+          title={this.state.title}
+          subheader={this.state.date}
         />
 
           <Menu
@@ -118,22 +245,41 @@ class RecipeReviewCard extends React.Component {
           onClose={this.handleClose}
         >
         
-          <MenuItem onClick={this.handleClose}>Edit</MenuItem>
-          <MenuItem onClick={this.handleClose}>Delete</MenuItem>
-        </Menu>
-        
+          <MenuItem onClick={this.moreInfo}>More Info</MenuItem>
+          <MenuItem onClick={this.showComments}>Comments</MenuItem>
 
+        </Menu>
+      
         <CardContent>
           <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          {this.state.description}
           </Typography>
         </CardContent>
+
+        <CardContent>
+         
+         
+          {renderTags}
+          
+          {this.state.language ? <Chip key={this.state.language} label={this.state.language} className={classes.chip}/>  : null}
+
+        
+        </CardContent>
+        
+        
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
+          <IconButton 
+          aria-label="Add to favorites"
+          onClick={this.clickFavorite}
+          >
+
+          {this.state.like ?   <FavoriteIcon style={{color:'red'}}/> : <FavoriteIcon/> }
+          
           </IconButton>
-          <IconButton aria-label="Share">
+          <IconButton 
+          aria-label="Share"
+          onClick={this.clickShare}
+          >
             <ShareIcon />
           </IconButton>
           <IconButton
@@ -145,22 +291,30 @@ class RecipeReviewCard extends React.Component {
             aria-label="Show more"
           >
             <ExpandMoreIcon />
+            
           </IconButton>
+
+          <IconButton
+            onClick={this.openPDF}
+          >
+
+          <ChromeReaderMode/>
+          
+          </IconButton>
+          
+
+
+
+
+
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           
           <CardContent>
 
-            {/*<div id="example1" style={{backgroundColor:'red',height:'900px'}}>
-            
-           
-
-          </div>*/}
-
-
           <PDFViewer
 
-            pdfBlob="http://www.orimi.com/pdf-test.pdf"
+            pdfBlob= {this.state.linkPdf}
             width="100%"
             height="500px"
             containerId = 'testpdf'
@@ -194,9 +348,6 @@ class RecipeReviewCard extends React.Component {
 
 
           </CardContent>
-
-
-
 
         </Collapse>
       </Card>

@@ -8,6 +8,23 @@ import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Post from '../Components/Post';
 
+const data = [
+  {
+
+    id : 1,
+    title : "Harry Potter à l'école des sorciers",
+    author : "J. K. Rowling",
+    initial: "JK",
+    description : "Après la mort de ses parents (Lily et James Potter), Harry Potter est recueilli par sa tante maternelle Pétunia et son oncle Vernon à l'âge d'un an...",
+    date : "26 June 1997",
+    linkPdf : "/pdf/main.pdf", //http://www.orimi.com/pdf-test.pdf
+    like : false,
+    tags : ["Drama", "Fantasy"],
+    language: "French",
+    me : false,
+  },
+];
+
 
 const styles = theme => ({
   root: {
@@ -48,18 +65,16 @@ class Content extends React.Component {
   render() {
     const { classes } = this.props;
 
+    const renderData = data.map((element) => {
+     return (<Post key= {element.id} data={element}/>)
+    });
+
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12} lg={8}>
 
-            <Post />
-           
-           {/* <Post /> 
-            <Post />
-            <Post />
-            <Post />
-            */}
+          {renderData}
 
           </Grid>
           <Grid item xs={12} lg={4}>

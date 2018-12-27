@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component,  } from 'react'; //PropTypes
 import PDFObject from '../pdfobject';
 
 class PdfViewer extends Component {
@@ -10,9 +10,7 @@ class PdfViewer extends Component {
 
   render() {
     const { width, height, containerId } = this.props;
-
     console.log(containerId);
-
     return <div style={{ width, height }} id={containerId} />;
   }
 }

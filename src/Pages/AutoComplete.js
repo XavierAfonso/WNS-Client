@@ -9,9 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 
-let suggestions = [
-];
-
 function renderInput(inputProps) {
   const { InputProps, classes, ref, ...other } = inputProps;
 
@@ -59,7 +56,6 @@ renderSuggestion.propTypes = {
 
 class DownshiftMultiple extends React.Component {
 
-
   constructor(props) {
     super(props)
     this.state = {
@@ -68,12 +64,8 @@ class DownshiftMultiple extends React.Component {
       labelData:'',
     };
 
-    suggestions = this.props.data;
-
-
    this.state.labelData = this.props.label;
-
-    console.log(this.props.data);
+   //console.log(this.props.data);
   }
 
     getSuggestions(value) {
@@ -120,7 +112,8 @@ class DownshiftMultiple extends React.Component {
       selectedItem,
     });
 
-    console.log(selectedItem);
+    //console.log(selectedItem);
+    this.props.sendData(selectedItem);
   };
 
   handleDelete = item => () => {

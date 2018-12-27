@@ -28,13 +28,6 @@ const languages = [
   { label: 'Italian' },
 ];
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-];
-
 const styles = theme => ({
   categoryHeader: {
     paddingTop: 16,
@@ -110,71 +103,56 @@ class Navigator extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: "",
-      author: "",
-      tags: "",
-      name: [],
-      multiline: '',
+      title: '',
+      description: '',
+      tags: [],
+      selectedAuthors: [],
+      selectedLanguages: [],
     }
   }
 
-
-  handleDelete = data => () => {
-
-    if (data.label === 'React') {
-      alert('Why would you want to delete React?! :)'); // eslint-disable-line no-alert
-      return;
-    }
-
-    this.setState(state => {
-      const chipData = [...state.chipData];
-      const chipToDelete = chipData.indexOf(data);
-      chipData.splice(chipToDelete, 1);
-      return { chipData };
-    });
-
-  };
-
+  //Title
   handleInputChange = (event) => {
     event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     })
-  }
+  };
 
+  //Description
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  handleChangeAuthors = event => {
-    this.setState({ name: event.target.value });
+  // Tags
+  handleTags = (val) => {
+    this.setState({ tags: val});
   };
 
-  handleChangeMultiple = event => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    this.setState({
-      name: value,
-    });
+  // Search Button
+  searchBooks = () => {
+
+    console.log("SEARCH");
+    console.log("Title: " + this.state.title);
+    console.log("Descritpion: " + this.state.description);
+    console.log("Authors: " + this.state.selectedAuthors);
+    console.log("Languages: " + this.state.selectedLanguages);
+    console.log("Tags : " + this.state.tags)
   };
 
-  coucou() {
-    console.log(this.state.tags);
-    this.setState({ chipData: this.state.idChip + 1 });
-    this.setState({ chipData: [...this.state.chipData, { key: this.state.idChip, label: "#" + this.state.tags }] });
+
+  // Authors
+  updateSelectedAuthors = (val) => {
+    this.setState({ selectedAuthors: val });
   }
 
-
-  handleChange() {
-
+  // Languages
+  updateSelectedLanguages = (val) => {
+    this.setState({ selectedLanguages: val });
   }
+
 
   render() {
     const { classes, ...other } = this.props;
@@ -183,14 +161,11 @@ class Navigator extends React.Component {
       <Drawer className={classes.customZIndex} variant="permanent" {...other}>
 
         <div className={classes.toolbar} />
-
-
         <div style={{ padding: '30px' }}>
-
 
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="title">Title</InputLabel>
-            <Input id="title" name="title" autoComplete="title" onChange={this.handleInputChange} />
+            <Input id="title" name="title" value={this.state.title} autoComplete="title" onChange={this.handleInputChange} />
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
@@ -199,38 +174,38 @@ class Navigator extends React.Component {
               label="Description"
               multiline
               rowsMax="4"
-              value={this.state.multiline}
-              onChange={this.handleChange('multiline')}
+              value={this.state.description}
+              onChange={this.handleChange('description')}
               className={classes.textField}
               margin="normal"
             />
           </FormControl>
 
-
           <FormControl margin="normal" fullWidth>
-            <AutoComplete label = "Authors" data = {authors} />
+            <AutoComplete sendData = {this.updateSelectedAuthors} label = "Authors" data = {authors} />
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
-            <AutoComplete label = "Languages" data = {languages} />
+            <AutoComplete  sendData = {this.updateSelectedLanguages} label = "Languages" data = {languages} />
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
             <ChipInput
               label="Tags"
               variant='standard'
-              onChange={(chips) => this.handleChange(chips)}
+              onChange={(chips) => this.handleTags(chips)}
             />
           </FormControl>
 
-
           <FormControl margin="normal" fullWidth>
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button variant="contained" color="primary" className={classes.button} onClick={this.searchBooks}>
               Search
                 <Search className={classes.rightIcon} />
             </Button>
           </FormControl>
+
         </div>
+        
       </Drawer>
     );
   }
