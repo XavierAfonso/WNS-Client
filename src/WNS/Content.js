@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Post from '../Components/Post';
+import IconButton from '@material-ui/core/IconButton';
 
 const data = [
   {
@@ -39,15 +40,15 @@ const styles = theme => ({
     height: 'auto',
   },
   avatar: {
-    margin: 10,
+    //margin: 10,
   },
   orangeAvatar: {
-    margin: 10,
+    //margin: 10,
     color: '#fff',
     backgroundColor: deepOrange[500],
   },
   purpleAvatar: {
-    margin: 10,
+    //margin: 10,
     color: '#fff',
     backgroundColor: deepPurple[500],
   },
@@ -82,20 +83,33 @@ class Content extends React.Component {
             <Paper className={classes.paper}>
               Following
               <Grid container justify="center" alignItems="center">
+                <IconButton>
                 <Avatar className={classes.avatar}>H</Avatar>
-                <Avatar className={classes.orangeAvatar}>N</Avatar>
+                </IconButton>
+                <IconButton>
+                   <Avatar className={classes.orangeAvatar}>N</Avatar>
+                   </IconButton>
+               
+                   <IconButton>
                 <Avatar className={classes.purpleAvatar}>OP</Avatar>
+                </IconButton>
               </Grid>
             </Paper>
 
             <Paper className={classes.paper}>
               Followers
               <Grid container justify="center" alignItems="center">
-                <Avatar className={classes.avatar}>P</Avatar>
-                <Avatar className={classes.orangeAvatar}>W</Avatar>
-                <Avatar className={classes.purpleAvatar}>IL</Avatar>
-                <Avatar className={classes.avatar}>H</Avatar>
-                <Avatar className={classes.orangeAvatar}>M</Avatar>
+              <IconButton>  <Avatar className={classes.avatar}>P</Avatar></IconButton>
+              
+                <IconButton><Avatar className={classes.orangeAvatar}>W</Avatar></IconButton>
+                
+                <IconButton>  <Avatar className={classes.purpleAvatar}>IL</Avatar></IconButton>
+              
+                <IconButton><Avatar className={classes.avatar}>H</Avatar></IconButton>
+                
+                {/*<IconButton><Avatar className={classes.orangeAvatar}>M</Avatar></IconButton>*/}
+                
+                
               </Grid>
             </Paper>
 

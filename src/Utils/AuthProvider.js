@@ -53,7 +53,7 @@ class AuthProvider extends Component {
             console.log(response);
             const {token} = response.data;
             window.localStorage.setItem('token',token);
-            this.setState({user:"connected"});
+            this.setState({user: username});
 
             /*const {user,token} = response.data;
             console.log({user,token})

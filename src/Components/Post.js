@@ -82,7 +82,7 @@ class RecipeReviewCard extends React.Component {
       linkPdf : '',
       like : false,
       initial : '',
-      me : false,
+      canEdit : false,
       tags : [],
       language : '',
 
@@ -99,7 +99,7 @@ class RecipeReviewCard extends React.Component {
     this.state.initial = this.props.data.initial;
     this.state.tags = this.props.data.tags;
     this.state.language = this.props.data.language;
-    this.state.me = this.props.data.me;
+    this.state.canEdit = this.props.data.canEdit;
 
     //console.log(this.props.data);
 
@@ -167,6 +167,20 @@ class RecipeReviewCard extends React.Component {
     window.open(url, '_blank');
   }
 
+
+  goProfilUser = () => {
+
+    console.log("GO PROFIL");
+  }
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = (page) => {
+    this.context.router.history.push(`${page}`)
+  }
+  
   render() {
 
     const { classes } = this.props;
@@ -181,7 +195,7 @@ class RecipeReviewCard extends React.Component {
     //Check privileges
     const checkRole = () => {
 
-      if(this.state.me){
+      if(this.state.canEdit){
         return(
         <>
         <IconButton
@@ -227,17 +241,33 @@ class RecipeReviewCard extends React.Component {
       
       <Card className={classes.card} >
 
-        <CardHeader
+
+        <CardHeader 
+          
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.state.initial}
-            </Avatar>
+
+            < div style={{background:'transparent'}}>
+            
+            <IconButton
+
+              onClick={() => {
+                this.redirectToTarget(`/profil/${this.state.author}`);
+              }}
+            
+            >
+              <Avatar aria-label="Recipe" className={classes.avatar}>
+                {this.state.initial}
+              </Avatar>
+            </IconButton>
+            </div>
           }
 
           action={checkRole()}
           
-          title={this.state.title}
+          title={this.state.author}
+          
           subheader={this.state.date}
+          
         />
 
           <Menu
@@ -252,7 +282,12 @@ class RecipeReviewCard extends React.Component {
 
         </Menu>
       
-        <CardContent>
+        <CardContent style={{marginLeft:'10px'}}>
+
+        <Typography variant="h6" style={{paddingBottom:'10px'}}>
+          {this.state.title}
+          </Typography>
+
           <Typography component="p">
           {this.state.description}
           </Typography>
@@ -374,7 +409,7 @@ class RecipeReviewCard extends React.Component {
         initial : this.props.data.initial,
         tags : this.props.data.tags,
         language : this.props.data.language,
-        me : this.props.data.me,
+        me : this.props.data.canEdit,
         firstTime : false,
       });
 

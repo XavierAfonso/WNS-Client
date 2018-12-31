@@ -150,9 +150,15 @@ class Header extends React.Component {
     router: PropTypes.object
   }
 
+  librairy = () => {
+
+    this.redirectToTarget('/librairy');
+  }
+
   redirectToTarget = (page) => {
     this.context.router.history.push(`${page}`)
   }
+
 
   render() {
 
@@ -201,7 +207,7 @@ class Header extends React.Component {
                 this.redirectToTarget("/profil");
               }}>Profile</MenuItem>
 
-              <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+              <MenuItem onClick={this.librairy}>Librairy</MenuItem>
               <MenuItem onClick={signOut}>Logout</MenuItem>
             </Menu>
           );
@@ -247,6 +253,10 @@ class Header extends React.Component {
               <AppBar position="absolute" className={classes.appBar}>
                 <Toolbar>
 
+    
+
+
+                  {this.props.home === "true" &&
                   <Hidden smUp>
                     <IconButton
                       color="inherit"
@@ -256,7 +266,7 @@ class Header extends React.Component {
                     >
                       <MenuIcon />
                     </IconButton>
-                  </Hidden>
+                  </Hidden>}
 
                   <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                     WNS

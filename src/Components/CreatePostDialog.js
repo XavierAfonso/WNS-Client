@@ -151,7 +151,6 @@ class CreatePostDialog extends React.Component {
     return (
       <>
 
-
         <Dialog
           open={this.props.open}
           onClose={this.handleClose}

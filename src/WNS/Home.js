@@ -6,127 +6,22 @@ import Hidden from '@material-ui/core/Hidden';
 import Navigator from './Navigator';
 import Content from './Content';
 import Header from './Header';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+import deepPurple from '@material-ui/core/colors/deepPurple';
+import Post from '../Components/Post';
+import IconButton from '@material-ui/core/IconButton';
 
-let theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-    h5: {
-      fontWeight: 500,
-      fontSize: 26,
-      letterSpacing: 0.5,
-    },
-  },
-  palette: {
-    primary: {
-      light: '#63ccff',
-      main: '#009be5',
-      dark: '#006db3',
-    },
-  },
-  shape: {
-    borderRadius: 8,
-  },
-});
+const {theme} = require('../Utils/theme');
 
-theme = {
-  ...theme,
-  overrides: {
-    MuiDrawer: {
-      paper: {
-        backgroundColor: '#dfe6e9', //#18202c
-      },
-    },
-    MuiButton: {
-      label: {
-        textTransform: 'initial',
-      },
-      contained: {
-        boxShadow: 'none',
-        '&:active': {
-          boxShadow: 'none',
-        },
-      },
-    },
-    MuiTabs: {
-      root: {
-        marginLeft: theme.spacing.unit,
-      },
-      indicator: {
-        height: 3,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3,
-        backgroundColor: theme.palette.common.white,
-      },
-    },
-    MuiTab: {
-      root: {
-        textTransform: 'initial',
-        margin: '0 16px',
-        minWidth: 0,
-        [theme.breakpoints.up('md')]: {
-          minWidth: 0,
-        },
-      },
-      labelContainer: {
-        padding: 0,
-        [theme.breakpoints.up('md')]: {
-          padding: 0,
-        },
-      },
-    },
-    MuiIconButton: {
-      root: {
-        padding: theme.spacing.unit,
-      },
-    },
-    MuiTooltip: {
-      tooltip: {
-        borderRadius: 4,
-      },
-    },
-    MuiDivider: {
-      root: {
-        backgroundColor: '#404854',
-      },
-    },
-    MuiListItemText: {
-      primary: {
-        fontWeight: theme.typography.fontWeightMedium,
-      },
-    },
-    MuiListItemIcon: {
-      root: {
-        color: 'inherit',
-        marginRight: 0,
-        '& svg': {
-          fontSize: 20,
-        },
-      },
-    },
-    MuiAvatar: {
-      root: {
-        width: 32,
-        height: 32,
-      },
-    },
-  },
-  props: {
-    MuiTab: {
-      disableRipple: true,
-    },
-  },
-  mixins: {
-    ...theme.mixins,
-    toolbar: {
-      minHeight: 48,
-    },
-  },
-};
+const {data} = require('../Utils/dataHome');
 
 const drawerWidthFull = 400;
 const drawerWidthMobile = 200;
 
-const styles = () => ({
+const styles  = theme => ({
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -144,16 +39,40 @@ const styles = () => ({
   },
   mainContent: {
     flex: 1,
-    padding: '48px 36px 0',
+    padding: '60px 36px 0',
     background: '#eaeff1',
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginTop: '10px',
+    height: 'auto',
+  },
+  avatar: {
+    //margin: 10,
+  },
+  orangeAvatar: {
+    //margin: 10,
+    color: '#fff',
+    backgroundColor: deepOrange[500],
+  },
+  purpleAvatar: {
+    //margin: 10,
+    color: '#fff',
+    backgroundColor: deepPurple[500],
   },
   
 });
 
 class Home extends React.Component {
-  state = {
-    mobileOpen: false,
-  };
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      mobileOpen: false,
+    }
+  }
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
@@ -161,6 +80,10 @@ class Home extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+    const renderData = data.map((element) => {
+      return (<Post key= {element.id} data={element}/>)
+     });
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -181,12 +104,54 @@ class Home extends React.Component {
             </Hidden>
           </nav>
           <div className={classes.appContent}>
-            <Header onDrawerToggle={this.handleDrawerToggle} />
+            <Header home = "true" onDrawerToggle={this.handleDrawerToggle} />
             
             <main className={classes.mainContent}>
 
               
-              <Content />
+            <Grid container spacing={24}>
+          <Grid item xs={12} lg={8}>
+
+          {renderData}
+
+          </Grid>
+          <Grid item xs={12} lg={4}>
+
+            <Paper className={classes.paper}>
+              Following
+              <Grid container justify="center" alignItems="center">
+                <IconButton>
+                <Avatar className={classes.avatar}>H</Avatar>
+                </IconButton>
+                <IconButton>
+                   <Avatar className={classes.orangeAvatar}>N</Avatar>
+                   </IconButton>
+               
+                   <IconButton>
+                <Avatar className={classes.purpleAvatar}>OP</Avatar>
+                </IconButton>
+              </Grid>
+            </Paper>
+
+            <Paper className={classes.paper}>
+              Followers
+              <Grid container justify="center" alignItems="center">
+              <IconButton>  <Avatar className={classes.avatar}>P</Avatar></IconButton>
+              
+                <IconButton><Avatar className={classes.orangeAvatar}>W</Avatar></IconButton>
+                
+                <IconButton>  <Avatar className={classes.purpleAvatar}>IL</Avatar></IconButton>
+              
+                <IconButton><Avatar className={classes.avatar}>H</Avatar></IconButton>
+                
+                {/*<IconButton><Avatar className={classes.orangeAvatar}>M</Avatar></IconButton>*/}
+                
+                
+              </Grid>
+            </Paper>
+
+          </Grid>
+        </Grid>
            
            
             </main>

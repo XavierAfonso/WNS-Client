@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import '../css/wall.css';
 
-class Wall extends Component {
+class defaultComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -13,14 +12,9 @@ class Wall extends Component {
   render() {
     return (
      <>
-     <div className="wall">
-
-        Wall
-
-     </div>
      </>
     );
   }
 }
 
-export default Wall;
+export default defaultComponent;

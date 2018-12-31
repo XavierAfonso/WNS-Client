@@ -8,10 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Post from '../Components/Post';
 
-import CreatePostDialog from '../Components/CreatePostDialog';
-import EditPostDialog from '../Components/EditPostDialog';
 
 import ProfilCard from '../Components/ProfilCard';
+
 
 const {theme} = require('../Utils/theme');
 
@@ -36,7 +35,7 @@ const styles  = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    height: '300px',
+    height: '500px',
     marginTop: '10px',
   },
 
@@ -59,10 +58,13 @@ const styles  = theme => ({
 });
 
 
-const {data} = require('../Utils/dataProfil');
+const {data} = require('../Utils/dataProfilOther');
 
+class ProfilOther extends React.Component {
 
-class Profil extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object
+  };
 
   constructor(props) {
     super(props)
@@ -73,6 +75,7 @@ class Profil extends React.Component {
       data : data,
       mobileOpen: false,
     }
+
   }
 
   handleChange = name => event => {
@@ -81,77 +84,35 @@ class Profil extends React.Component {
     });
   };
 
-  //Open Dialog add btn
-  handleClickAddBtnOpen = () => {
-    this.setState({ open: true });
-  };
-
-
-  // Close add dialog
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  // Close edit dialog
-  handleCloseEdit = () => {
-    this.setState({ openEdit: false });
-    //console.log("CLOSE Edit");
-  };
-
-    // const fd = new FormData();
-    //fd.append('pdf',this.state.selectedFile,this.state.selectedFile.name)
-
-    handleAdd = (val) => {
-
-      let newArray = this.state.data.slice();    
-      newArray.push(val);   
-      this.setState({data:newArray})
-
-      this.handleClose();
-    };
-
-    handleUpdate= (val) => {
-
-      let arrayCpy = [...this.state.data];
-     
-      let index = this.state.data.findIndex(e => e.id === val.id);
-
-      arrayCpy[index] = val;
-      this.setState({data : arrayCpy});
-
-      this.handleCloseEdit();
-    };
-
-    deletePost = (id) => {
-
-      let filteredArray = this.state.data.filter(element => element.id !== id);
-
-      return this.setState({
-        data: filteredArray
-      });
-    }
-
-    editPost = (data) => {
-
-      this.setState({
-        openEdit: true,
-        currentEdit: data
-      });
-    }
-
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+
+    // L'utilisateur en cours ne pas pas acceder à sa page ex /profil/username 
+    // car ça page est à /profil
+    console.log(this.props.match.params.name);
+    if(this.props.match.params.name==="Xavier"){
+      this.redirectToTarget(`/profil`)
+    }
+
+
   };
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
+  redirectToTarget = (page) => {
+    this.context.router.history.push(`${page}`)
+  }
+
   render() {
+
+    //console.log(this.props.match.params);
+
     const { classes } = this.props;
 
     const renderData = this.state.data.map((element) => {
-      return (<Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost} />)
+      return (<Post key= {element.id} data={element} />)
      });
 
     return (
@@ -169,24 +130,12 @@ class Profil extends React.Component {
               <Grid container spacing={24}>
           <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
-
-          <ProfilCard  me="true" username="Xavier"/>
-
+          <ProfilCard  me="false" username={this.props.match.params.name}/>
+  
           </Grid>
 
           <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
 
-            <Paper className={classes.newPost}>
-
-              <Button variant="contained" color="primary" className={classes.addBtn} onClick={this.handleClickAddBtnOpen}>
-                Add
-               </Button>
-
-               <CreatePostDialog add = {this.handleAdd} close ={this.handleClose} open={this.state.open}/>
-
-               <EditPostDialog data = {this.state.currentEdit} update = {this.handleUpdate} close ={this.handleCloseEdit} open={this.state.openEdit}/>
-
-            </Paper>
 
             {renderData}
 
@@ -194,12 +143,11 @@ class Profil extends React.Component {
 
           <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
+
           </Grid>
 
         </Grid>
                 
-
-
             </main>
           </div>
         </div>
@@ -208,8 +156,8 @@ class Profil extends React.Component {
   }
 }
 
-Profil.propTypes = {
+ProfilOther.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Profil);
+export default withStyles(styles)(ProfilOther);
