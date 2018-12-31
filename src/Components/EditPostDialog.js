@@ -15,9 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ChipInput from 'material-ui-chip-input';
 import Select from '@material-ui/core/Select';
 
-
-let cpt = 1;
-
 const languages = [
   'French',
   'English',
@@ -34,19 +31,27 @@ const styles = theme => ({
   },
 });
 
-class CreatePostDialog extends React.Component {
+class EditPostDialog extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
       selectedFile : "",
-      title : '',
-      description : '',
-      language : '',
-      tags : [],
+      firstTime : true,
 
+      id: '',
+      author: '',
+      title:'',
+      description : '',
+      date : '',
+      linkPdf : '',
+      like : false,
+      initial : '',
+      me : false,
+      tags : [],
+      language : '',
     }
-  }
+  };
 
     //Title
     handleInputChange = (event) => {
@@ -66,7 +71,7 @@ class CreatePostDialog extends React.Component {
     // Tags
     handleTags = (val) => {
       this.setState({ tags: val});
-      console.log()
+      //console.log()
     };
   
 
@@ -83,35 +88,22 @@ class CreatePostDialog extends React.Component {
     this.setState({ language: event.target.value });
   };
 
-  closeDialog = () => {
-
-    this.setState({
-      selectedFile : "",
-      title : '',
-      description : '',
-      language : '',
-      tags : [],
-    });
-
-    this.props.close();
-  }
-
-  addPost = () => {
+  updatePost = () => {
 
 
     //Check the data
 
     //If correct 
 
-    console.log("Title: " + this.state.title);
+    /*console.log("Title: " + this.state.title);
     console.log("Description: " + this.state.description);
     console.log("Language: " + this.state.language);
-    console.log("Tags : " + this.state.tags)
+    console.log("Tags : " + this.state.tags)*/
 
     const data = 
       {
     
-        id : cpt,
+        id : this.state.id,
         title : this.state.title,
         author : "Xavier Vaz Afonso",
         initial: "X",
@@ -122,23 +114,20 @@ class CreatePostDialog extends React.Component {
         tags : this.state.tags,
         language: this.state.language,
         me : true,
-      }
-
-    cpt++;
+        firstTime : true,
+      } 
     
-    this.closeDialog();
-    this.props.add(data);
+    this.props.update(data);
   
     //else
     //this.props.close();
 
+  };
 
-  }
-
-  render() {
+  render(){
 
     const { classes } = this.props;
-
+  
     return (
       <>
 
@@ -147,10 +136,10 @@ class CreatePostDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Post a new book</DialogTitle>
+          <DialogTitle id="form-dialog-title">Edit book</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To add a new book, please enter the title, the description, tags and the pdf.
+              You can edit a book.
             </DialogContentText>
 
             <FormControl margin="normal" fullWidth>
@@ -164,7 +153,7 @@ class CreatePostDialog extends React.Component {
                 label="Description"
                 multiline
                 rowsMax="10"
-                //value={this.state.description}
+                value={this.state.description}
                 onChange={this.handleChange('description')}
                 className={classes.textField}
                 margin="normal"
@@ -240,19 +229,43 @@ class CreatePostDialog extends React.Component {
 
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.closeDialog} color="primary">
+            <Button onClick={this.props.close} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.addPost} color="primary">
-              Add
+            <Button onClick={this.updatePost} color="primary">
+              Update
             </Button>
           </DialogActions>
         </Dialog>
 
       </>
     );
+  };
+
+  componentDidUpdate(prevProps) {
+
+    // Detect if the dialog open
+    if (this.props.open !== prevProps.open && this.props.open ===true ) {
+            
+      this.setState({
+
+        id : this.props.data.id,
+        author : this.props.data.author,
+        title : this.props.data.title,
+        description : this.props.data.description,
+        date : this.props.data.date,
+        linkPdf : this.props.data.linkPdf,
+        like : this.props.data.like,
+        initial : this.props.data.initial,
+        tags : this.props.data.tags,
+        language : this.props.data.language,
+        me : this.props.data.me,
+        firstTime : false,
+      });
+
+    }
   }
 }
 
 
-export default withStyles(styles)(CreatePostDialog);
+export default withStyles(styles)(EditPostDialog);

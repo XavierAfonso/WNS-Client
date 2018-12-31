@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Post from '../Components/Post';
 
 import CreatePostDialog from '../Components/CreatePostDialog';
+import EditPostDialog from '../Components/EditPostDialog';
 
 
 const styles = theme => ({
@@ -52,28 +53,32 @@ const styles = theme => ({
 });
 
 
+const merde = [
+  {
+
+    id : 0,
+    title : "Premier Livre",
+    author : "Xavier Vaz Afonso",
+    initial: "X",
+    description : "Super livre sans description ;)",
+    date : "27 December 2018",
+    linkPdf : "http://www.orimi.com/pdf-test.pdf",
+    like : false,
+    tags : ["awesome","funny"],
+    language : "English",
+    me : true,
+  },
+]
+
 class Content extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
       open: false,
-      data : [
-        {
-      
-          id : 0,
-          title : "Premier Livre",
-          author : "Xavier Vaz Afonso",
-          initial: "X",
-          description : "Super livre sans description ;)",
-          date : "27 December 2018",
-          linkPdf : "http://www.orimi.com/pdf-test.pdf",
-          like : false,
-          tags : ["awesome","funny"],
-          language : "English",
-          me : true,
-        },
-      ]
+      openEdit : false,
+      currentEdit : null,
+      data : merde,
     }
   }
 
@@ -83,36 +88,63 @@ class Content extends React.Component {
     });
   };
 
-  handleClickOpen = () => {
+  //Open Dialog add btn
+  handleClickAddBtnOpen = () => {
     this.setState({ open: true });
-    console.log("OPEN");
   };
 
+
+  // Close add dialog
   handleClose = () => {
     this.setState({ open: false });
-    console.log("CLOSE");
   };
 
-   // const fd = new FormData();
+  // Close edit dialog
+  handleCloseEdit = () => {
+    this.setState({ openEdit: false });
+    //console.log("CLOSE Edit");
+  };
+
+    // const fd = new FormData();
     //fd.append('pdf',this.state.selectedFile,this.state.selectedFile.name)
 
     handleAdd = (val) => {
-      console.log("BIEN RECU");
-      console.log(val);
-      this.state.data.push(val);
+
+      let newArray = this.state.data.slice();    
+      newArray.push(val);   
+      this.setState({data:newArray})
+
       this.handleClose();
     };
 
+    handleUpdate= (val) => {
+
+      let arrayCpy = [...this.state.data];
+     
+      let index = this.state.data.findIndex(e => e.id === val.id);
+
+      arrayCpy[index] = val;
+      this.setState({data : arrayCpy});
+
+      this.handleCloseEdit();
+    };
+
     deletePost = (id) => {
-      console.log("DELETE POST FROM PARENT  " + id);
-      console.log( this.state.data);
-   
-      this.setState({
-        data: this.state.data.filter(element => element.id != id)
+
+      let filteredArray = this.state.data.filter(element => element.id !== id);
+
+      return this.setState({
+        data: filteredArray
       });
-      //console.log(this.state.data);
     }
 
+    editPost = (data) => {
+
+      this.setState({
+        openEdit: true,
+        currentEdit: data
+      });
+    }
 
   componentDidMount() {
     window.scrollTo(0, 0)
@@ -121,10 +153,8 @@ class Content extends React.Component {
   render() {
     const { classes } = this.props;
 
-    console.log(this.state.data);
-
     const renderData = this.state.data.map((element) => {
-      return (<Post delete = {this.deletePost} key= {element.id} data={element}/>)
+      return (<Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost} />)
      });
 
     return (
@@ -148,11 +178,13 @@ class Content extends React.Component {
 
             <Paper className={classes.newPost}>
 
-              <Button variant="contained" color="primary" className={classes.addBtn} onClick={this.handleClickOpen}>
+              <Button variant="contained" color="primary" className={classes.addBtn} onClick={this.handleClickAddBtnOpen}>
                 Add
                </Button>
 
                <CreatePostDialog add = {this.handleAdd} close ={this.handleClose} open={this.state.open}/>
+
+               <EditPostDialog data = {this.state.currentEdit} update = {this.handleUpdate} close ={this.handleCloseEdit} open={this.state.openEdit}/>
 
             </Paper>
 

@@ -22,7 +22,7 @@ import { Redirect } from 'react-router-dom'
 import { AuthContext } from '../Utils/AuthProvider';
 
 
-function checkUrl() {
+/*function checkUrl() {
 
   let urlFull = window.location.href;
   let pathArray = window.location.href.split('/');
@@ -33,7 +33,7 @@ function checkUrl() {
   return urlFull;
 }
 
-checkUrl();
+checkUrl();*/
 
 
 const styles = theme => ({
@@ -146,19 +146,32 @@ class Header extends React.Component {
     })
   }
 
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = (page) => {
+    this.context.router.history.push(`${page}`)
+  }
+
   render() {
 
 
-    if (this.state.redirect === true) {
+   /* if (this.state.redirect === true) {
       //this.setState({ redirect: false });
 
       console.log(checkUrl());
 
       if (checkUrl() !== this.state.nextPath) {
 
-        return <Redirect to={this.state.nextPath} />
+        //return <Redirect to={this.state.nextPath} />
+
+        
+        //return <Redirect to={this.state.nextPath} />
+        //console.log("TEST");
+        //this.context.router.history.push(`/target`);
       }
-    }
+    }*/
 
     return (
 
@@ -183,8 +196,9 @@ class Header extends React.Component {
             >
 
               <MenuItem onClick={() => {
-                this.setState({ nextPath: "/profil" });
-                this.setRedirect();
+                //this.setState({ nextPath: "/profil" });
+                //this.setRedirect();
+                this.redirectToTarget("/profil");
               }}>Profile</MenuItem>
 
               <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
@@ -267,8 +281,9 @@ class Header extends React.Component {
 
 
                   <Button color="inherit" onClick={() => {
-                    this.setState({ nextPath: "/" });
-                    this.setRedirect();
+                    //this.setState({ nextPath: "/" });
+                    //this.setRedirect();
+                    this.redirectToTarget("/");
                   }}>Home</Button>
 
                   <div className={classes.sectionDesktop}>

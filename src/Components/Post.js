@@ -88,6 +88,7 @@ class RecipeReviewCard extends React.Component {
 
     };
 
+    
     this.state.id = this.props.data.id;
     this.state.author = this.props.data.author;
     this.state.title = this.props.data.title;
@@ -100,7 +101,7 @@ class RecipeReviewCard extends React.Component {
     this.state.language = this.props.data.language;
     this.state.me = this.props.data.me;
 
-    console.log(this.props.data);
+    //console.log(this.props.data);
 
   }
 
@@ -144,7 +145,8 @@ class RecipeReviewCard extends React.Component {
 
   // Delete
   editPost = () => {
-    console.log("Edit ID : " + this.state.id);
+    //console.log("Edit ID : " + this.state.id);
+    this.props.edit(this.props.data);
   }
 
   // Favorite
@@ -352,6 +354,31 @@ class RecipeReviewCard extends React.Component {
         </Collapse>
       </Card>
     );
+  };
+
+  componentDidUpdate(prevProps) {
+
+    if (this.props.data !== prevProps.data) {
+
+      console.log("DATA CHANGE");
+            
+      this.setState({
+
+        id : this.props.data.id,
+        author : this.props.data.author,
+        title : this.props.data.title,
+        description : this.props.data.description,
+        date : this.props.data.date,
+        linkPdf : this.props.data.linkPdf,
+        like : this.props.data.like,
+        initial : this.props.data.initial,
+        tags : this.props.data.tags,
+        language : this.props.data.language,
+        me : this.props.data.me,
+        firstTime : false,
+      });
+
+    }
   }
 }
 
