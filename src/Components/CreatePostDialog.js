@@ -16,6 +16,9 @@ import ChipInput from 'material-ui-chip-input';
 import Select from '@material-ui/core/Select';
 
 
+import AlertDialog from './AlertDialog';
+
+
 let cpt = 1;
 
 const languages = [
@@ -101,12 +104,18 @@ class CreatePostDialog extends React.Component {
 
     //Check the data
 
-    //If correct 
 
     console.log("Title: " + this.state.title);
     console.log("Description: " + this.state.description);
     console.log("Language: " + this.state.language);
     console.log("Tags : " + this.state.tags)
+
+    if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")
+    {
+
+
+    //If correct 
+
 
     const data = 
       {
@@ -132,7 +141,7 @@ class CreatePostDialog extends React.Component {
     //else
     //this.props.close();
 
-
+    }
   }
 
   render() {
@@ -142,12 +151,18 @@ class CreatePostDialog extends React.Component {
     return (
       <>
 
+
         <Dialog
           open={this.props.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
+
+        { /*<AlertDialog /> */}
+
           <DialogTitle id="form-dialog-title">Post a new book</DialogTitle>
+
+          
           <DialogContent>
             <DialogContentText>
               To add a new book, please enter the title, the description, tags and the pdf.

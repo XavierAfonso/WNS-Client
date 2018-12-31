@@ -91,6 +91,10 @@ class EditPostDialog extends React.Component {
   updatePost = () => {
 
 
+    if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")
+    {
+
+
     //Check the data
 
     //If correct 
@@ -121,6 +125,7 @@ class EditPostDialog extends React.Component {
   
     //else
     //this.props.close();
+    }
 
   };
 
