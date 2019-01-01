@@ -21,20 +21,10 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       
       return <AuthContext>
 
-         {( {user}) => {
+         {( {user,checkConnection}) => {
 
-          //console.log("SECOND");
 
-            if(user === null){
-
-              const token = window.localStorage.getItem('token');
-
-                if(token){
-                  user = "connected";
-                }
-            }
-
-           //console.log("THE USER " + user);
+          checkConnection();
 
           return user 
           ? <Component {...params} />

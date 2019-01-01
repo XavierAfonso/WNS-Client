@@ -71,8 +71,12 @@ class Login extends React.Component {
 
     return (
       <AuthContext>
-        {({ error, user, signIn }) => { // authContext
+        {({ error, user, signIn, checkConnection }) => { // authContext
 
+
+          if(user===null){
+            //checkConnection();
+          }
 
           if(user) {
             return <Redirect to="/" />;

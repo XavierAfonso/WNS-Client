@@ -18,11 +18,26 @@ class AuthProvider extends Component {
             signIn:this.signIn,
             signUp:this.signUp,
             signOut:this.signOut,
+            checkConnection:this.checkConnection,
 
           }
     }
 
-    componentDidMount() {
+    componentWillMount () {
+
+        if(this.state.user === null){
+
+            const token = window.localStorage.getItem('token');
+
+              if(token){
+                this.setState({user: 'connected'});
+                
+              }
+          }
+
+         //console.log("THE USER " + user);
+
+         console.log(this.state.user );
 
         /*const token = window.localStorage.getItem('token');
         if(token){
@@ -46,6 +61,11 @@ class AuthProvider extends Component {
         }*/
     }
 
+
+    checkConnection = () => {
+
+
+    }
 
     getError = (error) => {
 

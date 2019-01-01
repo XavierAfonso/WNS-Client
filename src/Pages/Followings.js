@@ -52,14 +52,13 @@ class Followings extends React.Component {
     const { classes } = this.props;
 
 
-    const renderData = this.state.data.map((element) => {
+    const renderData = this.state.data.map((element,i) => {
       return (
       
-      <>
-      <Grid style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
-        <FollowingCard username = {element.username}  />
+      <Grid  key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
+        <FollowingCard key={i}  username = {element.username}  />
       </Grid>
-      </>
+      
      )
      });
 

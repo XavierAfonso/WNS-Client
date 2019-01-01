@@ -53,14 +53,14 @@ class Followers extends React.Component {
     const { classes } = this.props;
 
 
-    const renderData = this.state.data.map((element) => {
+    const renderData = this.state.data.map((element, i) => {
       return (
       
-      <>
-      <Grid style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
-        <FollowerCard username = {element.username}  />
+      
+      <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
+        <FollowerCard key={i} username = {element.username}  />
       </Grid>
-      </>
+      
      )
      });
 

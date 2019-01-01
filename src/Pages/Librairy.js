@@ -36,7 +36,7 @@ const styles  = theme => ({
 
 //const datafull = 
 
-class ProfilOther extends React.Component {
+class Librairy extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object
@@ -75,17 +75,16 @@ class ProfilOther extends React.Component {
 
     const { classes } = this.props;
 
-    const renderData = this.state.data.map((element) => {
+    const renderData = this.state.data.map((element,i) => {
       return (
       
-      <>
-      <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={4}>
-      <Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost}  />
-      </Grid>
-      </>
       
+      <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={12} lg={4}>
+      <Post  key={i} delete = {this.deletePost} data={element} edit={this.editPost}  />
+      </Grid>
+
      )
-     });
+     });  
 
     return (
 
@@ -101,12 +100,10 @@ class ProfilOther extends React.Component {
 
          <Grid container spacing={24}>
 
-
-        {renderData}
+            {renderData}
+    
 
         </Grid>
-
-
 
               
           </main>
@@ -117,8 +114,8 @@ class ProfilOther extends React.Component {
   }
 }
 
-ProfilOther.propTypes = {
+Librairy.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProfilOther);
+export default withStyles(styles)(Librairy);
