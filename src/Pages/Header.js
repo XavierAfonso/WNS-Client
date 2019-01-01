@@ -35,6 +35,8 @@ import { AuthContext } from '../Utils/AuthProvider';
 
 checkUrl();*/
 
+const { theme } = require('../Utils/theme');
+
 
 const styles = theme => ({
   root: {

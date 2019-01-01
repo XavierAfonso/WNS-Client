@@ -55,6 +55,9 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      firstname: "",
+      lastname:"",
+      email:"",
       username: "",
       password: "",
       statusRegister: null,
@@ -109,10 +112,27 @@ class SignIn extends React.Component {
                   Register
                 </Typography>
                 <form className={classes.form}>
+
                   <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="username">Email Address</InputLabel>
-                    <Input id="username" name="username" autoComplete="email" autoFocus onChange={this.handleInputChange} />
+                  <InputLabel htmlFor="firstname">Firsname</InputLabel>
+                    <Input id="firstname" name="firstname" autoComplete="firstname" autoFocus onChange={this.handleInputChange} />
                   </FormControl>
+
+                  <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="lastname">Lastname</InputLabel>
+                    <Input id="lastname" name="lastname" autoComplete="lastname" autoFocus onChange={this.handleInputChange} />
+                  </FormControl>
+
+                  <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="username">Username</InputLabel>
+                    <Input id="username" name="username" autoComplete="username" autoFocus onChange={this.handleInputChange} />
+                  </FormControl>
+
+                  <FormControl margin="normal" required fullWidth>
+                    <InputLabel htmlFor="email">Email Address</InputLabel>
+                    <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleInputChange} />
+                  </FormControl>
+
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleInputChange} />
