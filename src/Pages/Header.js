@@ -150,11 +150,6 @@ class Header extends React.Component {
     router: PropTypes.object
   }
 
-  librairy = () => {
-
-    this.redirectToTarget('/librairy');
-  }
-
   redirectToTarget = (page) => {
     this.context.router.history.push(`${page}`)
   }
@@ -207,7 +202,9 @@ class Header extends React.Component {
                 this.redirectToTarget("/profil");
               }}>Profile</MenuItem>
 
-              <MenuItem onClick={this.librairy}>Librairy</MenuItem>
+              <MenuItem onClick={() => {this.redirectToTarget('/librairy')}}>Librairy</MenuItem>
+              <MenuItem onClick={() => {this.redirectToTarget('/followings')}} >Followings</MenuItem>
+              <MenuItem onClick={() => {this.redirectToTarget('/followers')}} >Followers</MenuItem>
               <MenuItem onClick={signOut}>Logout</MenuItem>
             </Menu>
           );

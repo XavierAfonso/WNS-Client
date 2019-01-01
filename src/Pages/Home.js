@@ -22,7 +22,7 @@ import Typography from '@material-ui/core/Typography';
 
 const { theme } = require('../Utils/theme');
 
-const { data } = require('../Utils/dataHome');
+const { data } = require('../Utils/data/dataHome');
 
 const drawerWidthFull = 400;
 const drawerWidthMobile = 200;
@@ -89,6 +89,15 @@ class Home extends React.Component {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = (page) => {
+    this.context.router.history.push(`${page}`)
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -133,7 +142,11 @@ class Home extends React.Component {
 
                     <CardHeader
                       action={
-                        <IconButton>
+                        <IconButton 
+
+                        onClick={() => {
+                          this.redirectToTarget(`/followings`);
+                        }}>
                           <OpenInNew />
                         </IconButton>
                       }
@@ -166,7 +179,10 @@ class Home extends React.Component {
 
                     <CardHeader
                       action={
-                        <IconButton>
+                        <IconButton
+                        onClick={() => {
+                          this.redirectToTarget(`/followers`);
+                        }}>
                           <OpenInNew />
                         </IconButton>
                       }

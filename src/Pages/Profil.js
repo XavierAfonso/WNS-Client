@@ -59,7 +59,7 @@ const styles  = theme => ({
 });
 
 
-const {data} = require('../Utils/dataProfil');
+const {data} = require('../Utils/data/dataProfil');
 
 
 class Profil extends React.Component {

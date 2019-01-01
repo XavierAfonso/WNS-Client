@@ -7,8 +7,9 @@ import { AuthContext } from './Utils/AuthProvider';
 import HomePage from './Pages/Home';
 import ProfilPage from './Pages/Profil';
 import ProfilOther from './Pages/ProfilOther';
-
 import LibrairyPage from './Pages/Librairy';
+import FollowersPage from './Pages/Followers';
+import FollowingsPage from './Pages/Followings';
 
 
 import './css/general.css';
@@ -58,12 +59,16 @@ class App extends Component {
 
     return (
       <Switch>
-        <ProtectedRoute path="/" exact component={HomePage} />
         {/*<Route path="/" exact component={HomePage} />*/}
+
+        <ProtectedRoute path="/" exact component={HomePage} />
         <ProtectedRoute path="/profil/:name" component={ProfilOther} />
         <ProtectedRoute path="/profil" component={ProfilPage} />
-        <Route path="/login" component={LoginPage} />
         <ProtectedRoute path="/librairy" component={LibrairyPage} />
+        <ProtectedRoute path="/followers" component={FollowersPage} />
+        <ProtectedRoute path="/followings" component={FollowingsPage} />
+        
+        <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/*" component={LoginPage} />
       </Switch>

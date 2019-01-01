@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Post from '../Components/Post';
+import Post from './Post';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles  = theme => ({
   
@@ -13,15 +15,15 @@ const styles  = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    height: '300px',
+    height: '200px',
     marginTop: '10px',
     //backgroundColor : 'transparent'
   },
 
   bigAvatar: {
     margin: 10,
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
 
   divImage : {
@@ -39,13 +41,13 @@ const styles  = theme => ({
 });
 
 
-class ProfilCard extends Component {
+class FollowerCard extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       username : '',
-      isSuscribe : false,
+      isSuscribe : true,
       colorBtn : "primary",
     }
 
@@ -65,6 +67,15 @@ class ProfilCard extends Component {
     this.setState({colorBtn: "primary"});
   }
 
+  
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = (page) => {
+    this.context.router.history.push(`${page}`)
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -74,31 +85,33 @@ class ProfilCard extends Component {
 
           <Paper className={classes.profil} elevation={1}>
 
-        
+          <div style={{backgroundColor:'transparent'}}>
+
           <Grid container justify="center" alignItems="center">
-          <Typography variant="h5">
-            {this.props.username}
-          </Typography>
+            <Typography variant="h5">
+              {this.props.username}
+           </Typography>
           </Grid>
 
           <Grid container justify="center" alignItems="center">
+
+          <IconButton
+
+          onClick={() => {
+            this.redirectToTarget(`/profil/${this.props.username}`);
+          }}>
             <Avatar alt="Remy Sharp" src="https://www.balkans.ch//assets/img/admin.png" className={classes.bigAvatar} />
+            </IconButton>
           </Grid>
 
-          <Grid  style ={{textAlign: 'center', backgroundColor:'transparent'}} container justify="center" alignItems="center">
+          <Typography variant="body1">
 
-            
-            Followers : 3<br/>
-            Followings : 5<br/>
-            Nb books posted : 8 <br/>
-            Nb books on library : 12 <br/>
+          </Typography>
+
           
-          </Grid>
-
           <Grid container justify="center" alignItems="center">
-          {this.props.me ==="false" && 
-          
           <Typography style={{marginTop:'10px', backgroundColor:'transparent'}} variant="body1">
+
 
           {this.state.isSuscribe ?
           
@@ -126,10 +139,9 @@ class ProfilCard extends Component {
 
 
           </Typography>
-
-          }
-        </Grid>
-         
+          </Grid>
+          
+          </div>
           </Paper>
 
       </>
@@ -137,4 +149,4 @@ class ProfilCard extends Component {
   }
 }
 
-export default withStyles(styles)(ProfilCard);
+export default withStyles(styles)(FollowerCard);

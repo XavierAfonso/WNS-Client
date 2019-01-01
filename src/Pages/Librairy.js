@@ -11,7 +11,7 @@ import Post from '../Components/Post';
 
 import ProfilCard from '../Components/ProfilCard';
 
-const {data} = require('../Utils/dataLibrairy');
+const {data} = require('../Utils/data/dataLibrairy');
 
 const {theme} = require('../Utils/theme');
 
@@ -78,15 +78,10 @@ class ProfilOther extends React.Component {
     const renderData = this.state.data.map((element) => {
       return (
       
-        <>
-      
-      
-
+      <>
       <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={4}>
       <Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost}  />
       </Grid>
-
-
       </>
       
      )
