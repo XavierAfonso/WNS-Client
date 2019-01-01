@@ -250,12 +250,10 @@ class Header extends React.Component {
 
           return (
             <div className={classes.root}>
-              <AppBar position="absolute" className={classes.appBar}>
+
+            {/*position="absolute"*/}
+              <AppBar position="fixed" className={classes.appBar}> 
                 <Toolbar>
-
-    
-
-
                   {this.props.home === "true" &&
                   <Hidden smUp>
                     <IconButton

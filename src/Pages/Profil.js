@@ -166,7 +166,7 @@ class Profil extends React.Component {
             <Header home = "false" onDrawerToggle={this.handleDrawerToggle} />
               <main className={classes.mainContent}>
 
-              <Grid container spacing={24}>
+          <Grid container spacing={24}>
           <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
 

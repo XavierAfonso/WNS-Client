@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
 
 import ChipInput from 'material-ui-chip-input';
-import AutoComplete from '../Pages/AutoComplete';
+import AutoComplete from '../Components/AutoComplete';
 
 const authors = [
   { label: 'Oliver Hansen' },

@@ -4,16 +4,15 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import LoginPage from './Pages/Login';
 import RegisterPage from './Pages/Register';
 import { AuthContext } from './Utils/AuthProvider';
-import HomePage from './WNS/Home';
-import ProfilPage from './WNS/Profil';
-import ProfilOther from './WNS/ProfilOther';
+import HomePage from './Pages/Home';
+import ProfilPage from './Pages/Profil';
+import ProfilOther from './Pages/ProfilOther';
 
-import LibrairyPage from './WNS/librairy';
+import LibrairyPage from './Pages/Librairy';
 
 
 import './css/general.css';
 
-import AutoComplete from './Pages/AutoComplete';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 
@@ -22,6 +21,19 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       return <AuthContext>
 
          {( {user}) => {
+
+          //console.log("SECOND");
+
+            if(user === null){
+
+              const token = window.localStorage.getItem('token');
+
+                if(token){
+                  user = "connected";
+                }
+            }
+
+           //console.log("THE USER " + user);
 
           return user 
           ? <Component {...params} />
@@ -46,12 +58,12 @@ class App extends Component {
 
     return (
       <Switch>
-        {/*<ProtectedRoute path="/" exact component={HomePage} />*/}
-        <Route path="/" exact component={HomePage} />
-        <Route path="/profil/:name" component={ProfilOther} />
-        <Route path="/profil" component={ProfilPage} />
+        <ProtectedRoute path="/" exact component={HomePage} />
+        {/*<Route path="/" exact component={HomePage} />*/}
+        <ProtectedRoute path="/profil/:name" component={ProfilOther} />
+        <ProtectedRoute path="/profil" component={ProfilPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/librairy" component={LibrairyPage} />
+        <ProtectedRoute path="/librairy" component={LibrairyPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/*" component={LoginPage} />
       </Switch>

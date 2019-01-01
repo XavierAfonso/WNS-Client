@@ -13,7 +13,7 @@ class AuthProvider extends Component {
 
           this.state = {
 
-            users:null,
+            user:null,
             error:null,
             signIn:this.signIn,
             signUp:this.signUp,
@@ -24,8 +24,10 @@ class AuthProvider extends Component {
 
     componentDidMount() {
 
-        const token = window.localStorage.getItem('token');
+        /*const token = window.localStorage.getItem('token');
         if(token){
+            
+            console.log("FIRST");
             
             this.setState({user : "connected"});
            
@@ -40,7 +42,26 @@ class AuthProvider extends Component {
             }).catch(err => {
                 console.error(err);
                 window.localStorage.removeItem('token');
-            })*/
+            })
+        }*/
+    }
+
+
+    getError = (error) => {
+
+        //console.log("ici " + error.response.status);
+
+        if(error.response.status===400){
+            this.setState({error: '400 The email already exist'});
+        }
+        else if(error.response.status===500){
+            this.setState({error: '500 Server error'});
+        }
+        else if (error.response.status===403){
+            this.setState({error: '403 forbidden'});
+        }
+        else{
+            this.setState({error: 'Invalid username or password'});
         }
     }
 
@@ -53,7 +74,13 @@ class AuthProvider extends Component {
             console.log(response);
             const {token} = response.data;
             window.localStorage.setItem('token',token);
+
+            console.log("ICIIIII");
+
+
+
             this.setState({user: username});
+            this.setState({error: ''});
 
             /*const {user,token} = response.data;
             console.log({user,token})
@@ -61,8 +88,9 @@ class AuthProvider extends Component {
             this.setState({user});*/
 
         }).catch(error => {
-            console.error(error);
-            this.setState({error: 'Invalid username or password'});
+
+            this.getError(error);
+           // throw error;
         });
     }
 
@@ -73,19 +101,8 @@ class AuthProvider extends Component {
             
         }).catch((error) => {
             
-            console.log("ici " + error.response.status);
-
-            if(error.response.status===400){
-                this.setState({error: 'The email already exist'});
-            }
-            else if(error.response.status===500){
-                this.setState({error: 'Server error'});
-            }
-            else{
-                this.setState({error: 'Invalid username or password'});
-            }
-           
-            throw error;
+            this.getError(error);
+            //throw error;
            
         });
     }

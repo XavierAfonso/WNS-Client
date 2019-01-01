@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { AuthContext } from '../Utils/AuthProvider';
 
+import { Redirect } from 'react-router-dom';
+
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -70,6 +72,11 @@ class Login extends React.Component {
     return (
       <AuthContext>
         {({ error, user, signIn }) => { // authContext
+
+
+          if(user) {
+            return <Redirect to="/" />;
+          }
 
           const { classes } = this.props;
 
