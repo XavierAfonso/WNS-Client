@@ -56,7 +56,8 @@ class Login extends React.Component {
     super(props)
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errorLocal : "",
     }
   }
 
@@ -71,7 +72,7 @@ class Login extends React.Component {
 
     return (
       <AuthContext>
-        {({ error, user, signIn, checkConnection }) => { // authContext
+        {({ error, user, signIn }) => { // authContext
 
 
           if(user===null){
@@ -87,13 +88,19 @@ class Login extends React.Component {
           const onSubmit = (event) => {
             event.preventDefault();
 
+            this.setState({ errorLocal: "" });
+
             let username = this.state.username;
             let password = this.state.password;
+
             console.log(username);
             console.log(password);
 
             if (username !== "" && password !== "") {
               signIn({ username, password });
+            }
+            else{
+              this.setState({ errorLocal: "The fields must not be null" });
             }
           }
 
@@ -129,6 +136,7 @@ class Login extends React.Component {
                   <br />
                   <a className={classes.a} href="/register">Not register yet ?</a>
                   <p style={{color:'red'}}>{error}</p>
+                  <p style={{color:'red'}}>{this.state.errorLocal}</p>
                 </form>
               </Paper>
             </main>

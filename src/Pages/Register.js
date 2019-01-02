@@ -60,7 +60,9 @@ class SignIn extends React.Component {
       email:"",
       username: "",
       password: "",
+      confirmPassword : "",
       statusRegister: null,
+      errorLocal : "",
     }
   }
 
@@ -86,18 +88,42 @@ class SignIn extends React.Component {
           const onSubmit = (event) => {
             event.preventDefault();
 
+            this.setState({ statusRegister: "" });
+            this.setState({ errorLocal: "" });
+
+            let firstname = this.state.firstname;
+            let lastname = this.state.lastname;
+            let email = this.state.email;
+
             let username = this.state.username;
             let password = this.state.password;
+            let confirmPassword = this.state.confirmPassword;
+
+            console.log(firstname);
+            console.log(lastname);
+            console.log(email);
             console.log(username);
             console.log(password);
+            console.log(confirmPassword);
 
-            if (username !== "" && password !== "") {
+            //if (firstname !== "" && lastname !== "" && email !== "" 
+            //&& username !== "" && password !== "" && confirmPassword !== "") {
 
-              return signUp({ username, password }).then((element) => {
-                this.setState({ statusRegister: "Account has been successfully registered" })
-              }).catch(err => {
+              if ( email !== ""  && password !== "" && confirmPassword !== "") {
+
+              if(password === confirmPassword){
+                  return signUp(email, password).then((element) => {
+                    this.setState({ statusRegister: "Account has been successfully registered" })
+                  }).catch(err => {
+                    //Error server
+                }
+              )}
+
+              else{
+                this.setState({ errorLocal: "Password must be the same" });
               }
-              );
+            }else{
+              this.setState({ errorLocal: "The fields must not be null" });
             }
           }
 
@@ -154,6 +180,7 @@ class SignIn extends React.Component {
                   <br />
                   <a className={classes.a} href="/login">You already have an account ?</a>
                   <p style={{ color: 'red' }}>{error}</p>
+                  <p style={{ color: 'red' }}>{this.state.errorLocal}</p>
                   <p style={{ color: 'green' }}>{this.state.statusRegister}</p>
                 </form>
               </Paper>

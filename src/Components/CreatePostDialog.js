@@ -16,7 +16,7 @@ import ChipInput from 'material-ui-chip-input';
 import Select from '@material-ui/core/Select';
 
 
-import AlertDialog from './AlertDialog';
+//import AlertDialog from './AlertDialog';
 
 
 let cpt = 1;

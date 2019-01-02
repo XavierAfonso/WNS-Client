@@ -16,9 +16,6 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
-
-import { Redirect } from 'react-router-dom'
-
 import { AuthContext } from '../Utils/AuthProvider';
 
 
@@ -35,7 +32,7 @@ import { AuthContext } from '../Utils/AuthProvider';
 
 checkUrl();*/
 
-const { theme } = require('../Utils/theme');
+//const { theme } = require('../Utils/theme');
 
 
 const styles = theme => ({

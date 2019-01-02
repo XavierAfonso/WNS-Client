@@ -18,7 +18,11 @@ class AuthProvider extends Component {
             signIn:this.signIn,
             signUp:this.signUp,
             signOut:this.signOut,
-            checkConnection:this.checkConnection,
+            getAllUsers:this.getAllUsers,
+            getUser:this.getUser,
+            getFollowers:this.getFollowers,
+            postFollower:this.postFollower,
+            //getFollowings:this.getFollowing,
 
           }
     }
@@ -61,12 +65,6 @@ class AuthProvider extends Component {
         }*/
     }
 
-
-    checkConnection = () => {
-
-
-    }
-
     getError = (error) => {
 
         //console.log("ici " + error.response.status);
@@ -88,6 +86,7 @@ class AuthProvider extends Component {
     signIn = ({username,password}) =>{
 
         console.log("SIGNIN");
+        this.setState({error : ""});
 
         axios.post('/users/signin',{username,password}).then(response => {
 
@@ -100,7 +99,7 @@ class AuthProvider extends Component {
 
 
             this.setState({user: username});
-            this.setState({error: ''});
+            
 
             /*const {user,token} = response.data;
             console.log({user,token})
@@ -114,19 +113,19 @@ class AuthProvider extends Component {
         });
     }
 
-    signUp = ({username,password}) =>{
+    signUp = (username,password) =>{
 
-    
+       this.setState({error : ""});
+
        return axios.post('/users/signup',{username,password}).then(response => {
             
         }).catch((error) => {
             
             this.getError(error);
-            //throw error;
+            throw error;
            
         });
     }
-
 
     signOut = () => {
         console.log("LOGOUT")
@@ -134,6 +133,101 @@ class AuthProvider extends Component {
         this.setState({user : null})
         //window.location.reload();
     }
+
+
+    getAllUsers = () => {
+
+        const token = window.localStorage.getItem('token');
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token, 
+        }
+
+        //console.log(headers);
+
+        return axios.get(`/users`,{headers}).then(response => {
+            console.log("Users : ");
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
+    getUser = (id) => {
+
+        const token = window.localStorage.getItem('token');
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token, 
+        }
+
+        return axios.get(`/users/${id}`,{headers}).then(response => {
+            console.log("User : ");
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
+    getFollowers= (id) => {
+
+        const token = window.localStorage.getItem('token');
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token, 
+        }
+
+        return axios.get(`/users/${id}/followers`,{headers}).then(response => {
+            console.log("Followers : ");
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
+
+    }
+
+    postFollower = (from, to) => {
+
+        const token = window.localStorage.getItem('token');
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token, 
+        }
+
+        return axios.post(`/users/follow?from=${from}&to=${to}`,{},{headers}).then(response => {
+            console.log("Followers : ");
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
+
+
+    }
+
+
+
+
+    /*getFollowings = (id) => {
+
+        const token = window.localStorage.getItem('token');
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': token, 
+        }
+
+        return axios.get(`/users/${id}/followings`,{headers}).then(response => {
+            console.log("Followings : ");
+            console.log(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
+
+    }*/
   
     render() {
 

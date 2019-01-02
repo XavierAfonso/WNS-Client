@@ -21,10 +21,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       
       return <AuthContext>
 
-         {( {user,checkConnection}) => {
-
-
-          checkConnection();
+         {( {user}) => {
 
           return user 
           ? <Component {...params} />
