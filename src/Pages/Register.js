@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { AuthContext } from '../Utils/AuthProvider';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 
 import { Redirect } from 'react-router-dom';
 
@@ -21,7 +23,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
+      width: 600,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -72,6 +74,13 @@ class SignIn extends React.Component {
       [event.target.name]: event.target.value
     })
   }
+
+    //Textfield
+    handleChange = name => event => {
+      this.setState({
+        [name]: event.target.value,
+      });
+    };
 
   render() {
 
@@ -139,34 +148,91 @@ class SignIn extends React.Component {
                 </Typography>
                 <form className={classes.form}>
 
-                  <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="firstname">Firsname</InputLabel>
-                    <Input id="firstname" name="firstname" autoComplete="firstname" autoFocus onChange={this.handleInputChange} />
-                  </FormControl>
+                <Grid container spacing={24}>
 
-                  <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="lastname">Lastname</InputLabel>
-                    <Input id="lastname" name="lastname" autoComplete="lastname" autoFocus onChange={this.handleInputChange} />
-                  </FormControl>
+                    <Grid item xs={12} md={6}>   
+                      <FormControl margin="normal"  fullWidth>
+                      <TextField
+                        required
+                        id="firstname"
+                        label="Firstname"
+                        value={this.state.firstname}
+                        onChange={this.handleChange('firstname')}
+                        variant="outlined"
+                        />
+                      </FormControl>
+                    </Grid>
 
-                  <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="username">Username</InputLabel>
-                    <Input id="username" name="username" autoComplete="username" autoFocus onChange={this.handleInputChange} />
-                  </FormControl>
+                    <Grid item xs={12} md={6}>
+                      <FormControl margin="normal"  fullWidth>
+                      <TextField
+                        required   
+                        id="lastname"
+                        label="Lastname"
+                        value={this.state.lastname}
+                        onChange={this.handleChange('lastname')}
+                        variant="outlined"
+                        />
+                      </FormControl>
+                    </Grid>
 
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleInputChange} />
-                  </FormControl>
+                    <Grid item xs={12} md={12}>
+                      <FormControl margin="normal"  fullWidth>
+                      <TextField
+                      required
+                        id="username"
+                        label="Username"
+                        value={this.state.username}
+                        onChange={this.handleChange('username')}
+                        variant="outlined"
+                        />
+                      </FormControl>
+                    </Grid>
 
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleInputChange} />
-                  </FormControl>
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="password">Confirm Password</InputLabel>
-                    <Input name="confirmPassword" type="password" id="confirmPassword" autoComplete="current-password" onChange={this.handleInputChange} />
-                  </FormControl>
+                    <Grid item xs={12} md={12}>
+                      <FormControl margin="normal"  fullWidth>
+                      <TextField
+                      required
+                        id="email"
+                        label="Email"
+                        value={this.state.email}
+                        onChange={this.handleChange('email')}
+                        variant="outlined"
+                        type="email"
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <FormControl margin="normal"  fullWidth>
+                      <TextField
+                      required
+                        id="password"
+                        label="Password"
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                        variant="outlined"
+                        type="password"
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                     <FormControl margin="normal"  fullWidth>
+                     <TextField
+                     required
+                        id="confirmPassword"
+                        label="Confirm password"
+                        value={this.state.confirmPassword}
+                        onChange={this.handleChange('confirmPassword')}
+                        variant="outlined"
+                        type="password"
+                        />
+                    </FormControl>
+                    </Grid>
+                </Grid>
+
+          
                   <Button
                     type="submit"
                     fullWidth

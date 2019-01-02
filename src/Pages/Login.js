@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { AuthContext } from '../Utils/AuthProvider';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 import { Redirect } from 'react-router-dom';
 
@@ -39,7 +41,7 @@ const styles = theme => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing.unit,
+    marginTop: "theme.spacing.unit",
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
@@ -67,6 +69,13 @@ class Login extends React.Component {
       [event.target.name]: event.target.value
     })
   }
+
+      //Textfield
+      handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+      };
 
   render() {
 
@@ -115,14 +124,37 @@ class Login extends React.Component {
                   Login
                 </Typography>
                 <form className={classes.form}>
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="username">Email Address</InputLabel>
-                    <Input id="username" name="username" autoComplete="email" autoFocus onChange={this.handleInputChange} />
+
+                <Grid container spacing={24}>
+
+                  <Grid item xs={12} md={12}> 
+                  <FormControl margin="normal"  fullWidth>
+                      <TextField
+                        required
+                        id="username"
+                        label="Email"
+                        value={this.state.email}
+                        onChange={this.handleChange('username')}
+                        variant="outlined"
+                        />
                   </FormControl>
-                  <FormControl margin="normal" required fullWidth>
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleInputChange} />
-                  </FormControl>
+                  
+                  </Grid>
+
+                  <Grid item xs={12} md={12}> 
+                  <FormControl margin="normal"  fullWidth>
+                      <TextField
+                        required
+                        id="password"
+                        label="Password"
+                        value={this.state.email}
+                        onChange={this.handleChange('password')}
+                        variant="outlined"
+                        type="password"
+                        />
+                      </FormControl>
+                  </Grid>
+              </Grid>
                   <Button
                     type="submit"
                     fullWidth
