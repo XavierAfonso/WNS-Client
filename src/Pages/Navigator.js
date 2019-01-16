@@ -173,6 +173,8 @@ class Navigator extends React.Component {
         <div className={classes.toolbar} />
         <div style={{ padding: '30px' }}>
 
+        <div data-tut=".1-home-step" >
+
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="title">Title</InputLabel>
             <Input id="title" name="title" value={this.state.title} autoComplete="title" onChange={this.handleInputChange} />
@@ -208,11 +210,12 @@ class Navigator extends React.Component {
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
-            <Button variant="contained" color="primary" className={classes.button} onClick={this.searchBooks}>
+            <Button  data-tut=".2-home-step" variant="contained" color="primary" className={classes.button} onClick={this.searchBooks}>
               Search
                 <Search className={classes.rightIcon} />
             </Button>
           </FormControl>
+          </div>
 
         </div>
         

@@ -239,7 +239,7 @@ class RecipeReviewCard extends React.Component {
 
     return (
       
-      <Card className={classes.card} >
+      <Card data-tut=".4-home-step" className={classes.card} >
 
 
         <CardHeader 
@@ -304,8 +304,8 @@ class RecipeReviewCard extends React.Component {
         </CardContent>
         
         
-        <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton 
+        <CardActions  className={classes.actions} disableActionSpacing>
+          <IconButton data-tut=".5-home-step"
           aria-label="Add to favorites"
           onClick={this.clickFavorite}
           >
@@ -313,13 +313,13 @@ class RecipeReviewCard extends React.Component {
           {this.state.like ?   <FavoriteIcon style={{color:'red'}}/> : <FavoriteIcon/> }
           
           </IconButton>
-          <IconButton 
+          <IconButton  data-tut=".6-home-step"
           aria-label="Share"
           onClick={this.clickShare}
           >
             <ShareIcon />
           </IconButton>
-          <IconButton
+          <IconButton  data-tut=".7-home-step"
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
             })}
@@ -331,7 +331,7 @@ class RecipeReviewCard extends React.Component {
             
           </IconButton>
 
-          <IconButton
+          <IconButton data-tut=".8-home-step"
             onClick={this.openPDF}
           >
 

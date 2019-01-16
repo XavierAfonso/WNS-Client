@@ -18,6 +18,9 @@ import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import { AuthContext } from '../Utils/AuthProvider';
 
+import Tour from 'reactour';
+const { steps } = require('../Utils/steps/stepsHome');
+
 
 /*function checkUrl() {
 
@@ -118,8 +121,19 @@ class Header extends React.Component {
       mobileMoreAnchorEl: null,
       redirect: false,
       nextPath: '',
+
+      isTourOpen: false,
+      closeTour: false,
     }
 
+  };
+
+  closeTour = () => {
+    this.setState({ isTourOpen: false });
+  };
+
+  openTour = () => {
+    this.setState({ isTourOpen: true });
   };
 
   handleProfileMenuOpen = event => {
@@ -153,6 +167,17 @@ class Header extends React.Component {
     this.context.router.history.push(`${page}`)
   }
 
+  startSteps = () => {   
+
+    // Need to wait until the popup menu close
+    this.setState({ anchorEl: false },this.goSteps);    
+  }
+
+  // Start the guide steps
+  goSteps = () => {
+    this.setState({ isTourOpen: true });
+  }
+      
 
   render() {
 
@@ -178,6 +203,7 @@ class Header extends React.Component {
 
       <AuthContext>
 
+
         {({ error, user, signOut }) => { // authContext
 
 
@@ -195,7 +221,7 @@ class Header extends React.Component {
               onClose={this.handleMenuClose}
             >
 
-              <MenuItem onClick={() => {
+              <MenuItem  onClick={() => {
                 //this.setState({ nextPath: "/profil" });
                 //this.setRedirect();
                 this.redirectToTarget("/profil");
@@ -204,6 +230,9 @@ class Header extends React.Component {
               <MenuItem onClick={() => {this.redirectToTarget('/librairy')}}>Librairy</MenuItem>
               <MenuItem onClick={() => {this.redirectToTarget('/followings')}} >Followings</MenuItem>
               <MenuItem onClick={() => {this.redirectToTarget('/followers')}} >Followers</MenuItem>
+              {this.props.home === "true"&&
+              <MenuItem onClick={this.startSteps} > Help</MenuItem>
+              }
               <MenuItem onClick={signOut}>Logout</MenuItem>
             </Menu>
           );
@@ -248,8 +277,9 @@ class Header extends React.Component {
             <div className={classes.root}>
 
             {/*position="absolute"*/}
-              <AppBar position="fixed" className={classes.appBar}> 
+              <AppBar data-tut=".11-home-step" position="fixed" className={classes.appBar}> 
                 <Toolbar>
+
                   {this.props.home === "true" &&
                   <Hidden smUp>
                     <IconButton
@@ -302,7 +332,7 @@ class Header extends React.Component {
                         <NotificationsIcon />
                       </Badge>
                     </IconButton>
-                    <IconButton
+                    <IconButton data-tut=".12-home-step"
                       aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                       aria-haspopup="true"
                       onClick={this.handleProfileMenuOpen}
@@ -321,6 +351,12 @@ class Header extends React.Component {
 
                 </Toolbar>
               </AppBar>
+
+
+              <Tour
+                steps={steps}
+                isOpen={this.state.isTourOpen}
+                onRequestClose={this.closeTour} />
 
               {renderMenu}
               {renderMobileMenu}

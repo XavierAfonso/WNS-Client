@@ -18,9 +18,13 @@ import OpenInNew from '@material-ui/icons/OpenInNew';
 import Typography from '@material-ui/core/Typography';
 import { AuthContext } from '../Utils/AuthProvider';
 
+import Tour from 'reactour';
+
 const { theme } = require('../Utils/theme');
 
 const { data } = require('../Utils/data/dataHome');
+
+const { steps } = require('../Utils/steps/stepsHome');
 
 const drawerWidthFull = 400;
 const drawerWidthMobile = 200;
@@ -84,11 +88,24 @@ class Home extends React.Component {
     super(props)
     this.state = {
       mobileOpen: false,
-      filter : {},
-      data : data,
-      dataFiltred : data
+      filter: {},
+      data: data,
+      dataFiltred: data,
+      isTourOpen: true,
+      closeTour: false,
+
     }
   }
+
+  
+  closeTour = () => {
+    this.setState({ isTourOpen: false });
+  };
+
+  openTour = () => {
+    this.setState({ isTourOpen: true });
+  };
+
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
@@ -104,14 +121,14 @@ class Home extends React.Component {
   }
 
   changeValue = (newvalue) => {
-    this.setState({ value : newvalue});
+    this.setState({ value: newvalue });
 
-    let tmp =  this.state.data;
+    let tmp = this.state.data;
 
     //tmp = tmp.filter(x => x.title.includes(newvalue.title));
     //tmp = tmp.filter(x => x.tags.includes(newvalue.tags));
 
-    this.setState({dataFiltred : tmp});
+    this.setState({ dataFiltred: tmp });
 
     console.log(newvalue);
   }
@@ -120,7 +137,7 @@ class Home extends React.Component {
 
     return (
       <AuthContext>
-        {({ getAllUsers, getUser , getFollowers, getFollowings, postFollower}) => {
+        {({ getAllUsers, getUser, getFollowers, getFollowings, postFollower }) => {
 
           let email = "admin@gmail.com";
           let to = "test@gmail.com";
@@ -128,7 +145,7 @@ class Home extends React.Component {
           //getAllUsers();
           //getUser(email);
           //postFollower(email,to);
-         // getFollowers(email);
+          // getFollowers(email);
 
           //getFollowings(email);
 
@@ -139,29 +156,33 @@ class Home extends React.Component {
           });
 
           return (
+
             <MuiThemeProvider theme={theme}>
+
+
               <div className={classes.root}>
                 <CssBaseline />
-                <nav className={classes.drawer}>
-                  
-                  <Hidden smUp implementation="js">
+                <nav  className={classes.drawer}>
 
-                    <Navigator
+                  <Hidden   smUp implementation="js">
+
+                    <Navigator 
                       PaperProps={{ style: { width: drawerWidthMobile } }}
                       variant="temporary"
                       open={this.state.mobileOpen}
                       onClose={this.handleDrawerToggle}
-                      changeValue = {this.changeValue}
+                      changeValue={this.changeValue}
+                    />
+                 
+                  </Hidden>
+
+                  <Hidden xsDown implementation="js">
+                    <Navigator
+                      changeValue={this.changeValue}
+                      PaperProps={{ style: { width: drawerWidthFull } }}
                     />
                   </Hidden>
 
-                  <Hidden xsDown implementation="css">
-                    <Navigator
-                     changeValue = {this.changeValue}
-                     PaperProps={{ style: { width: drawerWidthFull } }} 
-                    />
-                  </Hidden>
-                  
                 </nav>
                 <div className={classes.appContent}>
                   <Header home="true" onDrawerToggle={this.handleDrawerToggle} />
@@ -170,7 +191,7 @@ class Home extends React.Component {
 
                     <Grid container spacing={24}>
 
-                      <Grid item xs={12} md={8}>
+                      <Grid  data-tut=".3-home-step" item xs={12} md={8}>
 
                         {renderData}
 
@@ -178,7 +199,7 @@ class Home extends React.Component {
 
                       <Grid item xs={12} md={4}>
 
-                        <Card className={classes.following}>
+                        <Card data-tut=".9-home-step" className={classes.following}>
 
                           <CardHeader
                             action={
@@ -215,7 +236,7 @@ class Home extends React.Component {
                         </Card>
 
 
-                        <Card className={classes.followers}>
+                        <Card data-tut=".10-home-step" className={classes.followers}>
 
                           <CardHeader
                             action={
@@ -253,8 +274,8 @@ class Home extends React.Component {
             </MuiThemeProvider>
           );
         }
-      }
-    </AuthContext>
+        }
+      </AuthContext>
     )
   }
 }
