@@ -61,30 +61,29 @@ class DownshiftMultiple extends React.Component {
     this.state = {
       inputValue: '',
       selectedItem: [],
-      labelData:'',
+      labelData: '',
     };
 
-   this.state.labelData = this.props.label;
-   //console.log(this.props.data);
+    this.state.labelData = this.props.label;
   }
 
-    getSuggestions(value) {
+  getSuggestions(value) {
     const inputValue = deburr(value.trim()).toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
-  
+
     return inputLength === 0
       ? []
       : this.props.data.filter(suggestion => {
-          const keep =
-            count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-  
-          if (keep) {
-            count += 1;
-          }
-  
-          return keep;
-        });
+        const keep =
+          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+
+        if (keep) {
+          count += 1;
+        }
+
+        return keep;
+      });
   }
 
   handleKeyDown = event => {
@@ -112,7 +111,6 @@ class DownshiftMultiple extends React.Component {
       selectedItem,
     });
 
-    //console.log(selectedItem);
     this.props.sendData(selectedItem);
   };
 
@@ -143,41 +141,41 @@ class DownshiftMultiple extends React.Component {
           selectedItem: selectedItem2,
           highlightedIndex,
         }) => (
-          <div className={classes.container}>
-            {renderInput({
-              fullWidth: true,
-              classes,
-              InputProps: getInputProps({
-                startAdornment: selectedItem.map(item => (
-                  <Chip
-                    key={item}
-                    tabIndex={-1}
-                    label={item}
-                    className={classes.chip}
-                    onDelete={this.handleDelete(item)}
-                  />
-                )),
-                onChange: this.handleInputChange,
-                onKeyDown: this.handleKeyDown,
-                placeholder: labelData,
-              }),
-              label: labelData,
-            })}
-            {isOpen ? (
-              <Paper className={classes.paper} square>
-                {this.getSuggestions(inputValue2).map((suggestion, index) =>
-                  renderSuggestion({
-                    suggestion,
-                    index,
-                    itemProps: getItemProps({ item: suggestion.label }),
-                    highlightedIndex,
-                    selectedItem: selectedItem2,
-                  }),
-                )}
-              </Paper>
-            ) : null}
-          </div>
-        )}
+            <div className={classes.container}>
+              {renderInput({
+                fullWidth: true,
+                classes,
+                InputProps: getInputProps({
+                  startAdornment: selectedItem.map(item => (
+                    <Chip
+                      key={item}
+                      tabIndex={-1}
+                      label={item}
+                      className={classes.chip}
+                      onDelete={this.handleDelete(item)}
+                    />
+                  )),
+                  onChange: this.handleInputChange,
+                  onKeyDown: this.handleKeyDown,
+                  placeholder: labelData,
+                }),
+                label: labelData,
+              })}
+              {isOpen ? (
+                <Paper className={classes.paper} square>
+                  {this.getSuggestions(inputValue2).map((suggestion, index) =>
+                    renderSuggestion({
+                      suggestion,
+                      index,
+                      itemProps: getItemProps({ item: suggestion.label }),
+                      highlightedIndex,
+                      selectedItem: selectedItem2,
+                    }),
+                  )}
+                </Paper>
+              ) : null}
+            </div>
+          )}
       </Downshift>
     );
   }

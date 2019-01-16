@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -139,7 +139,17 @@ class Navigator extends React.Component {
     console.log("Descritpion: " + this.state.description);
     console.log("Authors: " + this.state.selectedAuthors);
     console.log("Languages: " + this.state.selectedLanguages);
-    console.log("Tags : " + this.state.tags)
+    console.log("Tags : " + this.state.tags);
+
+    const filter =  {
+     title: this.state.title,
+     description: this.state.description,
+     selectedAuthors: this.state.selectedAuthors,
+     selectedLanguages: this.state.selectedLanguages,
+     tags: this.state.tags,
+    }
+
+    this.props.changeValue(filter);
   };
 
 
@@ -155,7 +165,7 @@ class Navigator extends React.Component {
 
 
   render() {
-    const { classes, ...other } = this.props;
+    const { classes, changeValue, ...other } = this.props;
     return (
 
       <Drawer className={classes.customZIndex} variant="permanent" {...other}>
@@ -211,8 +221,8 @@ class Navigator extends React.Component {
   }
 }
 
-Navigator.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+/*Navigator.propTypes = {
+  //classes: PropTypes.object.isRequired,
+};*/
 
 export default withStyles(styles)(Navigator);

@@ -354,7 +354,7 @@ class RecipeReviewCard extends React.Component {
             pdfBlob= {this.state.linkPdf}
             width="100%"
             height="500px"
-            containerId = 'testpdf'
+            containerId = {"container" + this.state.id}
           />
 
             {/*<Typography paragraph>Method:</Typography>

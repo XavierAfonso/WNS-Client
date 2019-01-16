@@ -25,6 +25,8 @@ const { data } = require('../Utils/data/dataHome');
 const drawerWidthFull = 400;
 const drawerWidthMobile = 200;
 
+let imgUrl = 'wallpaper.png'
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -45,6 +47,8 @@ const styles = theme => ({
     flex: 1,
     padding: '60px 36px 0',
     background: '#eaeff1',
+    //backgroundImage: 'url(' + imgUrl + ')',
+    //opacity: 0.5,
   },
   following: {
     // padding: theme.spacing.unit * 2,
@@ -80,6 +84,9 @@ class Home extends React.Component {
     super(props)
     this.state = {
       mobileOpen: false,
+      filter : {},
+      data : data,
+      dataFiltred : data
     }
   }
 
@@ -94,6 +101,19 @@ class Home extends React.Component {
 
   redirectToTarget = (page) => {
     this.context.router.history.push(`${page}`)
+  }
+
+  changeValue = (newvalue) => {
+    this.setState({ value : newvalue});
+
+    let tmp =  this.state.data;
+
+    //tmp = tmp.filter(x => x.title.includes(newvalue.title));
+    //tmp = tmp.filter(x => x.tags.includes(newvalue.tags));
+
+    this.setState({dataFiltred : tmp});
+
+    console.log(newvalue);
   }
 
   render() {
@@ -114,7 +134,7 @@ class Home extends React.Component {
 
           const { classes } = this.props;
 
-          const renderData = data.map((element) => {
+          const renderData = this.state.dataFiltred.map((element) => {
             return (<Post key={element.id} data={element} />)
           });
 
@@ -123,6 +143,7 @@ class Home extends React.Component {
               <div className={classes.root}>
                 <CssBaseline />
                 <nav className={classes.drawer}>
+                  
                   <Hidden smUp implementation="js">
 
                     <Navigator
@@ -130,11 +151,17 @@ class Home extends React.Component {
                       variant="temporary"
                       open={this.state.mobileOpen}
                       onClose={this.handleDrawerToggle}
+                      changeValue = {this.changeValue}
                     />
                   </Hidden>
+
                   <Hidden xsDown implementation="css">
-                    <Navigator PaperProps={{ style: { width: drawerWidthFull } }} />
+                    <Navigator
+                     changeValue = {this.changeValue}
+                     PaperProps={{ style: { width: drawerWidthFull } }} 
+                    />
                   </Hidden>
+                  
                 </nav>
                 <div className={classes.appContent}>
                   <Header home="true" onDrawerToggle={this.handleDrawerToggle} />

@@ -41,7 +41,7 @@ class AuthProvider extends Component {
 
          //console.log("THE USER " + user);
 
-         console.log(this.state.user );
+        // console.log(this.state.user );
 
         /*const token = window.localStorage.getItem('token');
         if(token){
@@ -207,9 +207,6 @@ class AuthProvider extends Component {
 
 
     }
-
-
-
 
     /*getFollowings = (id) => {
 

@@ -15,10 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ChipInput from 'material-ui-chip-input';
 import Select from '@material-ui/core/Select';
 
-
-//import AlertDialog from './AlertDialog';
-
-
 let cpt = 1;
 
 const languages = [
@@ -75,10 +71,13 @@ class CreatePostDialog extends React.Component {
 
   //Select the pdf file
   fileSelectedHandler  = event => {
-    console.log(event.target.files[0])
+    
+    //console.log(event.target.files[0])
+    
     this.setState({
       selectedFile:event.target.files[0]
     })
+
   };
 
   // Language
@@ -101,10 +100,6 @@ class CreatePostDialog extends React.Component {
 
   addPost = () => {
 
-
-    //Check the data
-
-
     console.log("Title: " + this.state.title);
     console.log("Description: " + this.state.description);
     console.log("Language: " + this.state.language);
@@ -112,11 +107,7 @@ class CreatePostDialog extends React.Component {
 
     if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")
     {
-
-
     //If correct 
-
-
     const data = 
       {
     

@@ -20,7 +20,7 @@ export const data = [
         initial: "A8",
         description : "Description 2",
         date : "now",
-        linkPdf : "/pdf/main.pdf", //http://www.orimi.com/pdf-test.pdf
+        linkPdf : "http://www.orimi.com/pdf-test.pdf",
         like : false,
         tags : ["tags1", "tag2"],
         language: "English",
@@ -34,7 +34,7 @@ export const data = [
         initial: "A8",
         description : "Description 3",
         date : "now",
-        linkPdf : "/pdf/main.pdf", //http://www.orimi.com/pdf-test.pdf
+        linkPdf : "/pdf/01-Introduction.pdf", //http://www.orimi.com/pdf-test.pdf
         like : false,
         tags : ["tags1", "tag2"],
         language: "English",
