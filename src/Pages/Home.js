@@ -22,7 +22,8 @@ import Tour from 'reactour';
 
 const { theme } = require('../Utils/theme');
 
-const { data } = require('../Utils/data/dataHome');
+//const { data } = require('../Utils/data/dataHome');
+const data = [];
 
 const { steps } = require('../Utils/steps/stepsHome');
 

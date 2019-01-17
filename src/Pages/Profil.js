@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Post from '../Components/Post';
+import axios from 'axios';
 
 import CreatePostDialog from '../Components/CreatePostDialog';
 import EditPostDialog from '../Components/EditPostDialog';
@@ -58,7 +59,7 @@ const styles  = theme => ({
 });
 
 
-const {data} = require('../Utils/data/dataProfil');
+//const {data} = require('../Utils/data/dataProfil');
 
 
 class Profil extends React.Component {
@@ -69,7 +70,7 @@ class Profil extends React.Component {
       open: false,
       openEdit : false,
       currentEdit : null,
-      data : data,
+      data : [],
       mobileOpen: false,
     }
   }
@@ -139,8 +140,36 @@ class Profil extends React.Component {
     }
 
   componentDidMount() {
+
+
     window.scrollTo(0, 0)
+
+    this.getBooksUser("admin@gmail.com").then(val => {
+
+      this.setState({data : val.data});
+      console.log(val.data);
+
+    });
+    
+
+    
+
+
   };
+
+  
+  getBooksUser = (id) => {
+
+    const token = window.localStorage.getItem('token');
+
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token, 
+    }
+
+    return axios.get(`/books/?id_user=${id}`,{headers});
+}
+
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
@@ -150,7 +179,8 @@ class Profil extends React.Component {
     const { classes } = this.props;
 
     const renderData = this.state.data.map((element) => {
-      return (<Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost} />)
+      return (<Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost}
+        canEdit ={true} />)
      });
 
     return (
@@ -205,6 +235,7 @@ class Profil extends React.Component {
       </MuiThemeProvider>
     );
   }
+
 }
 
 Profil.propTypes = {

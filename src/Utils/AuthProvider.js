@@ -22,6 +22,7 @@ class AuthProvider extends Component {
             getUser:this.getUser,
             getFollowers:this.getFollowers,
             postFollower:this.postFollower,
+            getBooksUser:this.getBooksUser,
             //getFollowings:this.getFollowing,
 
           }

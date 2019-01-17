@@ -90,16 +90,23 @@ class RecipeReviewCard extends React.Component {
 
     
     this.state.id = this.props.data.id;
-    this.state.author = this.props.data.author;
+    this.state.author = this.props.data.authorId;
     this.state.title = this.props.data.title;
-    this.state.description = this.props.data.description;
-    this.state.date = this.props.data.date;
-    this.state.linkPdf = this.props.data.linkPdf;
-    this.state.like = this.props.data.like;
-    this.state.initial = this.props.data.initial;
-    this.state.tags = this.props.data.tags;
+    this.state.description = this.props.data.postDescription;
+    this.state.date = this.props.data.createdDate;
+
+    this.state.linkPdf = `http://127.0.0.1:8080/books/${this.state.id}/pdf`;
+    
+    
+  
     this.state.language = this.props.data.language;
-    this.state.canEdit = this.props.data.canEdit;
+
+    this.state.initial = this.props.data.authorId[0].toUpperCase();
+
+    this.state.tags = this.props.data.tags;
+
+    this.state.like = this.props.data.like;
+    this.state.canEdit = this.props.canEdit;
 
     //console.log(this.props.data);
 

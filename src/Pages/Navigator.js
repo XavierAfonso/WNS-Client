@@ -79,6 +79,11 @@ const styles = theme => ({
     zIndex: 1100 - 1,
   },
 
+  // Navigator background
+  paper :{
+    //backgroundColor : "yellow",
+  },
+
   genres: {
     marginTop: '10px',
   },
@@ -168,7 +173,7 @@ class Navigator extends React.Component {
     const { classes, changeValue, ...other } = this.props;
     return (
 
-      <Drawer className={classes.customZIndex} variant="permanent" {...other}>
+      <Drawer classes={{ paper: classes.paper }} className={classes.customZIndex} variant="permanent" {...other}>
 
         <div className={classes.toolbar} />
         <div style={{ padding: '30px' }}>
