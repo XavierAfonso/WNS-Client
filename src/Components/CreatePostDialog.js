@@ -147,11 +147,12 @@ class CreatePostDialog extends React.Component {
         'Authorization': token, 
     }
 
-    return axios.post(`/books`,{data},{headers}).then(response => {
-        console.log(response);
-    }).catch((error) => {
-        console.error(error);
-    });
+    return axios.post(`/books`,{
+      post_description : this.state.description,
+      book_title : this.state.title,
+      book_content : this.state.book_content,
+      tags : this.state.tags,
+    },{headers});
 
 
 }
@@ -167,15 +168,22 @@ class CreatePostDialog extends React.Component {
 
     const body = {
 
-      "post_description" : this.state.description,
-      "book_title" : this.state.title,
-      "book_content" : this.state.book_content,
-      "tags" : this.state.tags,
+      post_description : this.state.description,
+      book_title : this.state.title,
+      book_content : this.state.book_content,
+      tags : this.state.tags,
     }
 
-    //console.log(data);
+    console.log(body);
 
-    this.postBooks(body);
+    this.postBooks(body).then(response => {
+      console.log(response);
+      
+  }).catch((error) => {
+      console.error(error);
+  });
+
+  this.closeDialog();
 
     
     /*if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")

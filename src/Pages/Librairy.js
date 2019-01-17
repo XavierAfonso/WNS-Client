@@ -6,7 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
 
 
-const {data} = require('../Utils/data/dataLibrairy');
+//const {data} = require('../Utils/data/dataLibrairy');
+const data = [];
 
 const {theme} = require('../Utils/theme');
 
