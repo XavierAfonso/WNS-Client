@@ -11,8 +11,8 @@ class defaultComponent extends Component {
 
   render() {
     return (
-     <>
-     </>
+      <>
+      </>
     );
   }
 }

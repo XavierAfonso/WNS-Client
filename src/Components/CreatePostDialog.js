@@ -11,9 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
 import ChipInput from 'material-ui-chip-input';
-import Select from '@material-ui/core/Select';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -29,22 +27,21 @@ class CreatePostDialog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedFile : "",
-      title : '',
-      description : '',
-      tags : [],
-      book_content : "",
-
+      selectedFile: "",
+      title: '',
+      description: '',
+      tags: [],
+      book_content: "",
     }
   }
 
-    //Title
-    handleInputChange = (event) => {
-      event.preventDefault();
-      this.setState({
-        [event.target.name]: event.target.value
-      })
-    };
+  //Title
+  handleInputChange = (event) => {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  };
 
   //Description
   handleChange = name => event => {
@@ -53,61 +50,49 @@ class CreatePostDialog extends React.Component {
     });
   };
 
-    // Tags
-    handleTags = (val) => {
-      this.setState({ tags: val});
-      console.log()
-    };
+  // Tags
+  handleTags = (val) => {
+    this.setState({ tags: val });
+    console.log()
+  };
 
-    convertToBase64(selectedFile) {
-     
-      //Read File
-      //let selectedFile = document.getElementById("inputFile").files;
+  convertToBase64(selectedFile) {
 
-      //Check File is not Empty
-      if (selectedFile.length > 0) {
-          // Select the very first file from list
-          let fileToLoad = selectedFile[0];
-          // FileReader function for read the file.
-          let fileReader = new FileReader();
-          let base64;
-          // Onload of file read the file content
-          fileReader.onload = function(fileLoadedEvent) {
-              base64 = fileLoadedEvent.target.result;
+    //Check File is not Empty
+    if (selectedFile.length > 0) {
+      // Select the very first file from list
+      let fileToLoad = selectedFile[0];
+      // FileReader function for read the file.
+      let fileReader = new FileReader();
+      let base64;
+      // Onload of file read the file content
+      fileReader.onload = function (fileLoadedEvent) {
+        base64 = fileLoadedEvent.target.result;
 
-              let removeString =  "base64,";
+        let removeString = "base64,";
 
-              //let fixbase64 = base64.replace("data:application/pdf;base64,","");
-              let fixbase64 = base64.substring(base64.indexOf(removeString) + removeString.length);
-             // console.log(fixbase64);
-              // Print data in console
-              //console.log(base64);
-              this.setState({book_content : fixbase64 })
-          }.bind(this);
-          // Convert data to base64
-           fileReader.readAsDataURL(fileToLoad);
-      }
-
-     
+        let fixbase64 = base64.substring(base64.indexOf(removeString) + removeString.length);
+        // Print data in console
+        //console.log(base64);
+        this.setState({ book_content: fixbase64 })
+      }.bind(this);
+      // Convert data to base64
+      fileReader.readAsDataURL(fileToLoad);
+    }
   }
-  
 
   //Select the pdf file
-  fileSelectedHandler  = event => {
+  fileSelectedHandler = event => {
 
-    if(event.target.files[0].type === "application/pdf"){
-    this.setState({
-      selectedFile : event.target.files[0]
-    })
-    
-    console.log(event.target.files)
+    if (event.target.files[0].type === "application/pdf") {
+      this.setState({
+        selectedFile: event.target.files[0]
+      })
 
-    let pdfTobase64 = this.convertToBase64(event.target.files);
+      console.log(event.target.files)
 
-    //console.log(pdfTobase64);
-
-  }
-  
+      this.convertToBase64(event.target.files);
+    }
 
   };
 
@@ -119,11 +104,11 @@ class CreatePostDialog extends React.Component {
   closeDialog = () => {
 
     this.setState({
-      selectedFile : "",
-      title : '',
-      description : '',
-      tags : [],
-      book_content : "",
+      selectedFile: "",
+      title: '',
+      description: '',
+      tags: [],
+      book_content: "",
     });
 
     this.props.close();
@@ -132,91 +117,43 @@ class CreatePostDialog extends React.Component {
 
   postBooks = () => {
 
-    //console.log(body);
-
     const token = window.localStorage.getItem('token');
 
     let headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token, 
+      'Content-Type': 'application/json',
+      'Authorization': token,
     }
 
-    return axios.post(`/books`,{
-      post_description : this.state.description,
-      book_title : this.state.title,
-      book_content : this.state.book_content,
-      tags : this.state.tags,
-    },{headers});
-
-
-}
+    return axios.post(`/books`, {
+      post_description: this.state.description,
+      book_title: this.state.title,
+      book_content: this.state.book_content,
+      tags: this.state.tags,
+    }, { headers });
+  }
 
   addPost = () => {
 
     console.log("Title: " + this.state.title);
     console.log("Description: " + this.state.description);
-    //console.log("Language: " + this.state.language);
     console.log("Tags : " + this.state.tags)
     console.log(this.state.book_content)
 
+    if (this.state.title !== "" && this.state.description !== "" && this.state.tags !== [] && this.state.book_content !== "") {
 
-    /*const body = {
+      this.postBooks().then(response => {
+        console.log(response);
+        this.closeDialog();
 
-      post_description : this.state.description,
-      book_title : this.state.title,
-      book_content : this.state.book_content,
-      tags : this.state.tags,
-    }*/
-
-    //console.log(body);
-
-     if(this.state.title !=="" && this.state.description  !=="" && this.state.tags  !== [] && this.state.book_content !==""){
-
-    this.postBooks().then(response => {
-      console.log(response);
+      }).catch((error) => {
+        console.error(error);
+        this.closeDialog();
+      });
+    }
+    else {
       this.closeDialog();
-      
-  }).catch((error) => {
-      console.error(error);
-      this.closeDialog();
-  });
-}
-else{
-  this.closeDialog();
 
-}
-
-
-
-    
-    /*if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")
-    {
-    //If correct 
-    const data = 
-      {
-    
-        id : cpt,
-        title : this.state.title,
-        author : "Xavier Vaz Afonso",
-        initial: "X",
-        description : this.state.description,
-        date : "now",
-        linkPdf : "/pdf/main.pdf", //http://www.orimi.com/pdf-test.pdf
-        like : false,
-        tags : this.state.tags,
-        language: this.state.language,
-        me : true,
-      }
-
-    cpt++;
-    
-    this.closeDialog();
-    this.props.add(data);
-  
-    //else
-    //this.props.close();
-
-    }*/
+    }
   }
 
   render() {
@@ -232,11 +169,11 @@ else{
           aria-labelledby="form-dialog-title"
         >
 
-        { /*<AlertDialog /> */}
+          { /*<AlertDialog /> */}
 
           <DialogTitle id="form-dialog-title">Post a new book</DialogTitle>
 
-          
+
           <DialogContent>
             <DialogContentText>
               To add a new book, please enter the title, the description, tags and the pdf.
@@ -259,7 +196,6 @@ else{
                 margin="normal"
               />
             </FormControl>
-
 
             <div>
 
@@ -321,7 +257,6 @@ else{
             </Button>
           </DialogActions>
         </Dialog>
-
       </>
     );
   }

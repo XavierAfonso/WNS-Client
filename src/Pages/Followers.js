@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import FollowerCard from '../Components/FollowerCard';
-
 import { userService } from '../Utils/user.services';
-
-const {theme} = require('../Utils/theme');
+import {withStyles } from '@material-ui/core/styles';
 
 const styles  = theme => ({
   
@@ -61,8 +58,6 @@ class Followers extends React.Component {
 
     let username = "";
 
-    // console.log("ici" + this.props.match.params.name)
-
     if(this.props.match.params.name){
       username = this.props.match.params.name;
 
@@ -84,18 +79,6 @@ class Followers extends React.Component {
   
   render() {
     const { classes } = this.props;
-
-    
-    /*userService.getWall("admin@gmail.com").then(val => {
-      console.log(val);
-    })*/
-
-
-    /*userService.getFollowings("admin@gmail.com").then(val => {
-      console.log(val);
-    })*/
-
-
     const renderData = this.state.data.map((element, i) => {
       return (
       

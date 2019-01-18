@@ -4,14 +4,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HelpIcon from '@material-ui/icons/Help';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -21,23 +19,6 @@ import { AuthContext } from '../Utils/AuthProvider';
 
 import Tour from 'reactour';
 const { steps } = require('../Utils/steps/stepsHome');
-
-
-/*function checkUrl() {
-
-  let urlFull = window.location.href;
-  let pathArray = window.location.href.split('/');
-  let protocol = pathArray[0];
-  let host = pathArray[2];
-  let url = protocol + '//' + host;
-  urlFull = urlFull.replace(url, "");
-  return urlFull;
-}
-
-checkUrl();*/
-
-//const { theme } = require('../Utils/theme');
-
 
 const styles = theme => ({
   root: {
@@ -168,37 +149,20 @@ class Header extends React.Component {
     this.context.router.history.push(`${page}`)
   }
 
-  startSteps = () => {   
+  startSteps = () => {
 
     // Need to wait until the popup menu close
-    this.setState({ anchorEl: false },this.goSteps);    
+    this.setState({ anchorEl: false }, this.goSteps);
   }
 
   // Start the guide steps
   goSteps = () => {
     this.setState({ isTourOpen: true });
   }
-      
+
 
   render() {
-
-
-   /* if (this.state.redirect === true) {
-      //this.setState({ redirect: false });
-
-      console.log(checkUrl());
-
-      if (checkUrl() !== this.state.nextPath) {
-
-        //return <Redirect to={this.state.nextPath} />
-
-        
-        //return <Redirect to={this.state.nextPath} />
-        //console.log("TEST");
-        //this.context.router.history.push(`/target`);
-      }
-    }*/
-
+    
     return (
 
 
@@ -222,15 +186,15 @@ class Header extends React.Component {
               onClose={this.handleMenuClose}
             >
 
-              <MenuItem  onClick={() => {
+              <MenuItem onClick={() => {
                 //this.setState({ nextPath: "/profil" });
                 //this.setRedirect();
                 this.redirectToTarget("/profil");
               }}>Profile</MenuItem>
 
-              <MenuItem onClick={() => {this.redirectToTarget('/librairy')}}>Librairy</MenuItem>
-              <MenuItem onClick={() => {this.redirectToTarget('/followings')}} >Followings</MenuItem>
-              <MenuItem onClick={() => {this.redirectToTarget('/followers')}} >Followers</MenuItem>
+              <MenuItem onClick={() => { this.redirectToTarget('/librairy') }}>Librairy</MenuItem>
+              <MenuItem onClick={() => { this.redirectToTarget('/followings') }} >Followings</MenuItem>
+              <MenuItem onClick={() => { this.redirectToTarget('/followers') }} >Followers</MenuItem>
               <MenuItem onClick={signOut}>Logout</MenuItem>
             </Menu>
           );
@@ -252,18 +216,18 @@ class Header extends React.Component {
                 </IconButton>
                 <p>Messages</p>
               </MenuItem>*/}
-               {this.props.home === "true"&&
-                <MenuItem  onClick={this.startSteps}>
-                <IconButton color="inherit">
-                <HelpIcon />
-                </IconButton>
-                <p>Question</p>
-              </MenuItem>
-               }
+              {this.props.home === "true" &&
+                <MenuItem onClick={this.startSteps}>
+                  <IconButton color="inherit">
+                    <HelpIcon />
+                  </IconButton>
+                  <p>Question</p>
+                </MenuItem>
+              }
 
               <MenuItem>
                 <IconButton color="inherit">
-                <NotificationsIcon />
+                  <NotificationsIcon />
                   {/*<Badge badgeContent={11} color="secondary">
                    
                   </Badge>*/}
@@ -284,21 +248,21 @@ class Header extends React.Component {
           return (
             <div className={classes.root}>
 
-            {/*position="absolute"*/}
-              <AppBar data-tut=".11-home-step" position="fixed" className={classes.appBar}> 
+              {/*position="absolute"*/}
+              <AppBar data-tut=".11-home-step" position="fixed" className={classes.appBar}>
                 <Toolbar>
 
                   {this.props.home === "true" &&
-                  <Hidden smUp>
-                    <IconButton
-                      color="inherit"
-                      aria-label="Open drawer"
-                      onClick={onDrawerToggle}
-                      className={classes.menuButton}
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                  </Hidden>}
+                    <Hidden smUp>
+                      <IconButton
+                        color="inherit"
+                        aria-label="Open drawer"
+                        onClick={onDrawerToggle}
+                        className={classes.menuButton}
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    </Hidden>}
 
                   <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                     WNS
@@ -335,19 +299,19 @@ class Header extends React.Component {
                         <MailIcon />
                       </Badge>
                 </IconButton>*/}
-                
-                {this.props.home === "true"&&
-                <IconButton onClick={this.startSteps} color="inherit">
-                <HelpIcon />
-                </IconButton>
-                }
-          
-          
+
+                    {this.props.home === "true" &&
+                      <IconButton onClick={this.startSteps} color="inherit">
+                        <HelpIcon />
+                      </IconButton>
+                    }
+
+
                     <IconButton color="inherit">
-                    <NotificationsIcon />
+                      <NotificationsIcon />
                       {/*<Badge badgeContent={0} color="secondary"> 
                       
-                      </Badge>*/} 
+                      </Badge>*/}
                     </IconButton>
                     <IconButton data-tut=".12-home-step"
                       aria-owns={isMenuOpen ? 'material-appbar' : undefined}

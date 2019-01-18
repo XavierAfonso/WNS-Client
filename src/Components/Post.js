@@ -11,21 +11,11 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChromeReaderMode from '@material-ui/icons/ChromeReaderMode';
-
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-//import PDFObject from '../pdfobject';
 import PDFViewer from '../Components/PdfViewer';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
 import { userService } from '../Utils/user.services';
 import Chip from '@material-ui/core/Chip';
 
@@ -109,7 +99,7 @@ class RecipeReviewCard extends React.Component {
     this.state.like = this.props.like;
     this.state.canEdit = this.props.canEdit;
 
-    //console.log(this.props.data);
+
 
   }
 
@@ -122,10 +112,6 @@ class RecipeReviewCard extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
-  /*componentDidMount() {
-    PDFObject.embed("../pdf/main.pdf", "#example1");
-  }*/
 
   // Expand the pdf part
   handleExpandClick = () => {
@@ -163,32 +149,32 @@ class RecipeReviewCard extends React.Component {
 
     const username = window.localStorage.getItem('username');
 
-    if(!this.state.like){
+    if (!this.state.like) {
 
 
       userService.getUser(username).then(response => {
 
-          console.log(response.data.likes);
+        console.log(response.data.likes);
 
-          let isExist = response.data.likes;
+        let isExist = response.data.likes;
 
-          if (isExist.indexOf(this.state.id) === -1) {
-            userService.likeAbook(this.state.id).then(val => console.log(val));
-          }
-          else{
-            console.log("Already liked");
-          }
+        if (isExist.indexOf(this.state.id) === -1) {
+          userService.likeAbook(this.state.id).then(val => console.log(val));
+        }
+        else {
+          console.log("Already liked");
+        }
 
-          
+
 
       })
 
       //userService.likeAbook(this.state.id).then(val => console.log(val));
-      }
-      else{
-        console.log(this.state.id);
-        userService.unLikeAbook(this.state.id).then(val => console.log(val));
-      }
+    }
+    else {
+      console.log(this.state.id);
+      userService.unLikeAbook(this.state.id).then(val => console.log(val));
+    }
 
     this.setState({ like: !this.state.like });
   }
@@ -220,9 +206,6 @@ class RecipeReviewCard extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    //return nextProps.data.authorId !== undefined;
-    // console.log("ici");
-    //console.log(nextProps);
 
     if (this.state.expanded !== nextState.expanded || this.state.like !== nextState.like) {
       return true;
@@ -236,8 +219,8 @@ class RecipeReviewCard extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    // const { anchorEl } = this.state;
+    //const open = Boolean(anchorEl);
 
 
     const renderTags = this.state.tags.map((tag) => {
@@ -250,22 +233,6 @@ class RecipeReviewCard extends React.Component {
       if (this.state.canEdit) {
         return (
           <>
-
-            {/*<IconButton
-          aria-label="More"
-          aria-owns={open ? 'long-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-        <MoreVertIcon />
-        </IconButton>
-
-          <IconButton
-          onClick={this.editPost}
-          >  
-            <EditIcon/>
-        </IconButton>*/}
-
             <IconButton
               onClick={this.deletePost}
             >
@@ -277,14 +244,6 @@ class RecipeReviewCard extends React.Component {
       else {
         return (
           <>
-            {/*<IconButton
-          aria-label="More"
-          aria-owns={open ? 'long-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-        <MoreVertIcon />
-        </IconButton>*/}
           </>
         )
       }
@@ -323,18 +282,6 @@ class RecipeReviewCard extends React.Component {
 
         />
 
-        {/*<Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-        
-          <MenuItem onClick={this.moreInfo}>More Info</MenuItem>
-          <MenuItem onClick={this.showComments}>Comments</MenuItem>
-
-          </Menu>*/}
-
         <CardContent style={{ marginLeft: '10px' }}>
 
           <Typography variant="h6" style={{ paddingBottom: '10px' }}>
@@ -366,13 +313,7 @@ class RecipeReviewCard extends React.Component {
             {this.state.like ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
 
           </IconButton>
-          
-          {/*<IconButton data-tut=".6-home-step"
-            aria-label="Share"
-            onClick={this.clickShare}
-          >
-            <ShareIcon />
-        </IconButton>*/}
+
           <IconButton data-tut=".7-home-step"
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
@@ -393,11 +334,6 @@ class RecipeReviewCard extends React.Component {
 
           </IconButton>
 
-
-
-
-
-
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 
@@ -410,34 +346,6 @@ class RecipeReviewCard extends React.Component {
               height="500px"
               containerId={"container" + this.state.id}
             />
-
-            {/*<Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-              heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-              browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-              chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-              salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-              minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-              to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
-
-            */}
-
-
           </CardContent>
 
         </Collapse>

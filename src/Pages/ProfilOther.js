@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import {withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
@@ -18,7 +18,7 @@ import ProfilCard from '../Components/ProfilCard';
 
 
 
-const { theme } = require('../Utils/theme');
+//const { theme } = require('../Utils/theme');
 
 const styles = theme => ({
 
@@ -78,7 +78,7 @@ const styles = theme => ({
 
 
 //const {data} = require('../Utils/data/dataProfilOther');
-const data = [];
+//const data = [];
 
 class ProfilOther extends React.Component {
 

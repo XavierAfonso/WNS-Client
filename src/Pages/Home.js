@@ -1,38 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from './Navigator';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Post from '../Components/Post';
 import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 import Typography from '@material-ui/core/Typography';
 import { AuthContext } from '../Utils/AuthProvider';
 
 import { userService } from '../Utils/user.services';
 
-import Tour from 'reactour';
-
-const { theme } = require('../Utils/theme');
+// const { theme } = require('../Utils/theme');
 
 //const { data } = require('../Utils/data/dataHome');
-const data = [];
+// const data = [];
 
-const { steps } = require('../Utils/steps/stepsHome');
+// const { steps } = require('../Utils/steps/stepsHome');
 
 const drawerWidthFull = 400;
 const drawerWidthMobile = 300;
 
-let imgUrl = 'wallpaper.png'
+// let imgUrl = 'wallpaper.png'
 
 const styles = theme => ({
   root: {
@@ -53,10 +49,6 @@ const styles = theme => ({
   mainContent: {
     flex: 1,
     padding: '60px 36px 0',
-    //background: "#1c92d2",  /* fallback for old browsers */
-    //background: "-webkit-linear-gradient(to right, #f2fcfe, #1c92d2)",  /* Chrome 10-25, Safari 5.1-6 */
-    //background: "linear-gradient(to right, #f2fcfe, #1c92d2);" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
     background: '#eaeff1',
     //backgroundImage: 'url(' + imgUrl + ')',
     //opacity: 0.5,
@@ -101,35 +93,36 @@ class Home extends React.Component {
       dataFiltred: [],
       isTourOpen: true,
       closeTour: false,
-      cpt : 0,
-      messageEmpty : "The wall is empty",
+      cpt: 0,
+      messageEmpty: "The wall is empty",
 
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
     const username = window.localStorage.getItem('username');
 
     userService.getWall(username).then(val => {
 
-      if(val.data.length> 0){
-        
-        this.setState({data : val.data,
-                      dataFiltred : val.data,
-                      messageEmpty : ""
-                     });
+      if (val.data.length > 0) {
+
+        this.setState({
+          data: val.data,
+          dataFiltred: val.data,
+          messageEmpty: ""
+        });
 
         // console.log("ici");
         console.log(val.data);
-        }
-     
+      }
+
     }).catch(err => console.log(err));
 
 
   };
 
-  
+
   closeTour = () => {
     this.setState({ isTourOpen: false });
   };
@@ -153,31 +146,16 @@ class Home extends React.Component {
   }
 
   changeValue = (newvalue) => {
-    
-    
-    // console.log(this.state.dataFiltred);
-    // console.log(newvalue);
-    
-    
-    // this.setState({ dataFiltred: [] });
 
-    if(newvalue.length === 0){
+    if (newvalue.length === 0) {
       this.setState({ dataFiltred: this.state.data });
     }
-    else{
-      this.setState({ dataFiltred: newvalue ,
-                      messageEmpty : ""});
+    else {
+      this.setState({
+        dataFiltred: newvalue,
+        messageEmpty: ""
+      });
     }
-   
-   
-
-
-    //let tmp = this.state.data;
-
-    //tmp = tmp.filter(x => x.title.includes(newvalue.title));
-    //tmp = tmp.filter(x => x.tags.includes(newvalue.tags));
-
-    //this.setState({ dataFiltred: tmp });
 
     console.log(newvalue);
   }
@@ -186,24 +164,15 @@ class Home extends React.Component {
 
     return (
       <AuthContext>
-        {({ getAllUsers, getUser, getFollowers, getFollowings, postFollower }) => {
+        {({ }) => {
 
           let email = "admin@gmail.com";
           let to = "test@gmail.com";
 
-          //getAllUsers();
-          //getUser(email);
-          //postFollower(email,to);
-          // getFollowers(email);
-
-          //getFollowings(email);
-          
-          //
-
           const { classes } = this.props;
 
           const renderData = this.state.dataFiltred.map((element) => {
-            return (<Post key={element.id}  data={element} />)
+            return (<Post key={element.id} data={element} />)
           });
 
           return (
@@ -211,118 +180,118 @@ class Home extends React.Component {
             //<MuiThemeProvider theme={theme}>
 
 
-              <div className={classes.root}>
-                <CssBaseline />
-                <nav  className={classes.drawer}>
+            <div className={classes.root}>
+              <CssBaseline />
+              <nav className={classes.drawer}>
 
-                  <Hidden   smUp implementation="js">
+                <Hidden smUp implementation="js">
 
-                    <Navigator 
-                      PaperProps={{ style: { width: drawerWidthMobile } }}
-                      variant="temporary"
-                      open={this.state.mobileOpen}
-                      onClose={this.handleDrawerToggle}
-                      changeValue={this.changeValue}
-                    />
-                 
-                  </Hidden>
+                  <Navigator
+                    PaperProps={{ style: { width: drawerWidthMobile } }}
+                    variant="temporary"
+                    open={this.state.mobileOpen}
+                    onClose={this.handleDrawerToggle}
+                    changeValue={this.changeValue}
+                  />
 
-                  <Hidden xsDown implementation="js">
-                    <Navigator
-                      changeValue={this.changeValue}
-                      PaperProps={{ style: { width: drawerWidthFull } }}
-                    />
-                  </Hidden>
+                </Hidden>
 
-                </nav>
-                <div className={classes.appContent}>
-                  <Header home="true" onDrawerToggle={this.handleDrawerToggle} />
+                <Hidden xsDown implementation="js">
+                  <Navigator
+                    changeValue={this.changeValue}
+                    PaperProps={{ style: { width: drawerWidthFull } }}
+                  />
+                </Hidden>
 
-                  <main className={classes.mainContent}>
+              </nav>
+              <div className={classes.appContent}>
+                <Header home="true" onDrawerToggle={this.handleDrawerToggle} />
 
-                    <Grid container spacing={24}>
+                <main className={classes.mainContent}>
 
-                      <Grid  data-tut=".3-home-step" item xs={12} md={8}  direction="column-reverse">
+                  <Grid container spacing={24}>
 
-                        
-                      <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
+                    <Grid data-tut=".3-home-step" item xs={12} md={8}>
 
-                        {renderData}
-                       
 
-                      </Grid>
+                      <div style={{ marginTop: "20px" }} >{this.state.messageEmpty} </div>
 
-                      <Grid item xs={12} md={4}>
+                      {renderData}
 
-                        <Card data-tut=".9-home-step" className={classes.following}>
 
-                          <CardHeader
-                            action={
-                              <IconButton
-                                onClick={() => {
-                                  this.redirectToTarget(`/followings`);
-                                }}>
-                                <OpenInNew />
-                              </IconButton>
-                            }
+                    </Grid>
 
-                            title={
-                              <Typography variant="h6" gutterBottom>
-                                Following
+                    <Grid item xs={12} md={4}>
+
+                      <Card data-tut=".9-home-step" className={classes.following}>
+
+                        <CardHeader
+                          action={
+                            <IconButton
+                              onClick={() => {
+                                this.redirectToTarget(`/followings`);
+                              }}>
+                              <OpenInNew />
+                            </IconButton>
+                          }
+
+                          title={
+                            <Typography variant="h6" gutterBottom>
+                              Following
                               </Typography>
-                            }
-                          />
+                          }
+                        />
 
 
-                        </Card>
+                      </Card>
 
-                        <Card data-tut=".10-home-step" className={classes.followers}>
+                      <Card data-tut=".10-home-step" className={classes.followers}>
 
-                      <CardHeader
-                        action={
-                          <IconButton
-                            onClick={() => {
-                              this.redirectToTarget(`/followers`);
-                            }}>
-                            <OpenInNew />
-                          </IconButton>
-                        }
+                        <CardHeader
+                          action={
+                            <IconButton
+                              onClick={() => {
+                                this.redirectToTarget(`/followers`);
+                              }}>
+                              <OpenInNew />
+                            </IconButton>
+                          }
 
-                        title={
-                          <Typography variant="h6" gutterBottom>
-                            Followers
+                          title={
+                            <Typography variant="h6" gutterBottom>
+                              Followers
                           </Typography>
-                        }
-                      />
+                          }
+                        />
                       </Card>
 
 
-                        <Card data-tut=".13-home-step" className={classes.library}>
+                      <Card data-tut=".13-home-step" className={classes.library}>
 
-                          <CardHeader
-                            action={
-                              <IconButton
-                                onClick={() => {
-                                  this.redirectToTarget(`/librairy`);
-                                }}>
-                                <OpenInNew />
-                              </IconButton>
-                            }
+                        <CardHeader
+                          action={
+                            <IconButton
+                              onClick={() => {
+                                this.redirectToTarget(`/librairy`);
+                              }}>
+                              <OpenInNew />
+                            </IconButton>
+                          }
 
-                            title={
-                              <Typography variant="h6" gutterBottom>
-                                Library
+                          title={
+                            <Typography variant="h6" gutterBottom>
+                              Library
                               </Typography>
-                            }
-                          />
-                        </Card>
+                          }
+                        />
+                      </Card>
 
-                      </Grid>
                     </Grid>
-                  </main>
-                </div>
+                  </Grid>
+                </main>
               </div>
-           // </MuiThemeProvider>
+            </div>
+            // </MuiThemeProvider>
           );
         }
         }

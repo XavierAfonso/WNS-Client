@@ -148,7 +148,7 @@ class SignIn extends React.Component {
 
                 <Grid container spacing={24}>
 
-                    <Grid item xs={12} md={6}>   
+                    {/*<Grid item xs={12} md={6}>   
                       <FormControl margin="normal"  fullWidth>
                       <TextField
                         required
@@ -185,7 +185,7 @@ class SignIn extends React.Component {
                         variant="outlined"
                         />
                       </FormControl>
-                    </Grid>
+          </Grid>*/}
 
                     <Grid item xs={12} md={12}>
                       <FormControl margin="normal"  fullWidth>

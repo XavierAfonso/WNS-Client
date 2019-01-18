@@ -10,25 +10,8 @@ import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
 
 import ChipInput from 'material-ui-chip-input';
-import AutoComplete from '../Components/AutoComplete';
 
 import { userService } from '../Utils/user.services';
-
-const authors = [
-  { label: 'Oliver Hansen' },
-  { label: 'Van Henry' },
-  { label: 'April Tucker' },
-  { label: 'Ralph Hubbard' },
-  { label: 'Omar Alexander' },
-  { label: 'Carlos Abbott' },
-];
-
-const languages = [
-  { label: 'French' },
-  { label: 'English' },
-  { label: 'German' },
-  { label: 'Italian' },
-];
 
 const styles = theme => ({
   categoryHeader: {
@@ -170,13 +153,13 @@ class Navigator extends React.Component {
       
     })
 
-    const filter =  {
+    /*const filter =  {
      title: this.state.title,
      description: this.state.description,
      selectedAuthors: this.state.selectedAuthors,
      selectedLanguages: this.state.selectedLanguages,
      tags: this.state.tags,
-    }
+    }*/
 
    
   };
@@ -234,14 +217,6 @@ class Navigator extends React.Component {
               margin="normal"
             />
           </FormControl>
-
-           {/*<FormControl margin="normal" fullWidth>
-            <AutoComplete sendData = {this.updateSelectedAuthors} label = "Authors" data = {authors} />
-          </FormControl>
-
-         <FormControl margin="normal" fullWidth>
-            <AutoComplete  sendData = {this.updateSelectedLanguages} label = "Languages" data = {languages} />
-    </FormControl>*/}
 
           <FormControl margin="normal" fullWidth>
             <ChipInput

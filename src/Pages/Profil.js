@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import {withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 import ProfilCard from '../Components/ProfilCard';
 
-const { theme } = require('../Utils/theme');
+// const { theme } = require('../Utils/theme');
 
 const styles = theme => ({
 

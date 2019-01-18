@@ -94,15 +94,7 @@ class EditPostDialog extends React.Component {
     if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")
     {
 
-
     //Check the data
-
-    //If correct 
-
-    /*console.log("Title: " + this.state.title);
-    console.log("Description: " + this.state.description);
-    console.log("Language: " + this.state.language);
-    console.log("Tags : " + this.state.tags)*/
 
     const data = 
       {

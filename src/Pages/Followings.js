@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import FollowingCard from '../Components/FollowingCard';
@@ -8,10 +8,10 @@ import FollowingCard from '../Components/FollowingCard';
 import { userService } from '../Utils/user.services';
 
 
-const {theme} = require('../Utils/theme');
+// const { theme } = require('../Utils/theme');
 
-const styles  = theme => ({
-  
+const styles = theme => ({
+
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -39,9 +39,9 @@ class Followings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data : [],
+      data: [],
       mobileOpen: false,
-      messageEmpty : "There are no followings",
+      messageEmpty: "There are no followings",
     }
   }
 
@@ -58,16 +58,18 @@ class Followings extends React.Component {
 
     userService.getFollowings(username).then(val => {
 
-      if(val.data.length > 0){
-        this.setState({data : val.data,
-                        messageEmpty : ""});
+      if (val.data.length > 0) {
+        this.setState({
+          data: val.data,
+          messageEmpty: ""
+        });
         console.log(val.data);
-        }
-     
+      }
+
     }).catch(err => console.log(err));
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
     console.log("test");
 
@@ -75,7 +77,7 @@ class Followings extends React.Component {
 
     // console.log("ici" + this.props.match.params.name)
 
-    if(this.props.match.params.name){
+    if (this.props.match.params.name) {
       username = this.props.match.params.name;
 
       userService.getUser(username).then(val => {
@@ -87,48 +89,48 @@ class Followings extends React.Component {
       })
     }
 
-    else{
-       username = window.localStorage.getItem('username');
-       this.getFollowings(username);
+    else {
+      username = window.localStorage.getItem('username');
+      this.getFollowings(username);
     }
   }
-  
+
   render() {
     const { classes } = this.props;
 
 
-    const renderData = this.state.data.map((element,i) => {
+    const renderData = this.state.data.map((element, i) => {
       return (
-      
-      <Grid  key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
-        <FollowingCard key={i}  username = {element.email}  />
-      </Grid>
-      
-     )
-     });
+
+        <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
+          <FollowingCard key={i} username={element.email} />
+        </Grid>
+
+      )
+    });
 
 
     return (
 
       //<MuiThemeProvider theme={theme}>
-      
-        <div className={classes.root}>
-          
 
-          <div className={classes.appContent}>
-            <Header home = "false" onDrawerToggle={this.handleDrawerToggle} />
-              <main className={classes.mainContent}>
+      <div className={classes.root}>
 
-          <Grid container spacing={24}>
 
-          <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
-          {renderData}
+        <div className={classes.appContent}>
+          <Header home="false" onDrawerToggle={this.handleDrawerToggle} />
+          <main className={classes.mainContent}>
 
-        </Grid>
-                
-            </main>
-          </div>
+            <Grid container spacing={24}>
+
+              <div style={{ marginTop: "20px" }} >{this.state.messageEmpty} </div>
+              {renderData}
+
+            </Grid>
+
+          </main>
         </div>
+      </div>
       //</MuiThemeProvider>
     );
   }

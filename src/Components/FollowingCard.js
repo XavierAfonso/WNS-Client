@@ -15,7 +15,6 @@ const styles  = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     height: '150px',
     marginTop: '10px',
-    //backgroundColor : 'transparent'
   },
 
   bigAvatar: {

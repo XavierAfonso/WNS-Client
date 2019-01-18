@@ -15,14 +15,6 @@ class PdfViewer extends Component {
   }
 }
 
-
-/*PdfViewer.propTypes = {
-  pdfBlob: PropTypes.string.isRequired,
-  width: PropTypes.string,
-  height: PropTypes.string,
-  containerId: PropTypes.string,
-};*/
-
 PdfViewer.defaultProps = {
   width: '100%',
   height: '100%',

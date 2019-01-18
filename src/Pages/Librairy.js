@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
@@ -11,7 +11,7 @@ import { userService } from '../Utils/user.services';
 //const {data} = require('../Utils/data/dataLibrairy');
 const data = [];
 
-const {theme} = require('../Utils/theme');
+//const {theme} = require('../Utils/theme');
 
 const styles  = theme => ({
   

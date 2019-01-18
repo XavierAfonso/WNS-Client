@@ -135,12 +135,6 @@ class ProfilCard extends Component {
   });
 
 
-
-
-
-
-
-
   };
 
   render() {
