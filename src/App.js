@@ -51,10 +51,12 @@ class App extends Component {
         <ProtectedRoute path="/" exact component={HomePage} />
         <ProtectedRoute path="/profil/:name" component={ProfilOther} />
         <ProtectedRoute path="/profil" component={ProfilPage} />
+        <ProtectedRoute path="/librairy/:name" component={LibrairyPage} />
         <ProtectedRoute path="/librairy" component={LibrairyPage} />
-        <ProtectedRoute path="/followers" component={FollowersPage} />
-        <ProtectedRoute path="/followings" component={FollowingsPage} />
-        
+        <ProtectedRoute path="/followers/:name" component={FollowersPage} />
+        <ProtectedRoute path="/followers/" component={FollowersPage} />
+        <ProtectedRoute path="/followings/:name" component={FollowingsPage} />
+        <ProtectedRoute path="/followings/" component={FollowingsPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/*" component={LoginPage} />

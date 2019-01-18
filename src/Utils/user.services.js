@@ -13,6 +13,13 @@ function getHeader(){
     return {headers};
 }
 
+// Get Notifications
+function getNotifications(username){
+
+    return axios.get(`/notifications/${username}`, getHeader());
+}
+
+
  // Get the followers
  function getFollowers(id){
 
@@ -31,10 +38,26 @@ function getHeader(){
     return axios.post(`/users/unfollow?to=${followerId}`, {}, getHeader());
 }
 
+ // like
+ function likeAbook(idBook){
+
+    return axios.post(`/books/like/${idBook}`, {}, getHeader());
+}
+
+function unLikeAbook(idBook){
+
+    return axios.post(`/books/unlike/${idBook}`, {}, getHeader());
+}
+
  // Get the followings (Don't exist yet)
  function getFollowings(id){
 
     return axios.get(`/users/${id}/followings`, getHeader());
+}
+
+// Get All likes books
+function getBooksLiked(username){
+    return axios.get(`/users/likes?id_user=${username}`, getHeader());
 }
 
 // Get the wall
@@ -81,5 +104,9 @@ export const userService = {
     deleteBooksUser,
     postFollow,
     postUnFollow,
-    searchBook
+    searchBook,
+    likeAbook,
+    getBooksLiked,
+    getNotifications,
+    unLikeAbook
 };

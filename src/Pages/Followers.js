@@ -42,10 +42,7 @@ class Followers extends React.Component {
     }
   }
 
-  componentDidMount(){
-
-
-    const username = window.localStorage.getItem('username');
+  getFollowers = (username) => {
 
     userService.getFollowers(username).then(val => {
 
@@ -55,8 +52,31 @@ class Followers extends React.Component {
         }
      
     }).catch(err => console.log(err));
+  }
 
 
+  componentDidMount(){
+
+    let username = "";
+
+    // console.log("ici" + this.props.match.params.name)
+
+    if(this.props.match.params.name){
+      username = this.props.match.params.name;
+
+      userService.getUser(username).then(val => {
+        this.getFollowers(username);
+
+      }).catch(err => {
+        console.log(err);
+        this.redirectToTarget(`/`)
+      })
+    }
+
+    else{
+       username = window.localStorage.getItem('username');
+       this.getFollowers(username);
+    }
   }
 
   
@@ -64,9 +84,9 @@ class Followers extends React.Component {
     const { classes } = this.props;
 
     
-    userService.getWall("admin@gmail.com").then(val => {
+    /*userService.getWall("admin@gmail.com").then(val => {
       console.log(val);
-    })
+    })*/
 
 
     /*userService.getFollowings("admin@gmail.com").then(val => {

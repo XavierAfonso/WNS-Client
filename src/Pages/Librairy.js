@@ -5,6 +5,8 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
 
+import { userService } from '../Utils/user.services';
+
 
 //const {data} = require('../Utils/data/dataLibrairy');
 const data = [];
@@ -43,6 +45,7 @@ class Librairy extends React.Component {
     this.state = {
       mobileOpen: false,
       data : data,
+      like : true,
     }
 
   }
@@ -53,9 +56,6 @@ class Librairy extends React.Component {
     });
   };
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  };
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
@@ -64,6 +64,55 @@ class Librairy extends React.Component {
   redirectToTarget = (page) => {
     this.context.router.history.push(`${page}`)
   }
+
+  
+  getBooksLiked = (username) => {
+
+    userService.getBooksLiked(username).then(val => {
+
+        const username = window.localStorage.getItem('username');
+        console.log(username);
+        console.log(this.props.match.params.name);
+
+
+        if(this.props.match.params.name !== username && this.props.match.params.name ){
+          this.setState({like : false});
+        }
+
+        if(val.data !==""){
+          this.setState({data : val.data});
+          console.log(val.data);
+          }
+     
+    }).catch(err => console.log(err));
+  }
+  
+  componentDidMount(){
+
+    let username = "";
+
+    // console.log("ici" + this.props.match.params.name)
+
+    if(this.props.match.params.name){
+
+      console.log("ici");
+      username = this.props.match.params.name;
+
+      userService.getUser(username).then(val => {
+        this.getBooksLiked(username);
+
+      }).catch(err => {
+        console.log(err);
+        this.redirectToTarget(`/`)
+      })
+    }
+
+    else{
+       username = window.localStorage.getItem('username');
+       this.getBooksLiked(username);
+    }
+  }
+
 
   render() {
 
@@ -76,7 +125,7 @@ class Librairy extends React.Component {
       
       
       <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={12} lg={4}>
-      <Post  key={i} delete = {this.deletePost} data={element} edit={this.editPost}  />
+      <Post like={this.state.like} key={i} delete = {this.deletePost} data={element} edit={this.editPost}  />
       </Grid>
 
      )

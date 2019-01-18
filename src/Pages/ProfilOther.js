@@ -5,6 +5,11 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
 import { userService } from '../Utils/user.services';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import OpenInNew from '@material-ui/icons/OpenInNew';
 
 
 import ProfilCard from '../Components/ProfilCard';
@@ -30,6 +35,19 @@ const styles = theme => ({
     flex: 1,
     padding: '60px 36px 0',
     background: '#eaeff1',
+  },
+
+  followers: {
+    marginTop: '10px',
+  },
+
+  
+  library: {
+    marginTop: '10px',
+  },
+
+  following: {
+    marginTop: '10px',
   },
 
   profil: {
@@ -76,6 +94,7 @@ class ProfilOther extends React.Component {
       currentEdit: null,
       data: [],
       mobileOpen: false,
+      unsernameFollower : ""
     }
 
   }
@@ -92,22 +111,22 @@ class ProfilOther extends React.Component {
     // L'utilisateur en cours ne pas pas acceder à sa page ex /profil/username 
     // car ça page est à /profil
     const username = window.localStorage.getItem('username');
-    const unsenameFollower = this.props.match.params.name;
+    this.setState({unsernameFollower : this.props.match.params.name});
 
-   // console.log(unsenameFollower);
-    if (unsenameFollower === username) {
-      this.redirectToTarget(`/`)
+    // console.log(unsenameFollower);
+    if (this.props.match.params.name === username) {
+      this.redirectToTarget(`/profil`)
     }
 
-    userService.getUser(unsenameFollower).then(val => {
+    userService.getUser(this.state.unsernameFollower).then(val => {
       console.log(val);
 
-      userService.getBooksUser(unsenameFollower).then(val => {
+      userService.getBooksUser(  this.state.unsernameFollower).then(val => {
 
         //console.log("ici");
         //console.log(val.data);
 
-         this.setState({data : val.data});
+        this.setState({ data: val.data });
 
       }).catch(err => {
         console.log(err);
@@ -120,9 +139,6 @@ class ProfilOther extends React.Component {
       this.redirectToTarget(`/`);
     }
     );
-
-
-
 
   };
 
@@ -171,6 +187,67 @@ class ProfilOther extends React.Component {
                 </Grid>
 
                 <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+
+                <Card  className={classes.following}>
+              <CardHeader
+                action={
+                  <IconButton
+
+                    onClick={() => {
+                      this.redirectToTarget(`/followings/${this.state.unsernameFollower}`);
+                    }}>
+                    <OpenInNew />
+                  </IconButton>
+                }
+
+                title={
+                  <Typography variant="h6" gutterBottom>
+                    His Following
+                  </Typography>
+                }
+              />
+              </Card>
+
+                  <Card className={classes.followers}>
+
+                    <CardHeader
+                      action={
+                        <IconButton
+                          onClick={() => {
+                            this.redirectToTarget(`/followers/${this.state.unsernameFollower}`);
+                          }}>
+                          <OpenInNew />
+                        </IconButton>
+                      }
+
+                      title={
+                        <Typography variant="h6" gutterBottom>
+                          His Followers
+                          </Typography>
+                      }
+                    />
+
+
+                  </Card>
+
+                  <Card  className={classes.library}>
+                <CardHeader
+                  action={
+                    <IconButton
+                      onClick={() => {
+                        this.redirectToTarget(`/librairy/${this.state.unsernameFollower}`);
+                      }}>
+                      <OpenInNew />
+                    </IconButton>
+                  }
+
+                  title={
+                    <Typography variant="h6" gutterBottom>
+                      His Library
+                    </Typography>
+                  }
+                />
+                </Card>
 
 
                 </Grid>

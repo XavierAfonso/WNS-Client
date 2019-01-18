@@ -48,6 +48,11 @@ class ProfilCard extends Component {
       username : '',
       isSuscribe : false,
       colorBtn : "primary",
+      nbFollowers : 0,
+      nbFollowings : 0,
+      nbBooks : 0,
+      nbLikes : 0,
+
     }
 
     this.state.username = this.props.username;
@@ -80,25 +85,62 @@ class ProfilCard extends Component {
 
   componentDidMount() {
 
+    
+
     window.scrollTo(0, 0)
 
     const username = window.localStorage.getItem('username');
 
-    userService.getFollowers(username).then(val => {
+    // Get the followings for the button
+    userService.getFollowings(username).then(val => {
 
       if(val.data !==""){
-      
-      let test = val.data.filter(x => x.email === this.state.username);
-      console.log(test);
 
-     if(test.length > 0){
-        this.setState({isSuscribe: true});
-     }
-      
-    
+        this.setState({nbFollowings : val.data.length});
+        let test = val.data.filter(x => x.email === this.state.username);
+        console.log(test);
+
+        if(test.length > 0){
+          this.setState({isSuscribe: true});
+      }     
     }
+  });
 
+      // Get the nb of followers
+      userService.getFollowers(this.state.username).then(val => {
+        if(val.data !==""){
+          this.setState({nbFollowers : val.data.length}); 
+        }
     });
+
+    // Get the nb of followings
+    userService.getFollowings(this.state.username).then(val => {
+      if(val.data !==""){
+        this.setState({nbFollowings : val.data.length}); 
+      }
+    });
+
+  // Get the nb of books
+  userService.getBooksUser(this.state.username).then(val => {
+    if(val.data !==""){
+      this.setState({nbBooks : val.data.length}); 
+    }
+  });
+
+  // Get the nb of likes
+  userService.getBooksLiked(this.state.username).then(val => {
+    if(val.data !==""){
+      this.setState({nbLikes : val.data.length}); 
+    }
+  });
+
+
+
+
+
+
+
+
   };
 
   render() {
@@ -118,16 +160,20 @@ class ProfilCard extends Component {
           </Grid>
 
           <Grid container justify="center" alignItems="center">
-            <Avatar alt="Remy Sharp" src="https://www.balkans.ch//assets/img/admin.png" className={classes.bigAvatar} />
+            {/*<Avatar alt="Remy Sharp" src="https://www.balkans.ch//assets/img/admin.png" className={classes.bigAvatar} />*/}
+            <Avatar aria-label="Recipe" className={classes.bigAvatar}>
+                  {this.state.username[0].toLocaleUpperCase()}
+            </Avatar>
+    
           </Grid>
 
           <Grid  style ={{textAlign: 'center', backgroundColor:'transparent'}} container justify="center" alignItems="center">
 
             
-            Followers : 3<br/>
-            Followings : 5<br/>
-            Nb books posted : 8 <br/>
-            Nb books on library : 12 <br/>
+            Followers : {this.state.nbFollowers}<br/>
+            Followings : {this.state.nbFollowings}<br/>
+            Nb books posted : {this.state.nbBooks} <br/>
+            Nb books on library : {this.state.nbLikes}<br/>
           
           </Grid>
 

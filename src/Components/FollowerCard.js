@@ -16,7 +16,7 @@ const styles  = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    height: '200px',
+    height: '150px',
     marginTop: '10px',
     //backgroundColor : 'transparent'
   },
@@ -122,7 +122,7 @@ class FollowerCard extends Component {
           </Typography>
 
           
-          <Grid container justify="center" alignItems="center">
+          {/*<Grid container justify="center" alignItems="center">
           <Typography style={{marginTop:'10px', backgroundColor:'transparent'}} variant="body1">
 
 
@@ -152,7 +152,7 @@ class FollowerCard extends Component {
 
 
           </Typography>
-          </Grid>
+        </Grid>*/}
           
           </div>
           </Paper>

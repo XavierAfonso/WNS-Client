@@ -22,18 +22,18 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 //import PDFObject from '../pdfobject';
-import PDFViewer from '../Components/PdfViewer'; 
+import PDFViewer from '../Components/PdfViewer';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-
+import { userService } from '../Utils/user.services';
 import Chip from '@material-ui/core/Chip';
 
 
 const styles = theme => ({
   card: {
     //maxWidth: 700,
-    marginTop:'10px',
+    marginTop: '10px',
   },
   media: {
     height: 0,
@@ -76,19 +76,20 @@ class RecipeReviewCard extends React.Component {
 
       id: '',
       author: '',
-      title:'',
-      description : '',
-      date : '',
-      linkPdf : '',
-      like : false,
-      initial : '',
-      canEdit : false,
-      tags : [],
-      language : '',
+      title: '',
+      description: '',
+      date: '',
+      linkPdf: '',
+      like: false,
+      initial: '',
+      canEdit: false,
+      tags: [],
+      language: '',
+      test: false,
 
     };
 
-    
+
     this.state.id = this.props.data.id;
     this.state.author = this.props.data.authorId;
     this.state.title = this.props.data.title;
@@ -96,16 +97,16 @@ class RecipeReviewCard extends React.Component {
     this.state.date = this.props.data.createdDate;
 
     this.state.linkPdf = `http://127.0.0.1:8080/books/${this.state.id}/pdf`;
-    
-    
-  
+
+
+
     this.state.language = this.props.data.language;
 
     this.state.initial = this.props.data.authorId[0].toUpperCase();
 
     this.state.tags = this.props.data.tags;
 
-    this.state.like = this.props.data.like;
+    this.state.like = this.props.like;
     this.state.canEdit = this.props.canEdit;
 
     //console.log(this.props.data);
@@ -138,8 +139,8 @@ class RecipeReviewCard extends React.Component {
     this.handleClose();
   }
 
-   // Comments
-   showComments = () => {
+  // Comments
+  showComments = () => {
     console.log("Comments");
     this.handleClose();
   }
@@ -159,7 +160,37 @@ class RecipeReviewCard extends React.Component {
   // Favorite
   clickFavorite = () => {
     console.log("Favorite");
-    this.setState({like: !this.state.like});
+
+    const username = window.localStorage.getItem('username');
+
+    if(!this.state.like){
+
+
+      userService.getUser(username).then(response => {
+
+          console.log(response.data.likes);
+
+          let isExist = response.data.likes;
+
+          if (isExist.indexOf(this.state.id) === -1) {
+            userService.likeAbook(this.state.id).then(val => console.log(val));
+          }
+          else{
+            console.log("Already liked");
+          }
+
+          
+
+      })
+
+      //userService.likeAbook(this.state.id).then(val => console.log(val));
+      }
+      else{
+        console.log(this.state.id);
+        userService.unLikeAbook(this.state.id).then(val => console.log(val));
+      }
+
+    this.setState({ like: !this.state.like });
   }
 
   // Share
@@ -188,15 +219,20 @@ class RecipeReviewCard extends React.Component {
     this.context.router.history.push(`${page}`)
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     //return nextProps.data.authorId !== undefined;
-   // console.log("ici");
+    // console.log("ici");
     //console.log(nextProps);
 
-    return false;
+    if (this.state.expanded !== nextState.expanded || this.state.like !== nextState.like) {
+      return true;
+    }
+    else {
+      return false;
+    }
 
   }
-  
+
   render() {
 
     const { classes } = this.props;
@@ -206,16 +242,16 @@ class RecipeReviewCard extends React.Component {
 
     const renderTags = this.state.tags.map((tag) => {
       return (<Chip key={tag} label={tag} className={classes.chip} />)
-     });
+    });
 
     //Check privileges
     const checkRole = () => {
 
-      if(this.state.canEdit){
-        return(
-        <>
-        
-        {/*<IconButton
+      if (this.state.canEdit) {
+        return (
+          <>
+
+            {/*<IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
@@ -229,19 +265,19 @@ class RecipeReviewCard extends React.Component {
           >  
             <EditIcon/>
         </IconButton>*/}
-  
-          <IconButton
-          onClick={this.deletePost}
-          >  
-            <DeleteIcon/>
-          </IconButton>
-        </>
-      )
-    }
-    else{
-      return(
-      <>
-        {/*<IconButton
+
+            <IconButton
+              onClick={this.deletePost}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        )
+      }
+      else {
+        return (
+          <>
+            {/*<IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
@@ -249,45 +285,45 @@ class RecipeReviewCard extends React.Component {
         >
         <MoreVertIcon />
         </IconButton>*/}
-      </>
-      )
+          </>
+        )
+      }
     }
-  }
 
     return (
-      
+
       <Card data-tut=".4-home-step" className={classes.card} >
 
 
-        <CardHeader 
-          
+        <CardHeader
+
           avatar={
 
-            < div style={{background:'transparent'}}>
-            
-            <IconButton
+            < div style={{ background: 'transparent' }}>
 
-              onClick={() => {
-                this.redirectToTarget(`/profil/${this.state.author}`);
-              }}
-            
-            >
-              <Avatar aria-label="Recipe" className={classes.avatar}>
-                {this.state.initial}
-              </Avatar>
-            </IconButton>
+              <IconButton
+
+                onClick={() => {
+                  this.redirectToTarget(`/profil/${this.state.author}`);
+                }}
+
+              >
+                <Avatar aria-label="Recipe" className={classes.avatar}>
+                  {this.state.initial}
+                </Avatar>
+              </IconButton>
             </div>
           }
 
           action={checkRole()}
-          
+
           title={this.state.author}
-          
+
           subheader={this.state.date}
-          
+
         />
 
-          {/*<Menu
+        {/*<Menu
           id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -298,45 +334,45 @@ class RecipeReviewCard extends React.Component {
           <MenuItem onClick={this.showComments}>Comments</MenuItem>
 
           </Menu>*/}
-      
-        <CardContent style={{marginLeft:'10px'}}>
 
-        <Typography variant="h6" style={{paddingBottom:'10px'}}>
-          {this.state.title}
+        <CardContent style={{ marginLeft: '10px' }}>
+
+          <Typography variant="h6" style={{ paddingBottom: '10px' }}>
+            {this.state.title}
           </Typography>
 
           <Typography component="p">
-          {this.state.description}
+            {this.state.description}
           </Typography>
         </CardContent>
 
         <CardContent>
-         
-         
-          {renderTags}
-          
-          {this.state.language ? <Chip key={this.state.language} label={this.state.language} className={classes.chip}/>  : null}
 
-        
+
+          {renderTags}
+
+          {this.state.language ? <Chip key={this.state.language} label={this.state.language} className={classes.chip} /> : null}
+
+
         </CardContent>
-        
-        
-        <CardActions  className={classes.actions} disableActionSpacing>
+
+
+        <CardActions className={classes.actions} disableActionSpacing>
           <IconButton data-tut=".5-home-step"
-          aria-label="Add to favorites"
-          onClick={this.clickFavorite}
+            aria-label="Add to favorites"
+            onClick={this.clickFavorite}
           >
 
-          {this.state.like ?   <FavoriteIcon style={{color:'red'}}/> : <FavoriteIcon/> }
-          
+            {this.state.like ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
+
           </IconButton>
-          <IconButton  data-tut=".6-home-step"
-          aria-label="Share"
-          onClick={this.clickShare}
+          <IconButton data-tut=".6-home-step"
+            aria-label="Share"
+            onClick={this.clickShare}
           >
             <ShareIcon />
           </IconButton>
-          <IconButton  data-tut=".7-home-step"
+          <IconButton data-tut=".7-home-step"
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
             })}
@@ -345,17 +381,17 @@ class RecipeReviewCard extends React.Component {
             aria-label="Show more"
           >
             <ExpandMoreIcon />
-            
+
           </IconButton>
 
           <IconButton data-tut=".8-home-step"
             onClick={this.openPDF}
           >
 
-          <ChromeReaderMode/>
-          
+            <ChromeReaderMode />
+
           </IconButton>
-          
+
 
 
 
@@ -363,16 +399,16 @@ class RecipeReviewCard extends React.Component {
 
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          
+
           <CardContent>
 
-          <PDFViewer
+            <PDFViewer
 
-            pdfBlob= {this.state.linkPdf}
-            width="100%"
-            height="500px"
-            containerId = {"container" + this.state.id}
-          />
+              pdfBlob={this.state.linkPdf}
+              width="100%"
+              height="500px"
+              containerId={"container" + this.state.id}
+            />
 
             {/*<Typography paragraph>Method:</Typography>
             <Typography paragraph>
@@ -413,21 +449,21 @@ class RecipeReviewCard extends React.Component {
     if (this.props.data !== prevProps.data) {
 
       console.log("DATA CHANGE");
-            
+
       this.setState({
 
-        id : this.props.data.id,
-        author : this.props.data.author,
-        title : this.props.data.title,
-        description : this.props.data.description,
-        date : this.props.data.date,
-        linkPdf : this.props.data.linkPdf,
-        like : this.props.data.like,
-        initial : this.props.data.initial,
-        tags : this.props.data.tags,
-        language : this.props.data.language,
-        me : this.props.data.canEdit,
-        firstTime : false,
+        id: this.props.data.id,
+        author: this.props.data.author,
+        title: this.props.data.title,
+        description: this.props.data.description,
+        date: this.props.data.date,
+        linkPdf: this.props.data.linkPdf,
+        like: this.props.data.like,
+        initial: this.props.data.initial,
+        tags: this.props.data.tags,
+        language: this.props.data.language,
+        me: this.props.data.canEdit,
+        firstTime: false,
       });
 
     }

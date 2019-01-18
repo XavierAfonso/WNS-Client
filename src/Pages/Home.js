@@ -65,9 +65,10 @@ const styles = theme => ({
     // height: 'auto',
   },
   followers: {
-
     marginTop: '10px',
-
+  },
+  library: {
+    marginTop: '10px',
   },
   avatar: {
     //margin: 10,
@@ -249,7 +250,6 @@ class Home extends React.Component {
                           <CardHeader
                             action={
                               <IconButton
-
                                 onClick={() => {
                                   this.redirectToTarget(`/followings`);
                                 }}>
@@ -264,31 +264,37 @@ class Home extends React.Component {
                             }
                           />
 
-                          {/*<CardContent >
-                            <Grid container justify="center" alignItems="center">
-                              <IconButton>
-                                <Avatar className={classes.avatar}>H</Avatar>
-                              </IconButton>
-                              <IconButton>
-                                <Avatar className={classes.orangeAvatar}>N</Avatar>
-                              </IconButton>
-
-                              <IconButton>
-                                <Avatar className={classes.purpleAvatar}>OP</Avatar>
-                              </IconButton>
-                            </Grid>
-                          </CardContent>*/}
 
                         </Card>
 
-
                         <Card data-tut=".10-home-step" className={classes.followers}>
+
+                      <CardHeader
+                        action={
+                          <IconButton
+                            onClick={() => {
+                              this.redirectToTarget(`/followers`);
+                            }}>
+                            <OpenInNew />
+                          </IconButton>
+                        }
+
+                        title={
+                          <Typography variant="h6" gutterBottom>
+                            Followers
+                          </Typography>
+                        }
+                      />
+                      </Card>
+
+
+                        <Card data-tut="" className={classes.library}>
 
                           <CardHeader
                             action={
                               <IconButton
                                 onClick={() => {
-                                  this.redirectToTarget(`/followers`);
+                                  this.redirectToTarget(`/librairy`);
                                 }}>
                                 <OpenInNew />
                               </IconButton>
@@ -296,24 +302,12 @@ class Home extends React.Component {
 
                             title={
                               <Typography variant="h6" gutterBottom>
-                                Followers
+                                Library
                               </Typography>
                             }
                           />
-
-                          {/* <CardContent >
-
-                            <Grid container justify="center" alignItems="center">
-                              <IconButton>  <Avatar className={classes.avatar}>P</Avatar></IconButton>
-                              <IconButton><Avatar className={classes.orangeAvatar}>W</Avatar></IconButton>
-                              <IconButton>  <Avatar className={classes.purpleAvatar}>IL</Avatar></IconButton>
-                              <IconButton><Avatar className={classes.avatar}>H</Avatar></IconButton>
-                            </Grid>
-
-                          </CardContent>
-                          */}
-                          
                         </Card>
+
                       </Grid>
                     </Grid>
                   </main>

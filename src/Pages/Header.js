@@ -246,19 +246,20 @@ class Header extends React.Component {
               open={isMobileMenuOpen}
               onClose={this.handleMobileMenuClose}
             >
-              <MenuItem>
+              {/*<MenuItem>
                 <IconButton color="inherit">
                   <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                   </Badge>
                 </IconButton>
                 <p>Messages</p>
-              </MenuItem>
+              </MenuItem>*/}
               <MenuItem>
                 <IconButton color="inherit">
-                  <Badge badgeContent={11} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
+                <NotificationsIcon />
+                  {/*<Badge badgeContent={11} color="secondary">
+                   
+                  </Badge>*/}
                 </IconButton>
                 <p>Notifications</p>
               </MenuItem>
@@ -322,15 +323,16 @@ class Header extends React.Component {
 
                   <div className={classes.sectionDesktop}>
 
-                    <IconButton color="inherit">
+                    {/*<IconButton color="inherit">
                       <Badge badgeContent={4} color="secondary">
                         <MailIcon />
                       </Badge>
-                    </IconButton>
+                </IconButton>*/}
                     <IconButton color="inherit">
-                      <Badge badgeContent={17} color="secondary">
-                        <NotificationsIcon />
-                      </Badge>
+                    <NotificationsIcon />
+                      {/*<Badge badgeContent={0} color="secondary"> 
+                      
+                      </Badge>*/} 
                     </IconButton>
                     <IconButton data-tut=".12-home-step"
                       aria-owns={isMenuOpen ? 'material-appbar' : undefined}

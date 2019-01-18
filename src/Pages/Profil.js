@@ -9,13 +9,17 @@ import Post from '../Components/Post';
 import CreatePostDialog from '../Components/CreatePostDialog';
 import EditPostDialog from '../Components/EditPostDialog';
 import { userService } from '../Utils/user.services';
-
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import OpenInNew from '@material-ui/icons/OpenInNew';
 import ProfilCard from '../Components/ProfilCard';
 
-const {theme} = require('../Utils/theme');
+const { theme } = require('../Utils/theme');
 
-const styles  = theme => ({
-  
+const styles = theme => ({
+
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -29,6 +33,17 @@ const styles  = theme => ({
     flex: 1,
     padding: '60px 36px 0',
     background: '#eaeff1',
+  },
+
+  followers: {
+    marginTop: '10px',
+  },
+
+  following: {
+    marginTop: '10px',
+  },
+  library: {
+    marginTop: '10px',
   },
 
   profil: {
@@ -46,7 +61,7 @@ const styles  = theme => ({
     display: 'flex',
   },
 
-  
+
   addBtn: {
 
     display: 'flex',
@@ -67,9 +82,9 @@ class Profil extends React.Component {
     super(props)
     this.state = {
       open: false,
-      openEdit : false,
-      currentEdit : null,
-      data : [],
+      openEdit: false,
+      currentEdit: null,
+      data: [],
       mobileOpen: false,
     }
   }
@@ -98,55 +113,55 @@ class Profil extends React.Component {
     //console.log("CLOSE Edit");
   };
 
-    // const fd = new FormData();
-    //fd.append('pdf',this.state.selectedFile,this.state.selectedFile.name)
+  // const fd = new FormData();
+  //fd.append('pdf',this.state.selectedFile,this.state.selectedFile.name)
 
-    handleAdd = (val) => {
+  handleAdd = (val) => {
 
-      let newArray = this.state.data.slice();    
-      newArray.push(val);   
-      this.setState({data:newArray})
+    let newArray = this.state.data.slice();
+    newArray.push(val);
+    this.setState({ data: newArray })
 
-      this.handleClose();
-    };
+    this.handleClose();
+  };
 
-    handleUpdate= (val) => {
+  handleUpdate = (val) => {
 
-      let arrayCpy = [...this.state.data];
-     
-      let index = this.state.data.findIndex(e => e.id === val.id);
+    let arrayCpy = [...this.state.data];
 
-      arrayCpy[index] = val;
-      this.setState({data : arrayCpy});
+    let index = this.state.data.findIndex(e => e.id === val.id);
 
-      this.handleCloseEdit();
-    };
+    arrayCpy[index] = val;
+    this.setState({ data: arrayCpy });
 
-    deletePost = (id) => {
+    this.handleCloseEdit();
+  };
 
-      if(window.confirm(`Delete ${id}`)){
-      
-        console.log(id);
+  deletePost = (id) => {
 
-        userService.deleteBooksUser(id).then((val ) => {
-          console.log(val);
-        });
+    if (window.confirm(`Delete ${id}`)) {
 
-        let filteredArray = this.state.data.filter(element => element.id !== id);
-  
-        return this.setState({
-          data: filteredArray
-        });
-      }
-    }
+      console.log(id);
 
-    editPost = (data) => {
+      userService.deleteBooksUser(id).then((val) => {
+        console.log(val);
+      });
 
-      this.setState({
-        openEdit: true,
-        currentEdit: data
+      let filteredArray = this.state.data.filter(element => element.id !== id);
+
+      return this.setState({
+        data: filteredArray
       });
     }
+  }
+
+  editPost = (data) => {
+
+    this.setState({
+      openEdit: true,
+      currentEdit: data
+    });
+  }
 
   componentDidMount() {
 
@@ -156,9 +171,9 @@ class Profil extends React.Component {
 
     userService.getBooksUser(username).then(val => {
 
-      if(val.data !==""){
-      this.setState({data : val.data});
-      //console.log(val.data);
+      if (val.data !== "") {
+        this.setState({ data: val.data });
+        //console.log(val.data);
       }
 
     });
@@ -169,60 +184,133 @@ class Profil extends React.Component {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = (page) => {
+    this.context.router.history.push(`${page}`)
+  }
+
   render() {
     const { classes } = this.props;
 
     const username = window.localStorage.getItem('username');
 
     const renderData = this.state.data.map((element) => {
-      return (<Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost}
-        canEdit ={true} />)
-     });
+      return (<Post delete={this.deletePost} key={element.id} data={element} edit={this.editPost}
+        canEdit={true} />)
+    });
 
     return (
 
       <MuiThemeProvider theme={theme}>
-      
+
         <div className={classes.root}>
-          
+
           {/*<CssBaseline /> */}
 
           <div className={classes.appContent}>
-            <Header home = "false" onDrawerToggle={this.handleDrawerToggle} />
-              <main className={classes.mainContent}>
+            <Header home="false" onDrawerToggle={this.handleDrawerToggle} />
+            <main className={classes.mainContent}>
 
-          <Grid container spacing={24}>
-          <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+              <Grid container spacing={24}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
 
-          <ProfilCard  me="true" username={username} />
+                  <ProfilCard me="true" username={username} />
 
-          </Grid>
+                </Grid>
 
-          <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
 
-            <Paper className={classes.newPost}>
+                  <Paper className={classes.newPost}>
 
-              <Button variant="contained" color="primary" className={classes.addBtn} onClick={this.handleClickAddBtnOpen}>
-                Add
+                    <Button variant="contained" color="primary" className={classes.addBtn} onClick={this.handleClickAddBtnOpen}>
+                      Add
                </Button>
 
-               <CreatePostDialog add = {this.handleAdd} close ={this.handleClose} open={this.state.open}/>
+                    <CreatePostDialog add={this.handleAdd} close={this.handleClose} open={this.state.open} />
 
-               <EditPostDialog data = {this.state.currentEdit} update = {this.handleUpdate} close ={this.handleCloseEdit} open={this.state.openEdit}/>
+                    <EditPostDialog data={this.state.currentEdit} update={this.handleUpdate} close={this.handleCloseEdit} open={this.state.openEdit} />
 
-            </Paper>
+                  </Paper>
 
-            {renderData}
+                  {renderData}
 
-          </Grid>
+                </Grid>
 
-          <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
-          </Grid>
-
-        </Grid>
                 
+              <Card  className={classes.following}>
+              <CardHeader
+                action={
+                  <IconButton
+
+                    onClick={() => {
+                      this.redirectToTarget(`/followings`);
+                    }}>
+                    <OpenInNew />
+                  </IconButton>
+                }
+
+                title={
+                  <Typography variant="h6" gutterBottom>
+                    Following
+                  </Typography>
+                }
+              />
+              </Card>
+
+                  <Card className={classes.followers}>
+
+                    <CardHeader
+                      action={
+                        <IconButton
+                          onClick={() => {
+                            this.redirectToTarget(`/followers`);
+                          }}>
+                          <OpenInNew />
+                        </IconButton>
+                      }
+
+                      title={
+                        <Typography variant="h6" gutterBottom>
+                          Followers
+                    </Typography>
+                      }
+                    />
+
+
+                  </Card>
+
+
+                         <Card  className={classes.library}>
+
+                        <CardHeader
+                          action={
+                            <IconButton
+                              onClick={() => {
+                                this.redirectToTarget(`/librairy`);
+                              }}>
+                              <OpenInNew />
+                            </IconButton>
+                          }
+
+                          title={
+                            <Typography variant="h6" gutterBottom>
+                              Library
+                            </Typography>
+                          }
+                        />
+                        </Card>
+
+
+                </Grid>
+
+              </Grid>
+
 
 
             </main>

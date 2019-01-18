@@ -5,6 +5,9 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import FollowingCard from '../Components/FollowingCard';
 
+import { userService } from '../Utils/user.services';
+
+
 const {theme} = require('../Utils/theme');
 
 const styles  = theme => ({
@@ -26,7 +29,9 @@ const styles  = theme => ({
 });
 
 
-const {data} = require('../Utils/data/dataFollowings');
+//const {data} = require('../Utils/data/dataFollowings');
+
+
 
 
 class Followings extends React.Component {
@@ -34,11 +39,57 @@ class Followings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data : data,
+      data : [],
       mobileOpen: false,
     }
   }
 
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  redirectToTarget = (page) => {
+    console.log(this.beforeNavigate);
+    this.context.router.history.push(`${page}`)
+  }
+
+  getFollowings = (username) => {
+
+    userService.getFollowings(username).then(val => {
+
+      if(val.data !==""){
+        this.setState({data : val.data});
+        console.log(val.data);
+        }
+     
+    }).catch(err => console.log(err));
+  }
+
+  componentDidMount(){
+
+    console.log("test");
+
+    let username = "";
+
+    // console.log("ici" + this.props.match.params.name)
+
+    if(this.props.match.params.name){
+      username = this.props.match.params.name;
+
+      userService.getUser(username).then(val => {
+        this.getFollowings(username);
+
+      }).catch(err => {
+        console.log(err);
+        this.redirectToTarget(`/`)
+      })
+    }
+
+    else{
+       username = window.localStorage.getItem('username');
+       this.getFollowings(username);
+    }
+  }
   
   render() {
     const { classes } = this.props;
@@ -48,7 +99,7 @@ class Followings extends React.Component {
       return (
       
       <Grid  key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
-        <FollowingCard key={i}  username = {element.username}  />
+        <FollowingCard key={i}  username = {element.email}  />
       </Grid>
       
      )
