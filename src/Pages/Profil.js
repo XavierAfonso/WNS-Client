@@ -6,10 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Post from '../Components/Post';
-import axios from 'axios';
-
 import CreatePostDialog from '../Components/CreatePostDialog';
 import EditPostDialog from '../Components/EditPostDialog';
+import { userService } from '../Utils/user.services';
 
 import ProfilCard from '../Components/ProfilCard';
 
@@ -90,6 +89,7 @@ class Profil extends React.Component {
   // Close add dialog
   handleClose = () => {
     this.setState({ open: false });
+    window.location.reload();
   };
 
   // Close edit dialog
@@ -124,11 +124,20 @@ class Profil extends React.Component {
 
     deletePost = (id) => {
 
-      let filteredArray = this.state.data.filter(element => element.id !== id);
+      if(window.confirm(`Delete ${id}`)){
+      
+        console.log(id);
 
-      return this.setState({
-        data: filteredArray
-      });
+        userService.deleteBooksUser(id).then((val ) => {
+          console.log(val);
+        });
+
+        let filteredArray = this.state.data.filter(element => element.id !== id);
+  
+        return this.setState({
+          data: filteredArray
+        });
+      }
     }
 
     editPost = (data) => {
@@ -141,34 +150,19 @@ class Profil extends React.Component {
 
   componentDidMount() {
 
-
     window.scrollTo(0, 0)
 
-    this.getBooksUser("admin@gmail.com").then(val => {
+    const username = window.localStorage.getItem('username');
 
+    userService.getBooksUser(username).then(val => {
+
+      if(val.data !==""){
       this.setState({data : val.data});
-      console.log(val.data);
+      //console.log(val.data);
+      }
 
     });
-    
-
-    
-
-
   };
-
-  
-  getBooksUser = (id) => {
-
-    const token = window.localStorage.getItem('token');
-
-    let headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token, 
-    }
-
-    return axios.get(`/books/?id_user=${id}`,{headers});
-}
 
 
   handleDrawerToggle = () => {
@@ -177,6 +171,8 @@ class Profil extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+    const username = window.localStorage.getItem('username');
 
     const renderData = this.state.data.map((element) => {
       return (<Post delete = {this.deletePost} key= {element.id} data={element} edit={this.editPost}
@@ -199,7 +195,7 @@ class Profil extends React.Component {
           <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
 
-          <ProfilCard  me="true" username="Xavier"/>
+          <ProfilCard  me="true" username={username} />
 
           </Grid>
 

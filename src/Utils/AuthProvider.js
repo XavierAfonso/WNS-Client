@@ -94,6 +94,7 @@ class AuthProvider extends Component {
             console.log(response);
             const {token} = response.data;
             window.localStorage.setItem('token',token);
+            window.localStorage.setItem('username',username);
 
             console.log("ICIIIII");
 
@@ -131,6 +132,7 @@ class AuthProvider extends Component {
     signOut = () => {
         console.log("LOGOUT")
         window.localStorage.removeItem('token');
+        window.localStorage.removeItem('username');
         this.setState({user : null})
         //window.location.reload();
     }

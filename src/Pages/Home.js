@@ -18,6 +18,8 @@ import OpenInNew from '@material-ui/icons/OpenInNew';
 import Typography from '@material-ui/core/Typography';
 import { AuthContext } from '../Utils/AuthProvider';
 
+import { userService } from '../Utils/user.services';
+
 import Tour from 'reactour';
 
 const { theme } = require('../Utils/theme');
@@ -90,13 +92,35 @@ class Home extends React.Component {
     this.state = {
       mobileOpen: false,
       filter: {},
-      data: data,
-      dataFiltred: data,
+      data: [],
+      dataFiltred: [],
       isTourOpen: true,
       closeTour: false,
+      cpt : 0,
 
     }
   }
+
+  componentDidMount(){
+
+    const username = window.localStorage.getItem('username');
+
+    userService.getWall(username).then(val => {
+
+      if(val.data !==""){
+        
+        this.setState({data : val.data,
+                      dataFiltred : val.data
+                     });
+
+        // console.log("ici");
+        console.log(val.data);
+        }
+     
+    }).catch(err => console.log(err));
+
+
+  };
 
   
   closeTour = () => {
@@ -122,14 +146,30 @@ class Home extends React.Component {
   }
 
   changeValue = (newvalue) => {
-    this.setState({ value: newvalue });
+    
+    
+    // console.log(this.state.dataFiltred);
+    // console.log(newvalue);
+    
+    
+    // this.setState({ dataFiltred: [] });
 
-    let tmp = this.state.data;
+    if(newvalue.length === 0){
+      this.setState({ dataFiltred: this.state.data });
+    }
+    else{
+      this.setState({ dataFiltred: newvalue });
+    }
+   
+   
+
+
+    //let tmp = this.state.data;
 
     //tmp = tmp.filter(x => x.title.includes(newvalue.title));
     //tmp = tmp.filter(x => x.tags.includes(newvalue.tags));
 
-    this.setState({ dataFiltred: tmp });
+    //this.setState({ dataFiltred: tmp });
 
     console.log(newvalue);
   }
@@ -149,11 +189,13 @@ class Home extends React.Component {
           // getFollowers(email);
 
           //getFollowings(email);
+          
+          //
 
           const { classes } = this.props;
 
           const renderData = this.state.dataFiltred.map((element) => {
-            return (<Post key={element.id} data={element} />)
+            return (<Post key={element.id}  data={element} />)
           });
 
           return (
@@ -194,7 +236,9 @@ class Home extends React.Component {
 
                       <Grid  data-tut=".3-home-step" item xs={12} md={8}>
 
+                        <div key = {this.state.cpt}>
                         {renderData}
+                        </div>
 
                       </Grid>
 
@@ -220,7 +264,7 @@ class Home extends React.Component {
                             }
                           />
 
-                          <CardContent >
+                          {/*<CardContent >
                             <Grid container justify="center" alignItems="center">
                               <IconButton>
                                 <Avatar className={classes.avatar}>H</Avatar>
@@ -233,7 +277,8 @@ class Home extends React.Component {
                                 <Avatar className={classes.purpleAvatar}>OP</Avatar>
                               </IconButton>
                             </Grid>
-                          </CardContent>
+                          </CardContent>*/}
+
                         </Card>
 
 
@@ -256,7 +301,7 @@ class Home extends React.Component {
                             }
                           />
 
-                          <CardContent >
+                          {/* <CardContent >
 
                             <Grid container justify="center" alignItems="center">
                               <IconButton>  <Avatar className={classes.avatar}>P</Avatar></IconButton>
@@ -266,6 +311,8 @@ class Home extends React.Component {
                             </Grid>
 
                           </CardContent>
+                          */}
+                          
                         </Card>
                       </Grid>
                     </Grid>

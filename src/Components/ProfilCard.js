@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
+import { userService } from '../Utils/user.services';
+
 const styles  = theme => ({
   
   profil: {
@@ -52,6 +54,18 @@ class ProfilCard extends Component {
   }
 
   follow = () => {
+
+    if(!this.state.isSuscribe){
+      userService.postFollow(this.state.username).then(val => {
+        console.log(val);
+      }).catch(err => console.log(err));
+    }
+
+    else{
+      userService.postUnFollow(this.state.username).then(val => {
+        console.log(val);
+      }).catch(err => console.log(err));
+    }
     this.setState({isSuscribe: !this.state.isSuscribe});
     console.log(`Follow ${this.state.username} : ${this.state.isSuscribe}`);
   }
@@ -63,6 +77,29 @@ class ProfilCard extends Component {
   eventOnMouseOut = () => {
     this.setState({colorBtn: "primary"});
   }
+
+  componentDidMount() {
+
+    window.scrollTo(0, 0)
+
+    const username = window.localStorage.getItem('username');
+
+    userService.getFollowers(username).then(val => {
+
+      if(val.data !==""){
+      
+      let test = val.data.filter(x => x.email === this.state.username);
+      console.log(test);
+
+     if(test.length > 0){
+        this.setState({isSuscribe: true});
+     }
+      
+    
+    }
+
+    });
+  };
 
   render() {
 

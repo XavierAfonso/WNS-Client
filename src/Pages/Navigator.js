@@ -12,6 +12,8 @@ import Search from '@material-ui/icons/Search';
 import ChipInput from 'material-ui-chip-input';
 import AutoComplete from '../Components/AutoComplete';
 
+import { userService } from '../Utils/user.services';
+
 const authors = [
   { label: 'Oliver Hansen' },
   { label: 'Van Henry' },
@@ -110,9 +112,10 @@ class Navigator extends React.Component {
     this.state = {
       title: '',
       description: '',
+      bookContent: '',
       tags: [],
-      selectedAuthors: [],
-      selectedLanguages: [],
+      //selectedAuthors: [],
+      //selectedLanguages: [],
     }
   }
 
@@ -139,12 +142,33 @@ class Navigator extends React.Component {
   // Search Button
   searchBooks = () => {
 
+    
+      let book_post_description = this.state.description ==='' ? null : this.state.description;
+      let book_title = this.state.title ==='' ? null : this.state.title;
+      let book_content = this.state.bookContent ==='' ? null : this.state.bookContent;
+      let book_tags = this.state.tags.length ===0 ? null :  this.state.tags;
+    
+         
     console.log("SEARCH");
-    console.log("Title: " + this.state.title);
-    console.log("Descritpion: " + this.state.description);
-    console.log("Authors: " + this.state.selectedAuthors);
-    console.log("Languages: " + this.state.selectedLanguages);
-    console.log("Tags : " + this.state.tags);
+    console.log("Title: " + book_title);
+    console.log("Descritpion: " + book_post_description);
+    console.log("BookContent: " + book_content);
+    console.log(book_tags);
+
+
+    userService.searchBook(book_title,book_post_description,book_content,book_tags).then(val => {
+      //console.log(val.data);
+
+      if(val.data.length > 0){
+        this.props.changeValue(val.data);
+      }
+      else{
+        this.props.changeValue([]);
+      }
+
+
+      
+    })
 
     const filter =  {
      title: this.state.title,
@@ -154,7 +178,7 @@ class Navigator extends React.Component {
      tags: this.state.tags,
     }
 
-    this.props.changeValue(filter);
+   
   };
 
 
@@ -199,12 +223,25 @@ class Navigator extends React.Component {
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
+            <TextField
+              id="standard-multiline-flexible"
+              label="Content"
+              multiline
+              rowsMax="4"
+              value={this.state.bookContent}
+              onChange={this.handleChange('bookContent')}
+              className={classes.textField}
+              margin="normal"
+            />
+          </FormControl>
+
+           {/*<FormControl margin="normal" fullWidth>
             <AutoComplete sendData = {this.updateSelectedAuthors} label = "Authors" data = {authors} />
           </FormControl>
 
-          <FormControl margin="normal" fullWidth>
+         <FormControl margin="normal" fullWidth>
             <AutoComplete  sendData = {this.updateSelectedLanguages} label = "Languages" data = {languages} />
-          </FormControl>
+    </FormControl>*/}
 
           <FormControl margin="normal" fullWidth>
             <ChipInput

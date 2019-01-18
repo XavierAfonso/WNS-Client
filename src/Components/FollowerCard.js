@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 
+import { userService } from '../Utils/user.services';
+
 const styles  = theme => ({
   
   profil: {
@@ -54,6 +56,18 @@ class FollowerCard extends Component {
   }
 
   follow = () => {
+
+    if(!this.state.isSuscribe){
+      userService.postFollow(this.state.username).then(val => {
+        console.log(val);
+      }).catch(err => console.log(err));
+    }
+
+    else{
+      userService.postUnFollow(this.state.username).then(val => {
+        console.log(val);
+      }).catch(err => console.log(err));
+    }
     this.setState({isSuscribe: !this.state.isSuscribe});
     console.log(`Follow ${this.state.username} : ${this.state.isSuscribe}`);
   }

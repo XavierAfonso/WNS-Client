@@ -187,6 +187,15 @@ class RecipeReviewCard extends React.Component {
   redirectToTarget = (page) => {
     this.context.router.history.push(`${page}`)
   }
+
+  shouldComponentUpdate(nextProps) {
+    //return nextProps.data.authorId !== undefined;
+   // console.log("ici");
+    //console.log(nextProps);
+
+    return false;
+
+  }
   
   render() {
 
@@ -205,7 +214,8 @@ class RecipeReviewCard extends React.Component {
       if(this.state.canEdit){
         return(
         <>
-        <IconButton
+        
+        {/*<IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
@@ -218,7 +228,7 @@ class RecipeReviewCard extends React.Component {
           onClick={this.editPost}
           >  
             <EditIcon/>
-          </IconButton>
+        </IconButton>*/}
   
           <IconButton
           onClick={this.deletePost}
@@ -231,14 +241,14 @@ class RecipeReviewCard extends React.Component {
     else{
       return(
       <>
-        <IconButton
+        {/*<IconButton
           aria-label="More"
           aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true"
           onClick={this.handleClick}
         >
         <MoreVertIcon />
-        </IconButton>
+        </IconButton>*/}
       </>
       )
     }
@@ -277,7 +287,7 @@ class RecipeReviewCard extends React.Component {
           
         />
 
-          <Menu
+          {/*<Menu
           id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -287,7 +297,7 @@ class RecipeReviewCard extends React.Component {
           <MenuItem onClick={this.moreInfo}>More Info</MenuItem>
           <MenuItem onClick={this.showComments}>Comments</MenuItem>
 
-        </Menu>
+          </Menu>*/}
       
         <CardContent style={{marginLeft:'10px'}}>
 

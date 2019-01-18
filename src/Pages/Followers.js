@@ -5,6 +5,8 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import FollowerCard from '../Components/FollowerCard';
 
+import { userService } from '../Utils/user.services';
+
 const {theme} = require('../Utils/theme');
 
 const styles  = theme => ({
@@ -26,7 +28,8 @@ const styles  = theme => ({
 });
 
 
-const {data} = require('../Utils/data/dataFollowers');
+//const {data} = require('../Utils/data/dataFollowers');
+const data = [];
 
 
 class Followers extends React.Component {
@@ -39,9 +42,36 @@ class Followers extends React.Component {
     }
   }
 
+  componentDidMount(){
+
+
+    const username = window.localStorage.getItem('username');
+
+    userService.getFollowers(username).then(val => {
+
+      if(val.data !==""){
+        this.setState({data : val.data});
+        console.log(val.data);
+        }
+     
+    }).catch(err => console.log(err));
+
+
+  }
+
   
   render() {
     const { classes } = this.props;
+
+    
+    userService.getWall("admin@gmail.com").then(val => {
+      console.log(val);
+    })
+
+
+    /*userService.getFollowings("admin@gmail.com").then(val => {
+      console.log(val);
+    })*/
 
 
     const renderData = this.state.data.map((element, i) => {
@@ -49,7 +79,7 @@ class Followers extends React.Component {
       
       
       <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
-        <FollowerCard key={i} username = {element.username}  />
+        <FollowerCard key={i} username = {element.email}  />
       </Grid>
       
      )

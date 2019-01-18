@@ -16,7 +16,7 @@ import ChipInput from 'material-ui-chip-input';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
 
-let cpt = 1;
+// let cpt = 1;
 
 const languages = [
   'French',
@@ -136,7 +136,7 @@ class CreatePostDialog extends React.Component {
   }
 
 
-  postBooks = (data) => {
+  postBooks = () => {
 
     //console.log(body);
 
@@ -166,24 +166,33 @@ class CreatePostDialog extends React.Component {
     console.log(this.state.book_content)
 
 
-    const body = {
+    /*const body = {
 
       post_description : this.state.description,
       book_title : this.state.title,
       book_content : this.state.book_content,
       tags : this.state.tags,
-    }
+    }*/
 
-    console.log(body);
+    //console.log(body);
 
-    this.postBooks(body).then(response => {
+     if(this.state.title !=="" && this.state.description  !=="" && this.state.tags  !== [] && this.state.book_content !==""){
+
+    this.postBooks().then(response => {
       console.log(response);
+      this.closeDialog();
       
   }).catch((error) => {
       console.error(error);
+      this.closeDialog();
   });
-
+}
+else{
   this.closeDialog();
+
+}
+
+
 
     
     /*if(this.state.title !=="" && this.state.description  !=="" && this.state.language  !== "")

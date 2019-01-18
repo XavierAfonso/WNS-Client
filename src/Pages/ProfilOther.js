@@ -4,15 +4,19 @@ import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
+import { userService } from '../Utils/user.services';
 
 
 import ProfilCard from '../Components/ProfilCard';
 
 
-const {theme} = require('../Utils/theme');
 
-const styles  = theme => ({
-  
+
+
+const { theme } = require('../Utils/theme');
+
+const styles = theme => ({
+
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -43,7 +47,7 @@ const styles  = theme => ({
     display: 'flex',
   },
 
-  
+
   addBtn: {
 
     display: 'flex',
@@ -55,7 +59,8 @@ const styles  = theme => ({
 });
 
 
-const {data} = require('../Utils/data/dataProfilOther');
+//const {data} = require('../Utils/data/dataProfilOther');
+const data = [];
 
 class ProfilOther extends React.Component {
 
@@ -67,9 +72,9 @@ class ProfilOther extends React.Component {
     super(props)
     this.state = {
       open: false,
-      openEdit : false,
-      currentEdit : null,
-      data : data,
+      openEdit: false,
+      currentEdit: null,
+      data: [],
       mobileOpen: false,
     }
 
@@ -86,10 +91,37 @@ class ProfilOther extends React.Component {
 
     // L'utilisateur en cours ne pas pas acceder à sa page ex /profil/username 
     // car ça page est à /profil
-    console.log(this.props.match.params.name);
-    if(this.props.match.params.name==="Xavier"){
-      this.redirectToTarget(`/profil`)
+    const username = window.localStorage.getItem('username');
+    const unsenameFollower = this.props.match.params.name;
+
+   // console.log(unsenameFollower);
+    if (unsenameFollower === username) {
+      this.redirectToTarget(`/`)
     }
+
+    userService.getUser(unsenameFollower).then(val => {
+      console.log(val);
+
+      userService.getBooksUser(unsenameFollower).then(val => {
+
+        //console.log("ici");
+        //console.log(val.data);
+
+         this.setState({data : val.data});
+
+      }).catch(err => {
+        console.log(err);
+        this.redirectToTarget(`/`)
+
+      })
+
+    }).catch(err => {
+      console.error(err);
+      this.redirectToTarget(`/`);
+    }
+    );
+
+
 
 
   };
@@ -109,42 +141,42 @@ class ProfilOther extends React.Component {
     const { classes } = this.props;
 
     const renderData = this.state.data.map((element) => {
-      return (<Post key= {element.id} data={element} />)
-     });
+      return (<Post key={element.id} data={element} />)
+    });
 
     return (
 
       <MuiThemeProvider theme={theme}>
-      
+
         <div className={classes.root}>
-          
+
           {/*<CssBaseline /> */}
 
           <div className={classes.appContent}>
-            <Header home = "false" onDrawerToggle={this.handleDrawerToggle} />
-              <main className={classes.mainContent}>
+            <Header home="false" onDrawerToggle={this.handleDrawerToggle} />
+            <main className={classes.mainContent}>
 
               <Grid container spacing={24}>
-          <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
 
-          <ProfilCard  me="false" username={this.props.match.params.name}/>
-  
-          </Grid>
+                  <ProfilCard me="false" username={this.props.match.params.name} />
 
-          <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
+                </Grid>
 
-
-            {renderData}
-
-          </Grid>
-
-          <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
 
 
-          </Grid>
+                  {renderData}
 
-        </Grid>
-                
+                </Grid>
+
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+
+
+                </Grid>
+
+              </Grid>
+
             </main>
           </div>
         </div>
