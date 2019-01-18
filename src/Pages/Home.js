@@ -30,7 +30,7 @@ const data = [];
 const { steps } = require('../Utils/steps/stepsHome');
 
 const drawerWidthFull = 400;
-const drawerWidthMobile = 200;
+const drawerWidthMobile = 300;
 
 let imgUrl = 'wallpaper.png'
 
@@ -98,6 +98,7 @@ class Home extends React.Component {
       isTourOpen: true,
       closeTour: false,
       cpt : 0,
+      messageEmpty : "The wall is empty",
 
     }
   }
@@ -108,10 +109,11 @@ class Home extends React.Component {
 
     userService.getWall(username).then(val => {
 
-      if(val.data !==""){
+      if(val.data.length> 0){
         
         this.setState({data : val.data,
-                      dataFiltred : val.data
+                      dataFiltred : val.data,
+                      messageEmpty : ""
                      });
 
         // console.log("ici");
@@ -159,7 +161,8 @@ class Home extends React.Component {
       this.setState({ dataFiltred: this.state.data });
     }
     else{
-      this.setState({ dataFiltred: newvalue });
+      this.setState({ dataFiltred: newvalue ,
+                      messageEmpty : ""});
     }
    
    
@@ -235,11 +238,13 @@ class Home extends React.Component {
 
                     <Grid container spacing={24}>
 
-                      <Grid  data-tut=".3-home-step" item xs={12} md={8}>
+                      <Grid  data-tut=".3-home-step" item xs={12} md={8}  direction="column-reverse">
 
-                        <div key = {this.state.cpt}>
+                        
+                        {this.state.messageEmpty}
+
                         {renderData}
-                        </div>
+                       
 
                       </Grid>
 
@@ -288,7 +293,7 @@ class Home extends React.Component {
                       </Card>
 
 
-                        <Card data-tut="" className={classes.library}>
+                        <Card data-tut=".13-home-step" className={classes.library}>
 
                           <CardHeader
                             action={

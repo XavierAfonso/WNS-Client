@@ -366,12 +366,13 @@ class RecipeReviewCard extends React.Component {
             {this.state.like ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteIcon />}
 
           </IconButton>
-          <IconButton data-tut=".6-home-step"
+          
+          {/*<IconButton data-tut=".6-home-step"
             aria-label="Share"
             onClick={this.clickShare}
           >
             <ShareIcon />
-          </IconButton>
+        </IconButton>*/}
           <IconButton data-tut=".7-home-step"
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,

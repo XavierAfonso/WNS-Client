@@ -94,7 +94,8 @@ class ProfilOther extends React.Component {
       currentEdit: null,
       data: [],
       mobileOpen: false,
-      unsernameFollower : ""
+      unsernameFollower : "",
+      messageEmpty : "There are no books",
     }
 
   }
@@ -125,8 +126,11 @@ class ProfilOther extends React.Component {
 
         //console.log("ici");
         //console.log(val.data);
-
-        this.setState({ data: val.data });
+        if(val.data.length> 0){
+          this.setState({ data: val.data ,
+                          messageEmpty : ""
+          });
+        }
 
       }).catch(err => {
         console.log(err);
@@ -181,7 +185,7 @@ class ProfilOther extends React.Component {
 
                 <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
 
-
+                  {this.state.messageEmpty}
                   {renderData}
 
                 </Grid>

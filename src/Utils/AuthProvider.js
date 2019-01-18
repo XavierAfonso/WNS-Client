@@ -28,7 +28,7 @@ class AuthProvider extends Component {
           }
     }
 
-    componentDidMount () {
+    componentWillMount () {
 
         if(this.state.user === null){
 

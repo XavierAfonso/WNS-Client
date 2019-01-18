@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import HelpIcon from '@material-ui/icons/Help';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
@@ -230,9 +231,6 @@ class Header extends React.Component {
               <MenuItem onClick={() => {this.redirectToTarget('/librairy')}}>Librairy</MenuItem>
               <MenuItem onClick={() => {this.redirectToTarget('/followings')}} >Followings</MenuItem>
               <MenuItem onClick={() => {this.redirectToTarget('/followers')}} >Followers</MenuItem>
-              {this.props.home === "true"&&
-              <MenuItem onClick={this.startSteps} > Help</MenuItem>
-              }
               <MenuItem onClick={signOut}>Logout</MenuItem>
             </Menu>
           );
@@ -254,6 +252,15 @@ class Header extends React.Component {
                 </IconButton>
                 <p>Messages</p>
               </MenuItem>*/}
+               {this.props.home === "true"&&
+                <MenuItem  onClick={this.startSteps}>
+                <IconButton color="inherit">
+                <HelpIcon />
+                </IconButton>
+                <p>Question</p>
+              </MenuItem>
+               }
+
               <MenuItem>
                 <IconButton color="inherit">
                 <NotificationsIcon />
@@ -328,6 +335,14 @@ class Header extends React.Component {
                         <MailIcon />
                       </Badge>
                 </IconButton>*/}
+                
+                {this.props.home === "true"&&
+                <IconButton onClick={this.startSteps} color="inherit">
+                <HelpIcon />
+                </IconButton>
+                }
+          
+          
                     <IconButton color="inherit">
                     <NotificationsIcon />
                       {/*<Badge badgeContent={0} color="secondary"> 

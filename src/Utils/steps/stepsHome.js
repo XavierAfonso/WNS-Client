@@ -19,10 +19,11 @@ export const steps = [
       selector: '[data-tut=".5-home-step"]',
       content: 'You can like a book. The book is stored in your library.',
     },
-    {
+   
+   /* {
       selector: '[data-tut=".6-home-step"]',
       content: 'You can share the book.',
-    },
+    },*/
     {
       selector: '[data-tut=".7-home-step"]',
       content: 'You can preview the book.',
@@ -38,6 +39,10 @@ export const steps = [
     {
       selector: '[data-tut=".10-home-step"]',
       content: 'You can see your followers.',
+    },
+    {
+      selector: '[data-tut=".13-home-step"]',
+      content: 'You can see your librairy',
     },
     {
       selector: '[data-tut=".11-home-step"]',

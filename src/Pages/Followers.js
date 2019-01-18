@@ -39,6 +39,7 @@ class Followers extends React.Component {
     this.state = {
       data : data,
       mobileOpen: false,
+      messageEmpty : "There are no followers",
     }
   }
 
@@ -46,8 +47,9 @@ class Followers extends React.Component {
 
     userService.getFollowers(username).then(val => {
 
-      if(val.data !==""){
-        this.setState({data : val.data});
+      if(val.data.length > 0){
+        this.setState({data : val.data,
+                      messageEmpty : ""});
         console.log(val.data);
         }
      
@@ -119,7 +121,7 @@ class Followers extends React.Component {
 
           <Grid container spacing={24}>
 
-
+          {this.state.messageEmpty}
           {renderData}
 
         </Grid>

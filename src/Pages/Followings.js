@@ -41,6 +41,7 @@ class Followings extends React.Component {
     this.state = {
       data : [],
       mobileOpen: false,
+      messageEmpty : "There are no followings",
     }
   }
 
@@ -57,8 +58,9 @@ class Followings extends React.Component {
 
     userService.getFollowings(username).then(val => {
 
-      if(val.data !==""){
-        this.setState({data : val.data});
+      if(val.data.length > 0){
+        this.setState({data : val.data,
+                        messageEmpty : ""});
         console.log(val.data);
         }
      
@@ -81,7 +83,7 @@ class Followings extends React.Component {
 
       }).catch(err => {
         console.log(err);
-        this.redirectToTarget(`/`)
+        this.redirectToTarget(`/`);
       })
     }
 
@@ -119,7 +121,7 @@ class Followings extends React.Component {
 
           <Grid container spacing={24}>
 
-
+          {this.state.messageEmpty}
           {renderData}
 
         </Grid>

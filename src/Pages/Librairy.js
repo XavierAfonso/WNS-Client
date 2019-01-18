@@ -46,6 +46,7 @@ class Librairy extends React.Component {
       mobileOpen: false,
       data : data,
       like : true,
+      messageEmpty : "There are no books",
     }
 
   }
@@ -79,10 +80,11 @@ class Librairy extends React.Component {
           this.setState({like : false});
         }
 
-        if(val.data !==""){
-          this.setState({data : val.data});
+        if(val.data.length > 0){
+          this.setState({data : val.data,
+          messageEmpty : ""});
           console.log(val.data);
-          }
+        }
      
     }).catch(err => console.log(err));
   }
@@ -145,12 +147,10 @@ class Librairy extends React.Component {
 
          <Grid container spacing={24}>
 
-            {renderData}
-    
-
-        </Grid>
-
-              
+          {this.state.messageEmpty}
+          {renderData}
+          </Grid>
+          
           </main>
         </div>
       </div>
