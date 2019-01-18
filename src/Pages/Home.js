@@ -53,6 +53,10 @@ const styles = theme => ({
   mainContent: {
     flex: 1,
     padding: '60px 36px 0',
+    //background: "#1c92d2",  /* fallback for old browsers */
+    //background: "-webkit-linear-gradient(to right, #f2fcfe, #1c92d2)",  /* Chrome 10-25, Safari 5.1-6 */
+    //background: "linear-gradient(to right, #f2fcfe, #1c92d2);" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     background: '#eaeff1',
     //backgroundImage: 'url(' + imgUrl + ')',
     //opacity: 0.5,
@@ -61,7 +65,7 @@ const styles = theme => ({
     // padding: theme.spacing.unit * 2,
     //textAlign: 'center',
     //color: theme.palette.text.secondary,
-    marginTop: '10px',
+    marginTop: '20px',
     // height: 'auto',
   },
   followers: {
@@ -204,7 +208,7 @@ class Home extends React.Component {
 
           return (
 
-            <MuiThemeProvider theme={theme}>
+            //<MuiThemeProvider theme={theme}>
 
 
               <div className={classes.root}>
@@ -241,7 +245,7 @@ class Home extends React.Component {
                       <Grid  data-tut=".3-home-step" item xs={12} md={8}  direction="column-reverse">
 
                         
-                        {this.state.messageEmpty}
+                      <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
 
                         {renderData}
                        
@@ -318,7 +322,7 @@ class Home extends React.Component {
                   </main>
                 </div>
               </div>
-            </MuiThemeProvider>
+           // </MuiThemeProvider>
           );
         }
         }

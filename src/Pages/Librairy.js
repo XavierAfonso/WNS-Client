@@ -135,7 +135,7 @@ class Librairy extends React.Component {
 
     return (
 
-      <MuiThemeProvider theme={theme}>
+      //<MuiThemeProvider theme={theme}>
       
       <div className={classes.root}>
         
@@ -147,14 +147,14 @@ class Librairy extends React.Component {
 
          <Grid container spacing={24}>
 
-          {this.state.messageEmpty}
+         <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
           {renderData}
           </Grid>
           
           </main>
         </div>
       </div>
-    </MuiThemeProvider>
+    //</MuiThemeProvider>
     );
   }
 }

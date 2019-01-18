@@ -47,7 +47,7 @@ const styles = theme => ({
   },
 
   following: {
-    marginTop: '10px',
+    marginTop: '20px',
   },
 
   profil: {
@@ -55,7 +55,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     height: '500px',
-    marginTop: '10px',
+    marginTop: '20px',
   },
 
   newPost: {
@@ -166,7 +166,7 @@ class ProfilOther extends React.Component {
 
     return (
 
-      <MuiThemeProvider theme={theme}>
+     // <MuiThemeProvider theme={theme}>
 
         <div className={classes.root}>
 
@@ -177,7 +177,7 @@ class ProfilOther extends React.Component {
             <main className={classes.mainContent}>
 
               <Grid container spacing={24}>
-                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+                <Grid style={{ marginTop: '10px'}} item xs={12} lg={3}>
 
                   <ProfilCard me="false" username={this.props.match.params.name} />
 
@@ -185,7 +185,7 @@ class ProfilOther extends React.Component {
 
                 <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
 
-                  {this.state.messageEmpty}
+                <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
                   {renderData}
 
                 </Grid>
@@ -261,7 +261,7 @@ class ProfilOther extends React.Component {
             </main>
           </div>
         </div>
-      </MuiThemeProvider>
+     // </MuiThemeProvider>
     );
   }
 }

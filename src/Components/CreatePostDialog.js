@@ -16,16 +16,6 @@ import ChipInput from 'material-ui-chip-input';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
 
-// let cpt = 1;
-
-const languages = [
-  'French',
-  'English',
-  'German',
-  'Spanish',
-  'Italian',
-];
-
 const styles = theme => ({
 
   root: {
@@ -42,7 +32,6 @@ class CreatePostDialog extends React.Component {
       selectedFile : "",
       title : '',
       description : '',
-      language : '',
       tags : [],
       book_content : "",
 
@@ -105,14 +94,19 @@ class CreatePostDialog extends React.Component {
 
   //Select the pdf file
   fileSelectedHandler  = event => {
+
+    if(event.target.files[0].type === "application/pdf"){
+    this.setState({
+      selectedFile : event.target.files[0]
+    })
     
-    //console.log(event.target.files)
+    console.log(event.target.files)
 
     let pdfTobase64 = this.convertToBase64(event.target.files);
 
     //console.log(pdfTobase64);
 
-    
+  }
   
 
   };
@@ -128,8 +122,8 @@ class CreatePostDialog extends React.Component {
       selectedFile : "",
       title : '',
       description : '',
-      language : '',
       tags : [],
+      book_content : "",
     });
 
     this.props.close();
@@ -303,22 +297,6 @@ else{
               </Grid>
 
             </div>
-
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="select-language">Language</InputLabel>
-              <Select
-                value={this.state.language}
-                onChange={this.handleChangeLangage}
-                input={<Input id="select-language" />}
-                //MenuProps={MenuProps}
-              >
-                {languages.map(language => (
-                  <MenuItem key={language} value={language}>
-                    {language}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
 
 
             <FormControl margin="normal" fullWidth>
