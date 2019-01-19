@@ -31,20 +31,27 @@ class AuthProvider extends Component {
 
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('username');
+        this.setState({user: null}); 
     }
 
     componentWillMount () {
 
-        if(this.state.user === null){
+       // if(this.state.user === null){
 
             const token = window.localStorage.getItem('token');
             const username = window.localStorage.getItem('username');
+            this.setState({user: token}); 
 
               if(token){
 
                 if(username){
 
+                    console.log("DATUDA1");
+
                     userService.getMe().then(val => {
+
+                        console.log("DATUDA2");
+                        console.log(val);
 
                         if(val.data.email===username){
                             this.setState({user: username}); 
@@ -54,11 +61,27 @@ class AuthProvider extends Component {
                         }
 
                     }).catch(err => {
+                        console.log("DATUDA3");
+                        console.log(err);
                         this.removeLocalStorage();
                     });
                 }
             }
-          }
+           /* }
+            else{
+
+            }
+          }*/
+
+          /*if(this.state.user === null){
+
+            const token = window.localStorage.getItem('token');
+
+              if(token){
+                this.setState({user: 'connected'});
+                
+              }
+          }*/
     }
 
     getError = (error) => {

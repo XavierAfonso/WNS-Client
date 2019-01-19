@@ -21,11 +21,8 @@ function getNotifications(username){
 
 // Get Notifications
 function getMe(){
-
-    return axios.get(`users/me`, getHeader());
+    return axios.get(`/users/me`, getHeader());
 }
-
-
 
  // Get the followers
  function getFollowers(id){
