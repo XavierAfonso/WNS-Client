@@ -118,6 +118,7 @@ class ProfilOther extends React.Component {
     if (this.props.match.params.name === username) {
       this.redirectToTarget(`/profil`)
     }
+    else{
 
     userService.getUser(this.state.unsernameFollower).then(val => {
       console.log(val);
@@ -143,7 +144,7 @@ class ProfilOther extends React.Component {
       this.redirectToTarget(`/`);
     }
     );
-
+  }
   };
 
   handleDrawerToggle = () => {

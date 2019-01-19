@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { AuthContext } from '../Utils/AuthProvider';
 
 import { userService } from '../Utils/user.services';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // const { theme } = require('../Utils/theme');
 
@@ -214,7 +215,10 @@ class Home extends React.Component {
                     <Grid data-tut=".3-home-step" item xs={12} md={8}>
 
 
-                      <div style={{ marginTop: "20px" }} >{this.state.messageEmpty} </div>
+                      <div style={{ margin:"auto" , marginTop: "20px"}} >
+                      {/*<CircularProgress className={classes.progress} />*/}
+                      {this.state.messageEmpty} 
+                      </div>
 
                       {renderData}
 

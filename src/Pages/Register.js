@@ -113,13 +113,13 @@ class SignIn extends React.Component {
             console.log(password);
             console.log(confirmPassword);
 
-            //if (firstname !== "" && lastname !== "" && email !== "" 
-            //&& username !== "" && password !== "" && confirmPassword !== "") {
+            if (firstname !== "" && lastname !== "" && email !== "" 
+            && username !== "" && password !== "" && confirmPassword !== "") {
 
-              if ( email !== ""  && password !== "" && confirmPassword !== "") {
+              //if ( email !== ""  && password !== "" && confirmPassword !== "") {
 
               if(password === confirmPassword){
-                  return signUp(email, password).then((element) => {
+                  return signUp(firstname,lastname,username,email, password).then((element) => {
                     this.setState({ statusRegister: "Account has been successfully registered" })
                   }).catch(err => {
                     //Error server
@@ -148,7 +148,7 @@ class SignIn extends React.Component {
 
                 <Grid container spacing={24}>
 
-                    {/*<Grid item xs={12} md={6}>   
+                    <Grid item xs={12} md={6}>   
                       <FormControl margin="normal"  fullWidth>
                       <TextField
                         required
@@ -185,7 +185,7 @@ class SignIn extends React.Component {
                         variant="outlined"
                         />
                       </FormControl>
-          </Grid>*/}
+          </Grid>
 
                     <Grid item xs={12} md={12}>
                       <FormControl margin="normal"  fullWidth>

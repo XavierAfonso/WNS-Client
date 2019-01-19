@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { userService } from '../Utils/user.services';
 
 const { 
     Provider : AuthContextProvider, 
@@ -23,9 +24,13 @@ class AuthProvider extends Component {
             getFollowers:this.getFollowers,
             postFollower:this.postFollower,
             getBooksUser:this.getBooksUser,
-            //getFollowings:this.getFollowing,
-
           }
+    }
+
+    removeLocalStorage = () => {
+
+        window.localStorage.removeItem('token');
+        window.localStorage.removeItem('username');
     }
 
     componentWillMount () {
@@ -33,42 +38,30 @@ class AuthProvider extends Component {
         if(this.state.user === null){
 
             const token = window.localStorage.getItem('token');
+            const username = window.localStorage.getItem('username');
 
               if(token){
-                this.setState({user: 'connected'});
-                
-              }
-          }
 
-         //console.log("THE USER " + user);
+                if(username){
 
-        // console.log(this.state.user );
+                    userService.getMe().then(val => {
 
-        /*const token = window.localStorage.getItem('token');
-        if(token){
-            
-            console.log("FIRST");
-            
-            this.setState({user : "connected"});
-           
-            /*axios.get('/api/me', {
-                headers : {
-                    Authorization : `bearer ${token}`,
+                        if(val.data.email===username){
+                            this.setState({user: username}); 
+                        }
+                        else{
+                            this.removeLocalStorage();
+                        }
+
+                    }).catch(err => {
+                        this.removeLocalStorage();
+                    });
                 }
-
-            }).then(response => {
-                const { user } = response.data;
-                this.setState({user});
-            }).catch(err => {
-                console.error(err);
-                window.localStorage.removeItem('token');
-            })
-        }*/
+            }
+          }
     }
 
     getError = (error) => {
-
-        //console.log("ici " + error.response.status);
 
         if(error.response.status===400){
             this.setState({error: '400 The email already exist'});
@@ -91,35 +84,24 @@ class AuthProvider extends Component {
 
         axios.post('/users/signin',{username,password}).then(response => {
 
-            console.log(response);
             const {token} = response.data;
             window.localStorage.setItem('token',token);
             window.localStorage.setItem('username',username);
 
-            console.log("ICIIIII");
-
-
-
             this.setState({user: username});
-            
 
-            /*const {user,token} = response.data;
-            console.log({user,token})
-            window.localStorage.setItem('token',token);
-            this.setState({user});*/
 
         }).catch(error => {
 
             this.getError(error);
-           // throw error;
         });
     }
 
-    signUp = (username,password) =>{
+    signUp = (firstname,lastname,realUsername,username, password) =>{
 
        this.setState({error : ""});
 
-       return axios.post('/users/signup',{username,password}).then(response => {
+       return axios.post('/users/signup',{firstname,lastname,realUsername,username, password}).then(response => {
             
         }).catch((error) => {
             
@@ -134,7 +116,6 @@ class AuthProvider extends Component {
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('username');
         this.setState({user : null})
-        //window.location.reload();
     }
 
 

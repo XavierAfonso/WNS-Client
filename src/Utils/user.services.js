@@ -19,6 +19,13 @@ function getNotifications(username){
     return axios.get(`/notifications/${username}`, getHeader());
 }
 
+// Get Notifications
+function getMe(){
+
+    return axios.get(`users/me`, getHeader());
+}
+
+
 
  // Get the followers
  function getFollowers(id){
@@ -108,5 +115,6 @@ export const userService = {
     likeAbook,
     getBooksLiked,
     getNotifications,
-    unLikeAbook
+    unLikeAbook,
+    getMe
 };

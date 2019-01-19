@@ -28,12 +28,7 @@ const styles = theme => ({
   },
 });
 
-
 //const {data} = require('../Utils/data/dataFollowings');
-
-
-
-
 class Followings extends React.Component {
 
   constructor(props) {
