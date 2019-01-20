@@ -13,6 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import ChipInput from 'material-ui-chip-input';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
 
@@ -32,6 +33,7 @@ class CreatePostDialog extends React.Component {
       description: '',
       tags: [],
       book_content: "",
+      displayCircularProgress : false,
     }
   }
 
@@ -53,7 +55,7 @@ class CreatePostDialog extends React.Component {
   // Tags
   handleTags = (val) => {
     this.setState({ tags: val });
-    console.log()
+    //console.log()
   };
 
   convertToBase64(selectedFile) {
@@ -86,12 +88,16 @@ class CreatePostDialog extends React.Component {
 
     if (event.target.files[0].type === "application/pdf") {
       this.setState({
-        selectedFile: event.target.files[0]
+        selectedFile: event.target.files[0],
+        errorLocal :""
       })
 
-      console.log(event.target.files)
+      //console.log(event.target.files)
 
       this.convertToBase64(event.target.files);
+    }
+    else{
+      this.setState({errorLocal : "The document must be a pdf."});
     }
 
   };
@@ -109,6 +115,7 @@ class CreatePostDialog extends React.Component {
       description: '',
       tags: [],
       book_content: "",
+      errorLocal : "",
     });
 
     this.props.close();
@@ -141,13 +148,17 @@ class CreatePostDialog extends React.Component {
 
     if (this.state.title !== "" && this.state.description !== "" && this.state.tags !== [] && this.state.book_content !== "") {
 
+      this.setState({displayCircularProgress:true});
       this.postBooks().then(response => {
         console.log(response);
         this.closeDialog();
+         this.setState({displayCircularProgress:false});
+         window.location.reload();
 
       }).catch((error) => {
         console.error(error);
         this.closeDialog();
+        this.setState({displayCircularProgress:false});
       });
     }
     else {
@@ -227,10 +238,10 @@ class CreatePostDialog extends React.Component {
                       Upload
                     </Button>
                   </InputLabel>
-
                 </Grid>
 
               </Grid>
+              <p style={{color:"red"}}>{this.state.errorLocal}</p>
 
             </div>
 
@@ -248,11 +259,17 @@ class CreatePostDialog extends React.Component {
             </FormControl>
 
           </DialogContent>
+          
+          <Grid container justify="center" alignItems="center">
+            {this.state.displayCircularProgress === true &&
+            <CircularProgress className={classes.progress}/>}
+          </Grid>
+
           <DialogActions>
             <Button onClick={this.closeDialog} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.addPost} color="primary">
+            <Button disabled={this.state.displayCircularProgress} onClick={this.addPost} color="primary">
               Add
             </Button>
           </DialogActions>

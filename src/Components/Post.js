@@ -133,8 +133,8 @@ class RecipeReviewCard extends React.Component {
 
   // Delete
   deletePost = () => {
-    console.log("Delete ID : " + this.state.id);
-    this.props.delete(this.state.id);
+    console.log("Delete ID : " + this.state.title);
+    this.props.delete(this.state.id,this.state.title);
   }
 
   // Delete

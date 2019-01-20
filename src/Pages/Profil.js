@@ -110,7 +110,7 @@ class Profil extends React.Component {
   // Close add dialog
   handleClose = () => {
     this.setState({ open: false });
-    window.location.reload();
+   // window.location.reload();
   };
 
   // Close edit dialog
@@ -143,9 +143,9 @@ class Profil extends React.Component {
     this.handleCloseEdit();
   };
 
-  deletePost = (id) => {
+  deletePost = (id,title) => {
 
-    if (window.confirm(`Delete ${id}`)) {
+    if (window.confirm(`Delete ${title}`)) {
 
       console.log(id);
 

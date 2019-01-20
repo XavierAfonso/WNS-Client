@@ -23,6 +23,7 @@ const styles  = theme => ({
     margin: 10,
     width: 100,
     height: 100,
+    fontSize:"60px",
   },
 
   divImage : {
