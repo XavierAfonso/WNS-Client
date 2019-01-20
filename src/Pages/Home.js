@@ -19,13 +19,6 @@ import { AuthContext } from '../Utils/AuthProvider';
 import { userService } from '../Utils/user.services';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// const { theme } = require('../Utils/theme');
-
-//const { data } = require('../Utils/data/dataHome');
-// const data = [];
-
-// const { steps } = require('../Utils/steps/stepsHome');
-
 const drawerWidthFull = 400;
 const drawerWidthMobile = 300;
 
@@ -81,6 +74,10 @@ const styles = theme => ({
     backgroundColor: deepPurple[500],
   },
 
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
+
 });
 
 class Home extends React.Component {
@@ -95,13 +92,14 @@ class Home extends React.Component {
       isTourOpen: true,
       closeTour: false,
       cpt: 0,
-      messageEmpty: "The wall is empty",
-
+      messageEmpty: "",
+      displayCircularProgress : true,
     }
   }
 
   componentDidMount() {
 
+    this.setState({ displayCircularProgress: true });
     const username = window.localStorage.getItem('username');
 
     userService.getWall(username).then(val => {
@@ -114,11 +112,21 @@ class Home extends React.Component {
           messageEmpty: ""
         });
 
+       
         // console.log("ici");
         console.log(val.data);
       }
+      else{
+        
+        this.setState({ messageEmpty: "The wall is empty." });
+      }
+      this.setState({ displayCircularProgress: false });
 
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+      this.setState({ messageEmpty: "The wall is empty." });
+      this.setState({ displayCircularProgress: false });
+    });
 
 
   };
@@ -150,6 +158,10 @@ class Home extends React.Component {
 
     if (newvalue.length === 0) {
       this.setState({ dataFiltred: this.state.data });
+
+      if(this.state.data.length === 0){
+        this.setState({ messageEmpty: "The wall is empty." });
+      }
     }
     else {
       this.setState({
@@ -212,15 +224,15 @@ class Home extends React.Component {
 
                   <Grid container spacing={24}>
 
-                    <Grid data-tut=".3-home-step" item xs={12} md={8}>
-
-
-                      <div style={{ margin:"auto" , marginTop: "20px"}} >
-                      {/*<CircularProgress className={classes.progress} />*/}
-                      {this.state.messageEmpty} 
-                      </div>
-
-                      {renderData}
+                  <Grid style={{marginTop: "10px"}} data-tut=".3-home-step" item xs={12} md={8}>
+                    
+                  <Grid container justify="center" alignItems="center">
+                  {this.state.displayCircularProgress === true &&
+                  <CircularProgress className={classes.progress}/>}
+                  {this.state.messageEmpty} 
+                  </Grid>
+                  
+                  {renderData}
 
 
                     </Grid>

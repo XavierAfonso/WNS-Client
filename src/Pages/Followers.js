@@ -4,10 +4,11 @@ import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import FollowerCard from '../Components/FollowerCard';
 import { userService } from '../Utils/user.services';
-import {withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles  = theme => ({
-  
+const styles = theme => ({
+
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -22,6 +23,9 @@ const styles  = theme => ({
     padding: '60px 36px 0',
     background: '#eaeff1',
   },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 
@@ -34,9 +38,10 @@ class Followers extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data : data,
+      data: data,
       mobileOpen: false,
-      messageEmpty : "There are no followers",
+      messageEmpty: "",
+      displayCircularProgress: true,
     }
   }
 
@@ -44,21 +49,31 @@ class Followers extends React.Component {
 
     userService.getFollowers(username).then(val => {
 
-      if(val.data.length > 0){
-        this.setState({data : val.data,
-                      messageEmpty : ""});
+      if (val.data.length > 0) {
+        this.setState({
+          data: val.data,
+          messageEmpty: ""
+        });
         console.log(val.data);
-        }
-     
-    }).catch(err => console.log(err));
+      }
+      else{
+        this.setState({ messageEmpty: "There are no followers." })
+      }
+      this.setState({ displayCircularProgress: false });
+
+    }).catch(err => {
+      console.log(err);
+      this.setState({ messageEmpty: "There are no followings." })
+      this.setState({ displayCircularProgress: false });
+    });
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
 
     let username = "";
 
-    if(this.props.match.params.name){
+    if (this.props.match.params.name) {
       username = this.props.match.params.name;
 
       userService.getUser(username).then(val => {
@@ -70,48 +85,53 @@ class Followers extends React.Component {
       })
     }
 
-    else{
-       username = window.localStorage.getItem('username');
-       this.getFollowers(username);
+    else {
+      username = window.localStorage.getItem('username');
+      this.getFollowers(username);
     }
   }
 
-  
+
   render() {
     const { classes } = this.props;
     const renderData = this.state.data.map((element, i) => {
       return (
-      
-      
-      <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
-        <FollowerCard key={i} username = {element.email}  />
-      </Grid>
-      
-     )
-     });
+
+
+        <Grid key={i} style={{ backgroundColor: 'transparent' }} item xs={6} md={3}>
+          <FollowerCard key={i} username={element.email} />
+        </Grid>
+
+      )
+    });
 
 
     return (
 
       //<MuiThemeProvider theme={theme}>
-      
-        <div className={classes.root}>
-          
 
-          <div className={classes.appContent}>
-            <Header home = "false" onDrawerToggle={this.handleDrawerToggle} />
-              <main className={classes.mainContent}>
+      <div className={classes.root}>
 
-          <Grid container spacing={24}>
 
-          <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
-          {renderData}
+        <div className={classes.appContent}>
+          <Header home="false" onDrawerToggle={this.handleDrawerToggle} />
+          <main className={classes.mainContent}>
 
-        </Grid>
-                
-            </main>
-          </div>
+            <Grid style={{ marginTop: "10px" }} container spacing={24}>
+
+
+              <Grid container justify="center" alignItems="center">
+                {this.state.displayCircularProgress === true &&
+                  <CircularProgress className={classes.progress} />}
+                {this.state.messageEmpty}
+              </Grid>
+              {renderData}
+
+            </Grid>
+
+          </main>
         </div>
+      </div>
       //</MuiThemeProvider>
     );
   }

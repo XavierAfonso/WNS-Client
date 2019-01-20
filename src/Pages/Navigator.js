@@ -8,8 +8,10 @@ import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Search from '@material-ui/icons/Search';
+import Grid from '@material-ui/core/Grid';
 
 import ChipInput from 'material-ui-chip-input';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { userService } from '../Utils/user.services';
 
@@ -97,6 +99,7 @@ class Navigator extends React.Component {
       description: '',
       bookContent: '',
       tags: [],
+      displayCircularProgress : false,
       //selectedAuthors: [],
       //selectedLanguages: [],
     }
@@ -125,11 +128,12 @@ class Navigator extends React.Component {
   // Search Button
   searchBooks = () => {
 
-    
-      let book_post_description = this.state.description ==='' ? null : this.state.description;
-      let book_title = this.state.title ==='' ? null : this.state.title;
-      let book_content = this.state.bookContent ==='' ? null : this.state.bookContent;
-      let book_tags = this.state.tags.length ===0 ? null :  this.state.tags;
+  this.setState({ displayCircularProgress: true});
+     
+  let book_post_description = this.state.description ==='' ? null : this.state.description;
+  let book_title = this.state.title ==='' ? null : this.state.title;
+  let book_content = this.state.bookContent ==='' ? null : this.state.bookContent;
+  let book_tags = this.state.tags.length ===0 ? null :  this.state.tags;
     
          
     console.log("SEARCH");
@@ -148,9 +152,9 @@ class Navigator extends React.Component {
       else{
         this.props.changeValue([]);
       }
-
-
-      
+      this.setState({ displayCircularProgress: false});
+    }).catch(() => {
+      this.setState({ displayCircularProgress: false});
     })
 
     /*const filter =  {
@@ -232,6 +236,11 @@ class Navigator extends React.Component {
                 <Search className={classes.rightIcon} />
             </Button>
           </FormControl>
+
+          <Grid container justify="center" alignItems="center">
+          {this.state.displayCircularProgress === true &&
+          <CircularProgress className={classes.progress}/>}
+          </Grid>
           </div>
 
         </div>

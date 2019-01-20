@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 import { Redirect } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   main: {
@@ -47,7 +48,10 @@ const styles = theme => ({
   a: {
     display: 'flex',
     marginTop: '10px',
-  }
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 class Login extends React.Component {
@@ -58,6 +62,7 @@ class Login extends React.Component {
       username: "",
       password: "",
       errorLocal : "",
+      displayCircularProgress : false,
     }
   }
 
@@ -95,6 +100,9 @@ class Login extends React.Component {
           const onSubmit = (event) => {
             event.preventDefault();
 
+            //this.state.displayCircularProgress 
+            this.setState({ displayCircularProgress: true });
+
             this.setState({ errorLocal: "" });
 
             let username = this.state.username;
@@ -104,9 +112,12 @@ class Login extends React.Component {
             console.log(password);
 
             if (username !== "" && password !== "") {
-              signIn({ username, password });
+              signIn({ username, password }).catch(() => {
+                this.setState({ displayCircularProgress: false });
+              })
             }
             else{
+              this.setState({ displayCircularProgress: false });
               this.setState({ errorLocal: "The fields must not be null" });
             }
           }
@@ -163,6 +174,13 @@ class Login extends React.Component {
                   >
                     Login
                   </Button>
+
+                  {this.state.displayCircularProgress === true &&
+                  <Grid container justify="center" alignItems="center">
+                  <CircularProgress className={classes.progress} />
+                  </Grid>
+                  }
+
                   <br />
                   <a className={classes.a} href="/register">Not register yet ?</a>
                   <p style={{color:'red'}}>{error}</p>

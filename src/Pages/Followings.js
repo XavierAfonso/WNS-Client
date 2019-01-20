@@ -4,11 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Grid from '@material-ui/core/Grid';
 import FollowingCard from '../Components/FollowingCard';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { userService } from '../Utils/user.services';
 
-
-// const { theme } = require('../Utils/theme');
 
 const styles = theme => ({
 
@@ -26,6 +25,9 @@ const styles = theme => ({
     padding: '60px 36px 0',
     background: '#eaeff1',
   },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 //const {data} = require('../Utils/data/dataFollowings');
@@ -36,7 +38,8 @@ class Followings extends React.Component {
     this.state = {
       data: [],
       mobileOpen: false,
-      messageEmpty: "There are no followings",
+      messageEmpty: "",
+      displayCircularProgress : true,
     }
   }
 
@@ -60,8 +63,17 @@ class Followings extends React.Component {
         });
         console.log(val.data);
       }
+      else{
+      
+        this.setState({ messageEmpty: "There are no followings." })
+      }
+      this.setState({ displayCircularProgress: false });
 
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+      this.setState({ messageEmpty: "There are no followings." })
+      this.setState({ displayCircularProgress: false });
+    });
   }
 
   componentDidMount() {
@@ -116,9 +128,15 @@ class Followings extends React.Component {
           <Header home="false" onDrawerToggle={this.handleDrawerToggle} />
           <main className={classes.mainContent}>
 
-            <Grid container spacing={24}>
+            <Grid style={{ marginTop: "10px" }}  container spacing={24}>
 
-              <div style={{ marginTop: "20px" }} >{this.state.messageEmpty} </div>
+
+                <Grid container justify="center" alignItems="center">
+                 {this.state.displayCircularProgress === true &&
+                 <CircularProgress className={classes.progress}/>}
+                 {this.state.messageEmpty} 
+                 </Grid>
+
               {renderData}
 
             </Grid>

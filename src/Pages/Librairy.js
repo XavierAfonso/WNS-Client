@@ -6,12 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Post from '../Components/Post';
 
 import { userService } from '../Utils/user.services';
-
-
-//const {data} = require('../Utils/data/dataLibrairy');
-const data = [];
-
-//const {theme} = require('../Utils/theme');
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles  = theme => ({
   
@@ -29,6 +24,9 @@ const styles  = theme => ({
     padding: '60px 36px 0',
     background: '#eaeff1',
   },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 
@@ -44,9 +42,10 @@ class Librairy extends React.Component {
     super(props)
     this.state = {
       mobileOpen: false,
-      data : data,
+      data : [],
       like : true,
-      messageEmpty : "There are no books",
+      messageEmpty : "",
+      displayCircularProgress: true,
     }
 
   }
@@ -85,8 +84,16 @@ class Librairy extends React.Component {
           messageEmpty : ""});
           console.log(val.data);
         }
+        else{
+          this.setState({ messageEmpty: " There are no books." })
+        }
+        this.setState({ displayCircularProgress: false });
      
-    }).catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+      this.setState({ messageEmpty: "There are no books." })
+      this.setState({ displayCircularProgress: false });
+    });
   }
   
   componentDidMount(){
@@ -111,7 +118,7 @@ class Librairy extends React.Component {
 
     else{
        username = window.localStorage.getItem('username');
-       this.getBooksLiked(username);
+       this.getBooksLiked(username)
     }
   }
 
@@ -144,11 +151,14 @@ class Librairy extends React.Component {
         <div className={classes.appContent}>
           <Header home = "false" onDrawerToggle={this.handleDrawerToggle} />
             <main className={classes.mainContent}>
-
-         <Grid container spacing={24}>
-
-         <div style={{marginTop:"20px"}} >{this.state.messageEmpty} </div>
-          {renderData}
+           
+            <Grid style={{ marginTop: "10px" }} container spacing={24}>
+              <Grid container justify="center" alignItems="center">
+                {this.state.displayCircularProgress === true &&
+                  <CircularProgress className={classes.progress} />}
+                {this.state.messageEmpty}
+              </Grid>
+              {renderData}
           </Grid>
           
           </main>

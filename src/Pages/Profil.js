@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import OpenInNew from '@material-ui/icons/OpenInNew';
 import ProfilCard from '../Components/ProfilCard';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // const { theme } = require('../Utils/theme');
 
@@ -70,6 +71,10 @@ const styles = theme => ({
     marginRight: '15px',
     marginBottom: '15px',
   },
+
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 
@@ -86,6 +91,7 @@ class Profil extends React.Component {
       currentEdit: null,
       data: [],
       mobileOpen: false,
+      displayCircularProgress : true,
     }
   }
 
@@ -166,6 +172,7 @@ class Profil extends React.Component {
   componentDidMount() {
 
     window.scrollTo(0, 0)
+    this.setState({ displayCircularProgress: true });
 
     const username = window.localStorage.getItem('username');
 
@@ -175,8 +182,15 @@ class Profil extends React.Component {
         this.setState({ data: val.data });
         //console.log(val.data);
       }
+      else{
 
-    });
+      }
+
+      this.setState({ displayCircularProgress: false });
+
+    }).catch(err => {
+ this.setState({ displayCircularProgress: false });
+    })
   };
 
 
@@ -215,14 +229,14 @@ class Profil extends React.Component {
             <main className={classes.mainContent}>
 
               <Grid container spacing={24}>
-                <Grid style={{  marginTop: '10px' }} item xs={12} lg={3}>
+                <Grid style={{  marginTop: '10px' }} item xs={12} md={3}>
 
 
                   <ProfilCard username={username} />
 
                 </Grid>
 
-                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={6}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} md={6}>
 
                   <Paper className={classes.newPost}>
 
@@ -236,11 +250,17 @@ class Profil extends React.Component {
 
                   </Paper>
 
+                  <Grid container justify="center" alignItems="center">
+                 
+                  {this.state.displayCircularProgress === true &&
+                  <CircularProgress className={classes.progress}/>}
+                  </Grid>
+
                   {renderData}
 
                 </Grid>
 
-                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} lg={3}>
+                <Grid style={{ backgroundColor: 'transparent' }} item xs={12} md={3}>
 
                 
               <Card  className={classes.following}>

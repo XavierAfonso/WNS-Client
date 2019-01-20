@@ -11,6 +11,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { AuthContext } from '../Utils/AuthProvider';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { Redirect } from 'react-router-dom';
 
@@ -47,7 +48,10 @@ const styles = theme => ({
   a: {
     display: 'flex',
     marginTop: '10px',
-  }
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 class SignIn extends React.Component {
@@ -63,6 +67,7 @@ class SignIn extends React.Component {
       confirmPassword : "",
       statusRegister: null,
       errorLocal : "",
+      displayCircularProgress : false,
     }
   }
 
@@ -95,6 +100,7 @@ class SignIn extends React.Component {
           const onSubmit = (event) => {
             event.preventDefault();
 
+            this.setState({ displayCircularProgress: true });
             this.setState({ statusRegister: "" });
             this.setState({ errorLocal: "" });
 
@@ -122,15 +128,17 @@ class SignIn extends React.Component {
                   return signUp(firstname,lastname,username,email, password).then((element) => {
                     this.setState({ statusRegister: "Account has been successfully registered" })
                   }).catch(err => {
-                    //Error server
+                    this.setState({ displayCircularProgress: false });
                 }
               )}
 
               else{
                 this.setState({ errorLocal: "Password must be the same" });
+                this.setState({ displayCircularProgress: false });
               }
             }else{
               this.setState({ errorLocal: "The fields must not be null" });
+              this.setState({ displayCircularProgress: false });
             }
           }
 
@@ -241,6 +249,14 @@ class SignIn extends React.Component {
                   >
                     Register
                   </Button>
+
+                  
+                  {this.state.displayCircularProgress === true &&
+                  <Grid container justify="center" alignItems="center">
+                  <CircularProgress className={classes.progress} />
+                  </Grid>
+                  }
+
                   <br />
                   <a className={classes.a} href="/login">You already have an account ?</a>
                   <p style={{ color: 'red' }}>{error}</p>
