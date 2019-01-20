@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 // Header
 function getHeader(){
@@ -108,7 +108,6 @@ function searchBook(book_title,book_post_description,book_content,book_tags){
     "book_tags" : book_tags
     }, getHeader());
 }
-
 
 export const userService = {
     getFollowers,
