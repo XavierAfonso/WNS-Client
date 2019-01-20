@@ -126,7 +126,8 @@ class SignIn extends React.Component {
 
               if(password === confirmPassword){
                   return signUp(firstname,lastname,username,email, password).then((element) => {
-                    this.setState({ statusRegister: "Account has been successfully registered" })
+                    this.setState({ statusRegister: "Account has been successfully registered" });
+                    this.setState({ displayCircularProgress: false });
                   }).catch(err => {
                     this.setState({ displayCircularProgress: false });
                 }

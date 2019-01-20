@@ -105,7 +105,7 @@ class AuthProvider extends Component {
         console.log("SIGNIN");
         this.setState({error : ""});
 
-        return axios.post('/users/signin',{username,password}).then(response => {
+        return userService.postLogin(username,password).then(response => {
 
             const {token} = response.data;
             window.localStorage.setItem('token',token);
@@ -125,7 +125,7 @@ class AuthProvider extends Component {
 
        this.setState({error : ""});
 
-       return axios.post('/users/signup',{firstname,lastname,realUsername,username, password}).then(response => {
+       return userService.postRegister(firstname,lastname,realUsername,username, password).then(response => {
             
         }).catch((error) => {
             

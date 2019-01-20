@@ -13,6 +13,17 @@ function getHeader(){
     return {headers};
 }
 
+function postLogin(username,password){
+    return axios.post('/users/signin',{username,password})
+    //return axios.get(`/notifications/${username}`, getHeader());
+}
+
+function postRegister(firstname,lastname,realUsername,username, password){
+    return axios.post('/users/signup',{firstname,lastname,realUsername,username, password});
+    //return axios.get(`/notifications/${username}`, getHeader());
+}
+
+
 // Get Notifications
 function getNotifications(username){
 
@@ -113,5 +124,7 @@ export const userService = {
     getBooksLiked,
     getNotifications,
     unLikeAbook,
-    getMe
+    getMe,
+    postLogin,
+    postRegister
 };
