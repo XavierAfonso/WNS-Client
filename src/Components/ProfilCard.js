@@ -86,8 +86,6 @@ class ProfilCard extends Component {
 
   componentDidMount() {
 
-    
-
     window.scrollTo(0, 0)
 
     const username = window.localStorage.getItem('username');

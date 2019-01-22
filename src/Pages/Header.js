@@ -15,7 +15,9 @@ import HelpIcon from '@material-ui/icons/Help';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
 import { AuthContext } from '../Utils/AuthProvider';
+import { userService } from '../Utils/user.services';
 
 import Tour from 'reactour';
 const { steps } = require('../Utils/steps/stepsHome');
@@ -106,6 +108,8 @@ class Header extends React.Component {
 
       isTourOpen: false,
       closeTour: false,
+      anchorNotif: null,
+      listNotifs: [],
     }
 
   };
@@ -122,9 +126,18 @@ class Header extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  handleNotificationsMenuOpen = event => {
+    this.setState({ anchorNotif: event.currentTarget });
+  }
+
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
     this.handleMobileMenuClose();
+  };
+
+  handleNotifsClose = () => {
+    this.setState({ anchorNotif: null });
+    //this.handleMobileMenuClose();
   };
 
   handleMobileMenuOpen = event => {
@@ -160,22 +173,60 @@ class Header extends React.Component {
     this.setState({ isTourOpen: true });
   }
 
+  deleteNotif = (notif) => {
+    console.log(notif)
+
+    let tmpListNotifs = this.state.listNotifs;
+    var index = tmpListNotifs.indexOf(notif);
+
+    //console.log(index);
+
+    if (index > -1) {
+      tmpListNotifs.splice(index, 1);
+      this.setState({ listNotifs: tmpListNotifs });
+
+      userService.postReadNotification(notif.id).then(val => console.log(val))
+      .catch(err => console.log(err));
+    }
+
+    //console.log(this.state.listNotifs)
+    this.handleNotifsClose();
+
+    // postReadNotification
+  }
+
+
+  componentDidMount() {
+
+
+    const username = window.localStorage.getItem('username');
+    userService.getNotifications(username).then(val => {
+
+      this.setState({ listNotifs: val.data })
+      //console.log("icicici");
+     // console.log(val.data);
+    });
+
+  }
 
   render() {
-    
+
     return (
 
-
       <AuthContext>
-
 
         {({ error, user, signOut }) => { // authContext
 
 
-          const { anchorEl, mobileMoreAnchorEl } = this.state;
+          const { anchorEl, mobileMoreAnchorEl, anchorNotif } = this.state;
           const { classes } = this.props;
           const isMenuOpen = Boolean(anchorEl);
+          const isNotifOpen = Boolean(anchorNotif);
           const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+          const renderListNotifications = this.state.listNotifs.map((element) => {
+            return (<MenuItem key={element.id} onClick={() => { this.deleteNotif(element) }}> {element.content} </MenuItem>)
+          });
 
           const renderMenu = (
             <Menu
@@ -187,8 +238,6 @@ class Header extends React.Component {
             >
 
               <MenuItem onClick={() => {
-                //this.setState({ nextPath: "/profil" });
-                //this.setRedirect();
                 this.redirectToTarget("/profil");
               }}>Profile</MenuItem>
 
@@ -196,6 +245,20 @@ class Header extends React.Component {
               <MenuItem onClick={() => { this.redirectToTarget('/followings') }} >Followings</MenuItem>
               <MenuItem onClick={() => { this.redirectToTarget('/followers') }} >Followers</MenuItem>
               <MenuItem onClick={signOut}>Logout</MenuItem>
+            </Menu>
+          );
+
+          const renderNotifications = (
+            <Menu
+              anchorEl={anchorNotif}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={isNotifOpen}
+              onClose={this.handleNotifsClose}
+            >
+
+              {this.state.listNotifs.length > 0 &&
+                renderListNotifications}
             </Menu>
           );
 
@@ -208,14 +271,7 @@ class Header extends React.Component {
               open={isMobileMenuOpen}
               onClose={this.handleMobileMenuClose}
             >
-              {/*<MenuItem>
-                <IconButton color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <MailIcon />
-                  </Badge>
-                </IconButton>
-                <p>Messages</p>
-              </MenuItem>*/}
+
               {this.props.home === "true" &&
                 <MenuItem onClick={this.startSteps}>
                   <IconButton color="inherit">
@@ -225,15 +281,27 @@ class Header extends React.Component {
                 </MenuItem>
               }
 
-              <MenuItem>
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                  {/*<Badge badgeContent={11} color="secondary">
-                   
-                  </Badge>*/}
-                </IconButton>
-                <p>Notifications</p>
-              </MenuItem>
+              {this.state.listNotifs.length > 0 &&
+                <MenuItem onClick={this.handleNotificationsMenuOpen}>
+                  <IconButton color="inherit">
+
+                    <Badge badgeContent={this.state.listNotifs.length} color="secondary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <p>Notifications</p>
+                </MenuItem>
+              }
+
+              {this.state.listNotifs.length === 0 &&
+                <MenuItem>
+                  <IconButton color="inherit">
+                    <NotificationsIcon />
+                  </IconButton>
+                  <p>Notifications</p>
+                </MenuItem>
+              }
+
               <MenuItem onClick={this.handleProfileMenuOpen}>
                 <IconButton color="inherit">
                   <AccountCircle />
@@ -268,37 +336,13 @@ class Header extends React.Component {
                     WNS
             </Typography>
 
-                  {/*<div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <SearchIcon />
-                    </div>
-                    <InputBase
-                      placeholder="Search…"
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                      }}
-                    />
-                    </div>*/}
-
-
-
                   <div className={classes.grow} />
 
-
                   <Button color="inherit" onClick={() => {
-                    //this.setState({ nextPath: "/" });
-                    //this.setRedirect();
                     this.redirectToTarget("/");
                   }}>Home</Button>
 
                   <div className={classes.sectionDesktop}>
-
-                    {/*<IconButton color="inherit">
-                      <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                      </Badge>
-                </IconButton>*/}
 
                     {this.props.home === "true" &&
                       <IconButton onClick={this.startSteps} color="inherit">
@@ -306,13 +350,22 @@ class Header extends React.Component {
                       </IconButton>
                     }
 
+                    {this.state.listNotifs.length > 0 &&
+                      <IconButton color="inherit"
+                        onClick={this.handleNotificationsMenuOpen}>
 
-                    <IconButton color="inherit">
-                      <NotificationsIcon />
-                      {/*<Badge badgeContent={0} color="secondary"> 
-                      
-                      </Badge>*/}
-                    </IconButton>
+                        <Badge badgeContent={this.state.listNotifs.length} color="secondary">
+                          <NotificationsIcon />
+                        </Badge>
+                      </IconButton>
+                    }
+
+                    {this.state.listNotifs.length === 0 &&
+                      <IconButton color="inherit">
+                        <NotificationsIcon />
+                      </IconButton>
+                    }
+
                     <IconButton data-tut=".12-home-step"
                       aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                       aria-haspopup="true"
@@ -341,6 +394,7 @@ class Header extends React.Component {
 
               {renderMenu}
               {renderMobileMenu}
+              {renderNotifications}
             </div>
           );
         }}

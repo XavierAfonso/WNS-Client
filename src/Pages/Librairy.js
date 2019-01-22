@@ -100,8 +100,6 @@ class Librairy extends React.Component {
 
     let username = "";
 
-    // console.log("ici" + this.props.match.params.name)
-
     if(this.props.match.params.name){
 
       console.log("ici");

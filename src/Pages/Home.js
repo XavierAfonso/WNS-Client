@@ -112,8 +112,6 @@ class Home extends React.Component {
           messageEmpty: ""
         });
 
-       
-        // console.log("ici");
         console.log(val.data);
       }
       else{
@@ -127,10 +125,7 @@ class Home extends React.Component {
       this.setState({ messageEmpty: "The wall is empty." });
       this.setState({ displayCircularProgress: false });
     });
-
-
   };
-
 
   closeTour = () => {
     this.setState({ isTourOpen: false });
@@ -192,7 +187,6 @@ class Home extends React.Component {
 
             //<MuiThemeProvider theme={theme}>
 
-
             <div className={classes.root}>
               <CssBaseline />
               <nav className={classes.drawer}>
@@ -233,7 +227,6 @@ class Home extends React.Component {
                   </Grid>
                   
                   {renderData}
-
 
                     </Grid>
 

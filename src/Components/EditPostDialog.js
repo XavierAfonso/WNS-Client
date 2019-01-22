@@ -259,7 +259,6 @@ class EditPostDialog extends React.Component {
         me : this.props.data.me,
         firstTime : false,
       });
-
     }
   }
 }

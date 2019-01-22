@@ -266,7 +266,7 @@ class CreatePostDialog extends React.Component {
           </Grid>
 
           <DialogActions>
-            <Button onClick={this.closeDialog} color="primary">
+            <Button disabled={this.state.displayCircularProgress} onClick={this.closeDialog} color="primary">
               Cancel
             </Button>
             <Button disabled={this.state.displayCircularProgress} onClick={this.addPost} color="primary">

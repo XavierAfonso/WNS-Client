@@ -145,6 +145,7 @@ class Login extends React.Component {
                         value={this.state.email}
                         onChange={this.handleChange('username')}
                         variant="outlined"
+                        type="email"
                         />
                   </FormControl>
                   
