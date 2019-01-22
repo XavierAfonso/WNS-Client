@@ -112,7 +112,7 @@ class Home extends React.Component {
           messageEmpty: ""
         });
 
-        console.log(val.data);
+        //console.log(val.data);
       }
       else{
         
@@ -121,7 +121,7 @@ class Home extends React.Component {
       this.setState({ displayCircularProgress: false });
 
     }).catch(err => {
-      console.log(err);
+      //console.log(err);
       this.setState({ messageEmpty: "The wall is empty." });
       this.setState({ displayCircularProgress: false });
     });
@@ -165,7 +165,7 @@ class Home extends React.Component {
       });
     }
 
-    console.log(newvalue);
+    //console.log(newvalue);
   }
 
   render() {

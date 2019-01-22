@@ -48,7 +48,7 @@ class Followings extends React.Component {
   }
 
   redirectToTarget = (page) => {
-    console.log(this.beforeNavigate);
+    //console.log(this.beforeNavigate);
     this.context.router.history.push(`${page}`)
   }
 
@@ -61,7 +61,7 @@ class Followings extends React.Component {
           data: val.data,
           messageEmpty: ""
         });
-        console.log(val.data);
+        //console.log(val.data);
       }
       else{
       
@@ -70,7 +70,7 @@ class Followings extends React.Component {
       this.setState({ displayCircularProgress: false });
 
     }).catch(err => {
-      console.log(err);
+      //console.log(err);
       this.setState({ messageEmpty: "There are no followings." })
       this.setState({ displayCircularProgress: false });
     });
@@ -78,7 +78,7 @@ class Followings extends React.Component {
 
   componentDidMount() {
 
-    console.log("test");
+    //console.log("test");
 
     let username = "";
 
@@ -91,7 +91,7 @@ class Followings extends React.Component {
         this.getFollowings(username);
 
       }).catch(err => {
-        console.log(err);
+        //console.log(err);
         this.redirectToTarget(`/`);
       })
     }

@@ -127,7 +127,7 @@ class ProfilOther extends React.Component {
     else{
 
     userService.getUser(this.state.unsernameFollower).then(val => {
-      console.log(val);
+      //console.log(val);
 
       userService.getBooksUser(  this.state.unsernameFollower).then(val => {
 

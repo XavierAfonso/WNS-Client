@@ -10,7 +10,7 @@ class PdfViewer extends Component {
 
   render() {
     const { width, height, containerId } = this.props;
-    console.log(containerId);
+    //console.log(containerId);
     return <div style={{ width, height }} id={containerId} />;
   }
 }

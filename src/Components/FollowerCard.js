@@ -57,7 +57,7 @@ class FollowerCard extends Component {
 
     if (!this.state.isSuscribe) {
       userService.postFollow(this.state.username).then(val => {
-        console.log(val);
+        //console.log(val);
       }).catch(err => console.log(err));
     }
 
@@ -67,7 +67,7 @@ class FollowerCard extends Component {
       }).catch(err => console.log(err));
     }
     this.setState({ isSuscribe: !this.state.isSuscribe });
-    console.log(`Follow ${this.state.username} : ${this.state.isSuscribe}`);
+    //console.log(`Follow ${this.state.username} : ${this.state.isSuscribe}`);
   }
 
   eventOnMouseOver = () => {

@@ -46,12 +46,10 @@ class AuthProvider extends Component {
 
                 if(username){
 
-                    console.log("DATUDA1");
-
+                
                     userService.getMe().then(val => {
 
-                        console.log("DATUDA2");
-                        console.log(val);
+                        // console.log(val);
 
                         if(val.data.email===username){
                             this.setState({user: username}); 
@@ -61,27 +59,10 @@ class AuthProvider extends Component {
                         }
 
                     }).catch(err => {
-                        console.log("DATUDA3");
-                        console.log(err);
                         this.removeLocalStorage();
                     });
                 }
             }
-           /* }
-            else{
-
-            }
-          }*/
-
-          /*if(this.state.user === null){
-
-            const token = window.localStorage.getItem('token');
-
-              if(token){
-                this.setState({user: 'connected'});
-                
-              }
-          }*/
     }
 
     getError = (error) => {
@@ -102,7 +83,7 @@ class AuthProvider extends Component {
 
     signIn = ({username,password}) =>{
 
-        console.log("SIGNIN");
+        //console.log("SIGNIN");
         this.setState({error : ""});
 
         return userService.postLogin(username,password).then(response => {
@@ -136,7 +117,7 @@ class AuthProvider extends Component {
     }
 
     signOut = () => {
-        console.log("LOGOUT")
+        //console.log("LOGOUT")
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('username');
         this.setState({user : null})
@@ -155,8 +136,8 @@ class AuthProvider extends Component {
         //console.log(headers);
 
         return axios.get(`/users`,{headers}).then(response => {
-            console.log("Users : ");
-            console.log(response.data);
+            //console.log("Users : ");
+            //console.log(response.data);
         }).catch((error) => {
             console.error(error);
         });
@@ -172,8 +153,8 @@ class AuthProvider extends Component {
         }
 
         return axios.get(`/users/${id}`,{headers}).then(response => {
-            console.log("User : ");
-            console.log(response.data);
+            //console.log("User : ");
+            //console.log(response.data);
         }).catch((error) => {
             console.error(error);
         });
@@ -189,8 +170,8 @@ class AuthProvider extends Component {
         }
 
         return axios.get(`/users/${id}/followers`,{headers}).then(response => {
-            console.log("Followers : ");
-            console.log(response.data);
+            //console.log("Followers : ");
+            //console.log(response.data);
         }).catch((error) => {
             console.error(error);
         });
@@ -207,8 +188,8 @@ class AuthProvider extends Component {
         }
 
         return axios.post(`/users/follow?from=${from}&to=${to}`,{},{headers}).then(response => {
-            console.log("Followers : ");
-            console.log(response.data);
+            //console.log("Followers : ");
+            //console.log(response.data);
         }).catch((error) => {
             console.error(error);
         });

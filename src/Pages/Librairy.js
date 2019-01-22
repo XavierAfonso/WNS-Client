@@ -71,8 +71,8 @@ class Librairy extends React.Component {
     userService.getBooksLiked(username).then(val => {
 
         const username = window.localStorage.getItem('username');
-        console.log(username);
-        console.log(this.props.match.params.name);
+        //console.log(username);
+        //console.log(this.props.match.params.name);
 
 
         if(this.props.match.params.name !== username && this.props.match.params.name ){
@@ -82,7 +82,7 @@ class Librairy extends React.Component {
         if(val.data.length > 0){
           this.setState({data : val.data,
           messageEmpty : ""});
-          console.log(val.data);
+          //console.log(val.data);
         }
         else{
           this.setState({ messageEmpty: " There are no books." })
@@ -90,7 +90,7 @@ class Librairy extends React.Component {
         this.setState({ displayCircularProgress: false });
      
     }).catch(err => {
-      console.log(err);
+      //console.log(err);
       this.setState({ messageEmpty: "There are no books." })
       this.setState({ displayCircularProgress: false });
     });
@@ -102,14 +102,14 @@ class Librairy extends React.Component {
 
     if(this.props.match.params.name){
 
-      console.log("ici");
+      //console.log("ici");
       username = this.props.match.params.name;
 
       userService.getUser(username).then(val => {
         this.getBooksLiked(username);
 
       }).catch(err => {
-        console.log(err);
+       // console.log(err);
         this.redirectToTarget(`/`)
       })
     }

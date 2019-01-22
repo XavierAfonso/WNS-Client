@@ -136,11 +136,11 @@ class Navigator extends React.Component {
   let book_tags = this.state.tags.length ===0 ? null :  this.state.tags;
     
          
-    console.log("SEARCH");
+    /*console.log("SEARCH");
     console.log("Title: " + book_title);
     console.log("Descritpion: " + book_post_description);
     console.log("BookContent: " + book_content);
-    console.log(book_tags);
+    console.log(book_tags);*/
 
 
     userService.searchBook(book_title,book_post_description,book_content,book_tags).then(val => {

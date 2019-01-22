@@ -54,7 +54,7 @@ class Followers extends React.Component {
           data: val.data,
           messageEmpty: ""
         });
-        console.log(val.data);
+        //console.log(val.data);
       }
       else{
         this.setState({ messageEmpty: "There are no followers." })
@@ -62,7 +62,7 @@ class Followers extends React.Component {
       this.setState({ displayCircularProgress: false });
 
     }).catch(err => {
-      console.log(err);
+      //console.log(err);
       this.setState({ messageEmpty: "There are no followings." })
       this.setState({ displayCircularProgress: false });
     });
@@ -80,7 +80,7 @@ class Followers extends React.Component {
         this.getFollowers(username);
 
       }).catch(err => {
-        console.log(err);
+        //console.log(err);
         this.redirectToTarget(`/`)
       })
     }

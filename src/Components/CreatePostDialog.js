@@ -141,16 +141,16 @@ class CreatePostDialog extends React.Component {
 
   addPost = () => {
 
-    console.log("Title: " + this.state.title);
+    /*console.log("Title: " + this.state.title);
     console.log("Description: " + this.state.description);
     console.log("Tags : " + this.state.tags)
-    console.log(this.state.book_content)
+    console.log(this.state.book_content)*/
 
     if (this.state.title !== "" && this.state.description !== "" && this.state.tags !== [] && this.state.book_content !== "") {
 
       this.setState({displayCircularProgress:true});
       this.postBooks().then(response => {
-        console.log(response);
+        //console.log(response);
         this.closeDialog();
          this.setState({displayCircularProgress:false});
          window.location.reload();

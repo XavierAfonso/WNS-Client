@@ -112,12 +112,12 @@ class SignIn extends React.Component {
             let password = this.state.password;
             let confirmPassword = this.state.confirmPassword;
 
-            console.log(firstname);
+            /*console.log(firstname);
             console.log(lastname);
             console.log(email);
             console.log(username);
             console.log(password);
-            console.log(confirmPassword);
+            console.log(confirmPassword);*/
 
             if (firstname !== "" && lastname !== "" && email !== "" 
             && username !== "" && password !== "" && confirmPassword !== "") {

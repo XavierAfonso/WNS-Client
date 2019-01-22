@@ -147,10 +147,10 @@ class Profil extends React.Component {
 
     if (window.confirm(`Delete ${title}`)) {
 
-      console.log(id);
+      //console.log(id);
 
       userService.deleteBooksUser(id).then((val) => {
-        console.log(val);
+        //console.log(val);
       });
 
       let filteredArray = this.state.data.filter(element => element.id !== id);

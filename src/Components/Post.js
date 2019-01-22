@@ -115,25 +115,25 @@ class RecipeReviewCard extends React.Component {
 
   // Expand the pdf part
   handleExpandClick = () => {
-    console.log("EXPAND");
+    //console.log("EXPAND");
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
   // More Info
   moreInfo = () => {
-    console.log("More Info");
+    //console.log("More Info");
     this.handleClose();
   }
 
   // Comments
   showComments = () => {
-    console.log("Comments");
+    //console.log("Comments");
     this.handleClose();
   }
 
   // Delete
   deletePost = () => {
-    console.log("Delete ID : " + this.state.title);
+    //console.log("Delete ID : " + this.state.title);
     this.props.delete(this.state.id,this.state.title);
   }
 
@@ -145,7 +145,7 @@ class RecipeReviewCard extends React.Component {
 
   // Favorite
   clickFavorite = () => {
-    console.log("Favorite");
+    //console.log("Favorite");
 
     const username = window.localStorage.getItem('username');
 
@@ -154,7 +154,7 @@ class RecipeReviewCard extends React.Component {
 
       userService.getUser(username).then(response => {
 
-        console.log(response.data.likes);
+        //console.log(response.data.likes);
 
         let isExist = response.data.likes;
 
@@ -172,7 +172,7 @@ class RecipeReviewCard extends React.Component {
       //userService.likeAbook(this.state.id).then(val => console.log(val));
     }
     else {
-      console.log(this.state.id);
+      //console.log(this.state.id);
       userService.unLikeAbook(this.state.id).then(val => console.log(val));
     }
 
@@ -181,20 +181,19 @@ class RecipeReviewCard extends React.Component {
 
   // Share
   clickShare = () => {
-    console.log("Share");
+    //console.log("Share");
   }
 
   // OpenPDF
   openPDF = () => {
-    console.log("OPEN PDF");
+    //console.log("OPEN PDF");
     const url = this.state.linkPdf;
     window.open(url, '_blank');
   }
 
 
   goProfilUser = () => {
-
-    console.log("GO PROFIL");
+    //console.log("GO PROFIL");
   }
 
   static contextTypes = {

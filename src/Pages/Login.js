@@ -108,8 +108,8 @@ class Login extends React.Component {
             let username = this.state.username;
             let password = this.state.password;
 
-            console.log(username);
-            console.log(password);
+            //console.log(username);
+            //console.log(password);
 
             if (username !== "" && password !== "") {
               signIn({ username, password }).catch(() => {

@@ -63,17 +63,17 @@ class ProfilCard extends Component {
 
     if(!this.state.isSuscribe){
       userService.postFollow(this.state.username).then(val => {
-        console.log(val);
+        //console.log(val);
       }).catch(err => console.log(err));
     }
 
     else{
       userService.postUnFollow(this.state.username).then(val => {
-        console.log(val);
+        //console.log(val);
       }).catch(err => console.log(err));
     }
     this.setState({isSuscribe: !this.state.isSuscribe});
-    console.log(`Follow ${this.state.username} : ${this.state.isSuscribe}`);
+    //console.log(`Follow ${this.state.username} : ${this.state.isSuscribe}`);
   }
 
   eventOnMouseOver = () => {
@@ -97,7 +97,7 @@ class ProfilCard extends Component {
 
         this.setState({nbFollowings : val.data.length});
         let test = val.data.filter(x => x.email === this.state.username);
-        console.log(test);
+        //console.log(test);
 
         if(test.length > 0){
           this.setState({isSuscribe: true});
