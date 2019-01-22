@@ -85,6 +85,11 @@ function getUser(id){
     return axios.get(`/users/${id}`, getHeader());
 }
 
+// Get users
+function getUsers(){
+    return axios.get(`/users/`, getHeader());
+}
+
 // Get Books
 function getBooksUser(id){
 
@@ -125,5 +130,6 @@ export const userService = {
     unLikeAbook,
     getMe,
     postLogin,
-    postRegister
+    postRegister,
+    getUsers
 };
