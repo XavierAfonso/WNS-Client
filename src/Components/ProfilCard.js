@@ -91,7 +91,7 @@ class ProfilCard extends Component {
     const username = window.localStorage.getItem('username');
 
     // Get the followings for the button
-    userService.getFollowings(username).then(val => {
+    userService.getFollowings(this.state.username).then(val => {
 
       if(val.data !==""){
 
