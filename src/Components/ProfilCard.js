@@ -91,13 +91,13 @@ class ProfilCard extends Component {
     const username = window.localStorage.getItem('username');
 
     // Get the followings for the button
-    userService.getFollowings(this.state.username).then(val => {
+    userService.getFollowings(username).then(val => {
 
       if(val.data !==""){
 
         this.setState({nbFollowings : val.data.length});
         let test = val.data.filter(x => x.email === this.state.username);
-        //console.log(test);
+        console.log(val.data);
 
         if(test.length > 0){
           this.setState({isSuscribe: true});
